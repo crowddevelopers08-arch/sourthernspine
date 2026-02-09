@@ -1,8 +1,16 @@
 'use client'
 
-import React from "react";
+import React, { useState } from "react";
+import PopupForm from "./popup";
 
 const GuidingYouForward = () => {
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const handleFormSubmit = (formData) => {
+    console.log('Appointment booked:', formData);
+    // Handle form submission - API call, etc.
+    alert(`Appointment booked successfully!\n\nName: ${formData.fullName}\nPhone: ${formData.phoneNumber}\nEmail: ${formData.email}\nType: ${formData.appointmentType}`);
+  };
   const NAVY = "#0b1842";
   const ORANGE = "#f99c1e";
 
@@ -84,7 +92,7 @@ const GuidingYouForward = () => {
             </p>
 
             <div className="flex justify-center  mt-3">
-              <button 
+              <button   onClick={() => setIsPopupOpen(true)}
                 className="flex items-center gap-2 border-2 px-5 md:px-6 py-2.5 md:py-3 rounded-full text-white transition-all duration-300 font-medium"
                 style={{ 
                   borderColor: ORANGE,
@@ -193,8 +201,8 @@ const GuidingYouForward = () => {
               strategies, ensuring a life of vitality.
             </p>
 
-            <div className="flex justify-center  mt-3">
-              <button 
+            <div className="flex justify-center  mt-3" >
+              <button   onClick={() => setIsPopupOpen(true)}
                 className="flex items-center gap-2 border-2 px-5 md:px-6 py-2.5 md:py-3 rounded-full text-white transition-all duration-300 font-medium"
                 style={{ 
                   borderColor: ORANGE,
@@ -296,7 +304,7 @@ const GuidingYouForward = () => {
             </p>
 
             <div className="flex justify-center mt-3">
-              <button 
+              <button   onClick={() => setIsPopupOpen(true)}
                 className="flex items-center mr-3 border-2 px-5 md:px-6 py-2.5 md:py-3 rounded-full text-white transition-all duration-300 font-medium "
                 style={{ 
                   borderColor: ORANGE,
@@ -331,6 +339,11 @@ const GuidingYouForward = () => {
           </div>
         </div>
       </div>
+            <PopupForm
+        isOpen={isPopupOpen}
+        onClose={() => setIsPopupOpen(false)}
+        onSubmit={handleFormSubmit}
+      />
     </div>
   );
 };

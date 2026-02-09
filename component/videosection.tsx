@@ -1,11 +1,18 @@
 
 'use client'
 import React, { useState } from "react";
+import PopupForm from "./popup";
 
 export default function RealPatientResultsSection() {
   const NAVY = "#0b1842";
   const ORANGE = "#f99c1e";
   const [currentSlide, setCurrentSlide] = useState(0);
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+      const handleFormSubmit = (formData) => {
+    console.log('Appointment booked:', formData);
+    // Handle form submission - API call, etc.
+    alert(`Appointment booked successfully!\n\nName: ${formData.fullName}\nPhone: ${formData.phoneNumber}\nEmail: ${formData.email}\nType: ${formData.appointmentType}`);
+  };
 
   const cards = [
     {
@@ -296,7 +303,7 @@ export default function RealPatientResultsSection() {
 
         {/* Book Appointment Button */}
         <div className="mt-10 flex justify-center">
-          <button className="book-btn">
+          <button className="book-btn"   onClick={() => setIsPopupOpen(true)}>
             Book Appointment
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="arrow">
               <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
@@ -316,6 +323,11 @@ export default function RealPatientResultsSection() {
           }
         }
       `}</style>
+            <PopupForm
+        isOpen={isPopupOpen}
+        onClose={() => setIsPopupOpen(false)}
+        onSubmit={handleFormSubmit}
+      />
     </section>
   );
 }

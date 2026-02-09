@@ -1,9 +1,16 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
+import PopupForm from './popup';
 
 const HeroSection = () => {
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+      const handleFormSubmit = (formData) => {
+    console.log('Appointment booked:', formData);
+    // Handle form submission - API call, etc.
+    alert(`Appointment booked successfully!\n\nName: ${formData.fullName}\nPhone: ${formData.phoneNumber}\nEmail: ${formData.email}\nType: ${formData.appointmentType}`);
+  };
   return (
     <section className="hero-banner">
       <div className="hero-wrapper">
@@ -24,7 +31,7 @@ const HeroSection = () => {
           </p>
           
           <div className="action-buttons">
-            <button className="book-btn">
+            <button className="book-btn" onClick={() => setIsPopupOpen(true)}>
               Book Appointment
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="arrow">
                 <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
@@ -749,7 +756,13 @@ const HeroSection = () => {
   }
 }
       `}</style>
+            <PopupForm
+        isOpen={isPopupOpen}
+        onClose={() => setIsPopupOpen(false)}
+        onSubmit={handleFormSubmit}
+      />
     </section>
+    
   );
 };
 
