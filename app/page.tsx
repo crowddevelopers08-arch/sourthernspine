@@ -1,3 +1,4 @@
+import ProfessionalsSection from "@/component/about";
 import GuidingYouForward from "@/component/componnt";
 import SouthernSpineClinic from "@/component/footer";
 import HeroSection from "@/component/herosection";
@@ -17,7 +18,8 @@ export default function Home() {
     <WhatWeDo /> 
  
     <GuidingYouForward />  
-    <RealPatientResultsSection />  
+    <RealPatientResultsSection /> 
+    {/* <ProfessionalsSection />  */}
     <SouthernSpineClinic />  
     <Footers />  
     </>
