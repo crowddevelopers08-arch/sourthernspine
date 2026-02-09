@@ -2,13 +2,18 @@
 'use client'
 import React, { useState } from "react";
 import PopupForm from "./popup";
-
+type AppointmentFormData = {
+  fullName: string;
+  phoneNumber: string;
+  email: string;
+  appointmentType: string;
+};
 export default function RealPatientResultsSection() {
   const NAVY = "#0b1842";
   const ORANGE = "#f99c1e";
   const [currentSlide, setCurrentSlide] = useState(0);
     const [isPopupOpen, setIsPopupOpen] = useState(false);
-      const handleFormSubmit = (formData) => {
+      const handleFormSubmit = (formData:AppointmentFormData) => {
     console.log('Appointment booked:', formData);
     // Handle form submission - API call, etc.
     alert(`Appointment booked successfully!\n\nName: ${formData.fullName}\nPhone: ${formData.phoneNumber}\nEmail: ${formData.email}\nType: ${formData.appointmentType}`);
@@ -323,7 +328,7 @@ export default function RealPatientResultsSection() {
           }
         }
       `}</style>
-            <PopupForm
+        <PopupForm
         isOpen={isPopupOpen}
         onClose={() => setIsPopupOpen(false)}
         onSubmit={handleFormSubmit}

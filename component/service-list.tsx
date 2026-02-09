@@ -79,11 +79,11 @@ export default function PainTypesGridReplica() {
     );
   };
 
-  const goToSlide = (index) => {
+  const goToSlide = (index :number) => {
     setCurrentIndex(index);
   };
 
-  const renderCard = (it) => (
+  const renderCard = (it:any) => (
     <div key={it.title} className="relative h-full  max-sm:pt-7">
       <div className="relative h-full" style={dottedBorderStyle}>
         <div

@@ -1,50 +1,94 @@
-import React, { useState } from 'react';
+import React, { useState,  ChangeEvent,
+  FormEvent,
+  MouseEvent } from 'react';
 
-const PopupForm = ({ isOpen, onClose, onSubmit }) => {
-  const [formData, setFormData] = useState({
-    fullName: '',
-    phoneNumber: '',
-    email: '',
-    appointmentType: 'general'
+
+
+interface FormData {
+  fullName: string;
+  phoneNumber: string;
+  email: string;
+  appointmentType: string;
+}
+
+interface PopupFormProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onSubmit: (data: FormData) => void;
+}
+
+/* ---------- Component ---------- */
+
+const PopupForm: React.FC<PopupFormProps> = ({
+  isOpen,
+  onClose,
+  onSubmit,
+}) => {
+  const [formData, setFormData] = useState<FormData>({
+    fullName: "",
+    phoneNumber: "",
+    email: "",
+    appointmentType: "general",
   });
 
-  const handleChange = (e) => {
+  /* ✅ typed event */
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
-  const handleSubmit = (e) => {
+  /* ✅ typed submit */
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSubmit(formData);
     onClose();
   };
 
-  if (!isOpen) return null;
+  /* ✅ typed click */
+  const handleClose = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onClose();
+  };
 
+  if (!isOpen) return null;
   return (
     <div 
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fadeIn"
-      onClick={onClose}
+      onClick={onClose} // Click outside to close
     >
       <div 
         className="relative bg-white rounded-xl shadow-2xl w-full max-w-md animate-slideUp overflow-hidden"
-        onClick={(e) => e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside form
       >
-        {/* Close Button */}
+        {/* Close Icon at Top Right */}
         <button
-          onClick={onClose}
-          className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100 transition-colors text-gray-600 hover:text-gray-900 z-10"
+          onClick={handleClose}
+          className="absolute top-4 right-4 p-2 rounded-full hover:bg-[#0b1842]/10 transition-all duration-200 z-10 group"
+          aria-label="Close form"
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
+          <div className="relative">
+            {/* Orange background on hover */}
+            <div className="absolute inset-0 bg-[#f99c1e] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
+            
+            <svg 
+              className="w-5 h-5 text-[#0b1842] group-hover:text-white relative transition-colors duration-200" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </div>
         </button>
 
         {/* Navy Header */}
-        <div className="bg-[#0b1842] text-white p-6">
+        <div className="bg-[#0b1842] text-white p-6 pt-10">
           <div className="text-center">
             <h2 className="text-2xl font-bold">Book Appointment</h2>
             <p className="text-gray-300 mt-2">Fill in your details below</p>

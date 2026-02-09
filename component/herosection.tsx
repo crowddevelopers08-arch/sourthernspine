@@ -3,10 +3,15 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import PopupForm from './popup';
-
+type AppointmentFormData = {
+  fullName: string;
+  phoneNumber: string;
+  email: string;
+  appointmentType: string;
+};
 const HeroSection = () => {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
-      const handleFormSubmit = (formData) => {
+      const handleFormSubmit = (formData:AppointmentFormData) => {
     console.log('Appointment booked:', formData);
     // Handle form submission - API call, etc.
     alert(`Appointment booked successfully!\n\nName: ${formData.fullName}\nPhone: ${formData.phoneNumber}\nEmail: ${formData.email}\nType: ${formData.appointmentType}`);
