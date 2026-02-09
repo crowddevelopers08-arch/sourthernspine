@@ -22,5 +22,390 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Roboto", Sans-serif;
+}
+.hero-banner {
+  background: linear-gradient(135deg, #0b1842 0%, #1a3058 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-banner::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(
+    circle,
+    rgba(249, 156, 30, 0.12) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+}
+
+.hero-wrapper {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 60px 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  min-height: 85vh;
+  position: relative;
+  z-index: 1;
+}
+
+.content-side {
+  animation: slideInLeft 0.7s ease-out;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.badge-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(249, 156, 30, 0.15);
+  border: 1px solid rgba(249, 156, 30, 0.4);
+  padding: 10px 20px;
+  border-radius: 30px;
+  color: #f99c1e;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  letter-spacing: 0.5px;
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  background: #f99c1e;
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.hero-heading {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 900;
+  color: white;
+  line-height: 1.15;
+  margin: 0 0 20px 0;
+  letter-spacing: -0.02em;
+}
+
+.pain-text {
+  display: block;
+  color: #f99c1e;
+  background: linear-gradient(135deg, #f99c1e 0%, #ff8c00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-description {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  line-height: 1.7;
+  margin: 0 0 35px 0;
+  max-width: 500px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 40px;
+}
+
+.book-btn {
+  background: linear-gradient(135deg, #f99c1e 0%, #ff8c00 100%);
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 16px 32px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(249, 156, 30, 0.4);
+}
+
+.book-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(249, 156, 30, 0.5);
+}
+
+.book-btn .arrow {
+  transition: transform 0.3s ease;
+}
+
+.book-btn:hover .arrow {
+  transform: translateX(4px);
+}
+
+.call-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 28px;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.call-btn:hover {
+  border-color: #f99c1e;
+  background: rgba(249, 156, 30, 0.1);
+}
+
+.trust-badges {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  padding: 20px 0;
+}
+
+.trust-item {
+  text-align: center;
+}
+
+.trust-number {
+  font-size: 28px;
+  font-weight: 900;
+  color: #f99c1e;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.trust-label {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 600;
+}
+
+.divider {
+  width: 1px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.video-side {
+  animation: slideInRight 0.7s ease-out 0.2s backwards;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.video-box {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  transition: transform 0.4s ease;
+}
+
+.video-box:hover {
+  transform: translateY(-10px);
+}
+
+.hero-video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.play-btn:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.play-circle {
+  width: 80px;
+  height: 80px;
+  background: rgba(249, 156, 30, 0.95);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 30px rgba(249, 156, 30, 0.5);
+}
+
+.video-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #f99c1e 0%, #ff8c00 100%);
+  padding: 12px 20px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 20px rgba(249, 156, 30, 0.4);
+}
+
+.badge-number {
+  font-size: 36px;
+  font-weight: 900;
+  color: white;
+  line-height: 1;
+}
+
+.badge-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: white;
+  line-height: 1.2;
+}
+
+.whatsapp-fab {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  background: #25d366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 24px rgba(37, 211, 102, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.whatsapp-fab:hover {
+  transform: scale(1.1);
+}
+
+.ping-circle {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #25d366;
+  border-radius: 50%;
+  animation: ping 2s ease-out infinite;
+}
+
+@keyframes ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 1024px) {
+  .hero-wrapper {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 50px 30px;
+    min-height: auto;
+  }
+
+  .content-side {
+    text-align: center;
+  }
+
+  .hero-description {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .action-buttons {
+    justify-content: center;
+  }
+
+  .trust-badges {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-wrapper {
+    padding: 40px 20px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .book-btn,
+  .call-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .trust-badges {
+    gap: 15px;
+  }
+
+  .trust-number {
+    font-size: 24px;
+  }
+}
+@keyframes logoFloat {
+  0% {
+    transform: translateX(0px);
+  }
+  50% {
+    transform: translateX(25px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
+
+.animate-logo-float {
+  animation: logoFloat 4s ease-in-out infinite;
 }
