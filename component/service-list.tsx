@@ -151,14 +151,14 @@ export default function PainTypesGridReplica() {
   return (
     <section className="w-full" style={{ backgroundColor: NAVY }}>
       <div className="mx-auto max-w-7xl px-6 py-5 md:py-15">
-        <div className="mx-auto max-w-5xl text-center text-white">
-          <p className="text-2xl md:text-4xl font-bold mb-20 ">
+        <div className="mx-auto max-w-5xl text-center text-white mb-10">
+          <p className="text-2xl md:text-4xl font-bold mb-4 ">
             Your Pain, Our Expertise
           </p>
           <p className="text-md md:text-lg font-semibold">
             As an expert, I understand various types of pain to provide effective assessment, diagnosis, and treatment. Here are some common types of pain that a
           </p>
-          <p className="mt-3 text-md md:text-lg font-semibold">
+          <p className="text-md md:text-lg font-semibold">
             Physiotherapist, Osteopath, or Chiropractor should be well-equipped to address:
           </p>
         </div>

@@ -1,224 +1,239 @@
-'use client'
-import React from 'react';
-import { motion } from 'framer-motion';
+"use client";
+import React, { useState } from "react";
+import PopupForm from "./popup";
 
-export default function ProfessionalsSection() {
-  const features = [
-    {
-      icon: (
-        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="10" y="8" width="6" height="24" rx="2" stroke="#4F46E5" strokeWidth="2" fill="none"/>
-          <rect x="24" y="8" width="6" height="24" rx="2" stroke="#4F46E5" strokeWidth="2" fill="none"/>
-          <line x1="13" y1="14" x2="13" y2="26" stroke="#4F46E5" strokeWidth="1.5" strokeLinecap="round"/>
-          <line x1="27" y1="14" x2="27" y2="26" stroke="#4F46E5" strokeWidth="1.5" strokeLinecap="round"/>
-        </svg>
-      ),
-      title: "Patient-Centered Care",
-      description: "Putting you at the heart of everything we do. Our patient-centered approach ensures personalized."
-    },
-    {
-      icon: (
-        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M20 12C20 12 16 16 12 16C12 20 14 24 20 28C26 24 28 20 28 16C24 16 20 12 20 12Z" stroke="#4F46E5" strokeWidth="2" fill="none" strokeLinejoin="round"/>
-          <circle cx="20" cy="20" r="3" fill="#4F46E5"/>
-          <path d="M15 18L17 20L15 22" stroke="#4F46E5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M25 18L23 20L25 22" stroke="#4F46E5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-      ),
-      title: "Specialist Doctors",
-      description: "Putting you at the heart of everything we do. Our patient-centered approach ensures personalized."
-    },
-    {
-      icon: (
-        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="20" cy="20" r="10" stroke="#4F46E5" strokeWidth="2" fill="none"/>
-          <path d="M20 14V20L24 22" stroke="#4F46E5" strokeWidth="2" strokeLinecap="round"/>
-          <circle cx="20" cy="8" r="1.5" fill="#4F46E5"/>
-          <circle cx="20" cy="32" r="1.5" fill="#4F46E5"/>
-          <circle cx="32" cy="20" r="1.5" fill="#4F46E5"/>
-          <circle cx="8" cy="20" r="1.5" fill="#4F46E5"/>
-        </svg>
-      ),
-      title: "24 Hours Service",
-      description: "Putting you at the heart of everything we do. Our patient-centered approach ensures personalized."
-    }
-  ];
+type AppointmentFormData = {
+  fullName: string;
+  phoneNumber: string;
+  email: string;
+  appointmentType: string;
+};
+
+const AboutSection = () => {
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
+
+  const handleFormSubmit = (formData: AppointmentFormData) => {
+    console.log("Appointment booked:", formData);
+    alert(
+      `Appointment booked successfully!\n\nName: ${formData.fullName}\nPhone: ${formData.phoneNumber}\nEmail: ${formData.email}\nType: ${formData.appointmentType}`
+    );
+  };
 
   return (
-    <section className="w-full bg-gradient-to-br from-gray-50 to-white py-16 px-6">
-      <div className="mx-auto max-w-7xl">
-        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
-          {/* Left Content */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            {/* Badge */}
-            <div className="mb-6 flex items-center gap-2">
-              <div className="flex items-center gap-2 rounded-full bg-indigo-50 px-4 py-2">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <path d="M10 2L12 8L18 8L13 12L15 18L10 14L5 18L7 12L2 8L8 8L10 2Z" fill="#4F46E5"/>
-                </svg>
-                <span className="text-sm font-semibold text-indigo-600">About Us</span>
+    <div id="about" className="text-black py-12 px-4 md:py-16 lg:py-10 relative">
+      
+      {/* Main Content Container */}
+      <div className="relative z-10 max-w-7xl mx-auto">
+        <p className="flex justify-center text-2xl md:text-4xl font-extrabold tracking-tight text-black mb-8">
+          Our Expert
+        </p>
+
+        <div className="grid md:grid-cols-5 gap-8 lg:gap-12 items-start">
+          
+          {/* Image Section - 40% width (2 out of 5 columns) - Hidden on mobile */}
+          <div className="hidden md:block md:col-span-2">
+            <div className="w-full h-auto rounded-xl overflow-hidden shadow-2xl border-2 border-[#0b1842]">
+              <img
+                src="/DR-Raghu.png"
+                alt="Dr. Raghupathi Jadhav"
+                className="w-full h-auto object-cover"
+              />
+            </div>
+          </div>
+
+          {/* Content Section - 60% width on medium+, full width on mobile */}
+          <div className="md:col-span-3 space-y-1">
+            
+            {/* Introduction Paragraph */}
+            <div className="space-y-1">
+              <h2 className="text-2xl font-bold text-black">Dr. Raghupathi Jadhav</h2>
+              <p className="text-gray-700 leading-relaxed text-base">
+                Dr. Raghupathi Jadhav is a renowned healthcare professional with 11 years of experience in holistic healthcare and expertise in Physiotherapy, Osteopathy, and Chiropractic care. Dr. Jadhav offers comprehensive solutions to patients, including alternatives to surgery and medication.
+              </p>
+            </div>
+
+            {/* Image for Mobile Only - Placed BELOW the introduction paragraph */}
+            <div className="block md:hidden my-6">
+              <div className="w-full h-auto rounded-xl overflow-hidden shadow-2xl border-2 border-[#0b1842]">
+                <img
+                  src="/DR-Raghu.png"
+                  alt="Dr. Raghupathi Jadhav"
+                  className="w-full h-auto object-cover"
+                />
               </div>
             </div>
 
-            {/* Heading */}
-            <h2 className="mb-6 text-4xl font-bold leading-tight text-gray-900 lg:text-5xl">
-              Professionals<br />
-              dedicated to your<br />
-              health
-            </h2>
-
-            {/* Description */}
-            <p className="mb-10 text-base text-gray-600 leading-relaxed">
-              Our team of skilled professionals is committed to providing<br className="hidden lg:block" />
-              personalized, compassionate care. With a focus.
-            </p>
-
-            {/* Features List */}
-            <div className="space-y-6 mb-10">
-              {features.map((feature, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="flex gap-4"
-                >
-                  {/* Icon */}
-                  <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-2xl bg-indigo-50">
-                    {feature.icon}
-                  </div>
-                  
-                  {/* Text */}
-                  <div>
-                    <h3 className="mb-2 text-lg font-bold text-gray-900">
-                      {feature.title}
-                    </h3>
-                    <p className="text-sm text-gray-600 leading-relaxed">
-                      {feature.description}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* CTA Button */}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="rounded-full bg-indigo-600 px-8 py-4 text-base font-semibold text-white shadow-lg hover:bg-indigo-700 transition-colors duration-300"
-            >
-              View More About Us
-            </motion.button>
-          </motion.div>
-
-          {/* Right Images Grid - WITH BASE IMAGE */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="relative"
-          >
-            {/* Main Container */}
-            <div className="relative h-[580px] lg:h-[620px]">
+            {/* Qualifications & Experience */}
+            <div className="space-y-2">
               
-              {/* BASE/DEFAULT IMAGE - Nurse with Elderly Patient (BOTTOM RIGHT POSITION) */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                viewport={{ once: true }}
-                className="absolute bottom-0 right-0 w-[340px] lg:w-[380px]"
-              >
-                <div className="overflow-hidden rounded-[40px] shadow-2xl">
-                  <img
-                    src="https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=700&q=80"
-                    alt="Nurse with elderly patient"
-                    className="h-[480px] lg:h-[520px] w-full object-cover"
-                  />
-                </div>
-              </motion.div>
+              {/* Education Section */}
+              <div className="space-y-2">
+                <h3 className="text-lg font-semibold text-black">Education and Qualifications:</h3>
+                <ul className="space-y-1 pl-4">
+                  <li className="text-gray-700">• MASTER OF CHIROPRACTIC (SWEDEN)</li>
+                  <li className="text-gray-700">• D.O OSTEOPATHY (CANADA)</li>
+                  <li className="text-gray-700">• FDM.FASCIAL DISTORTION MODEL (GERMANY)</li>
+                  <li className="text-gray-700">• BACHELOR OF PHYSIOTHERAPY</li>
+                </ul>
+              </div>
 
-              {/* OVERLAY 1: Top Left Image - Doctor with Tablet (VIDEO CALL SUPPORT) */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9, y: -20 }}
-                whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                viewport={{ once: true }}
-                className="absolute left-0 top-0 z-20 w-[240px] lg:w-[260px]"
-              >
-                <div className="overflow-hidden rounded-[40px] bg-gradient-to-br from-slate-800 to-slate-900 shadow-2xl">
-                  <div className="relative">
-                    <img
-                      src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=600&q=80"
-                      alt="Doctor with tablet"
-                      className="h-[280px] w-full object-cover"
-                    />
-                    {/* Dark gradient overlay at bottom */}
-                    <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-slate-900/90 via-slate-900/50 to-transparent" />
-                  </div>
-                  {/* Label */}
-                  <div className="bg-slate-900 px-6 py-4">
-                    <p className="text-center text-xs font-bold text-white tracking-[0.15em] uppercase">
-                      VIDEO CALL SUPPORT
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
+              {/* Specializations Section */}
+              <div className="space-y-2">
+                <h3 className="text-lg font-semibold text-black">Specializations:</h3>
+                <p className="text-gray-700">
+                  Dr. Jadhav's expertise includes specialized treatments like chiropractic and physiotherapy interventions.
+                </p>
+              </div>
 
-              {/* OVERLAY 2: Opening Hours Floating Card (BOTTOM RIGHT - ON TOP OF BASE IMAGE) */}
-              <motion.div
-                initial={{ opacity: 0, y: 30, scale: 0.95 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.5 }}
-                viewport={{ once: true }}
-                className="absolute bottom-12 right-12 z-30 w-[240px]"
-              >
-                <div className="relative overflow-hidden rounded-[28px] bg-gradient-to-br from-indigo-600 to-indigo-700 p-6 shadow-2xl">
-                  {/* Clock Icon Circle - Top Right */}
-                  <div className="absolute -top-2 -right-2 flex h-16 w-16 items-center justify-center rounded-full bg-white shadow-xl">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-                      <circle cx="12" cy="12" r="9" stroke="#4F46E5" strokeWidth="2.5" fill="none"/>
-                      <path d="M12 7V12L15.5 14.5" stroke="#4F46E5" strokeWidth="2.5" strokeLinecap="round"/>
-                    </svg>
-                  </div>
-
-                  {/* Content */}
-                  <div className="pt-8">
-                    <h3 className="mb-5 text-xl font-bold text-white">
-                      Opening Hours
-                    </h3>
-                    
-                    <div className="space-y-3.5">
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm font-medium text-indigo-100">Mon To Fri</span>
-                        <span className="text-sm font-bold text-white">09:30 - 07:30</span>
-                      </div>
-                      
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm font-medium text-indigo-100">Saturday</span>
-                        <span className="text-sm font-bold text-white">10:30 - 5:00</span>
-                      </div>
-                      
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm font-medium text-indigo-100">Sunday</span>
-                        <span className="text-sm font-bold text-white">Closed</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-
+              {/* Clinical Experience Section */}
+              <div className="space-y-2">
+                <h3 className="text-lg font-semibold text-black">Clinical Experience:</h3>
+                <p className="text-gray-700">
+                  With over a decade of experience, Dr. Jadhav provides hands-on spinal manipulation and holistic healing approaches. The Best Doctors Award in 2018 recognized his commitment to patient well-being.
+                </p>
+              </div>
             </div>
-          </motion.div>
+
+            {/* Appointment Button with Play Animation */}
+            <div className="pt-4 flex items-center flex-wrap gap-4">
+              <button
+                onClick={() => setIsPopupOpen(true)}
+                className="bg-[#f99c1e] text-white hover:bg-[#0b1842] px-8 py-3 rounded-lg font-semibold transition-colors duration-300 flex items-center gap-2 shadow-lg hover:shadow-xl"
+              >
+                Book Appointment
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  className="arrow"
+                >
+                  <path
+                    d="M4 10H16M16 10L11 5M16 10L11 15"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </button>
+
+              {/* Play Button Animation with Text */}
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => setIsImagePopupOpen(true)}
+                  className="relative flex items-center justify-center w-16 h-16 cursor-pointer group"
+                  aria-label="View clinic tour"
+                >
+                  {/* Animated Rings */}
+                  <span className="absolute inline-flex h-full w-full rounded-full bg-[#0b1842] opacity-30 animate-ping"></span>
+                  <span className="absolute inline-flex h-12 w-12 rounded-full bg-[#0b1842] opacity-40 animate-pulse"></span>
+                  
+                  {/* Play Button Circle */}
+                  <span className="relative inline-flex items-center justify-center h-12 w-12 rounded-full bg-[#0b1842] shadow-lg group-hover:bg-[#0a1538] transition-colors duration-300">
+                    {/* Play Icon */}
+                    <svg
+                      width="16"
+                      height="18"
+                      viewBox="0 0 16 18"
+                      fill="none"
+                      className="ml-1"
+                    >
+                      <path
+                        d="M15 9L1.5 17.6603L1.5 0.339745L15 9Z"
+                        fill="white"
+                      />
+                    </svg>
+                  </span>
+                </button>
+                
+                {/* Text beside animation */}
+                <div className="flex flex-col">
+                  <span className="text-[#0b1842] font-semibold text-sm"> Watch Clinic Tour</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </section>
+
+      {/* Appointment Form Popup */}
+      <PopupForm
+        isOpen={isPopupOpen}
+        onClose={() => setIsPopupOpen(false)}
+        onSubmit={handleFormSubmit}
+      />
+
+      {/* Image Popup */}
+      {isImagePopupOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50"
+          onClick={() => setIsImagePopupOpen(false)}
+        >
+          <div
+            className="relative w-full h-full max-w-7xl max-h-screen flex items-center justify-center p-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setIsImagePopupOpen(false)}
+              className="absolute top-4 right-4 z-10 bg-white rounded-full p-2 shadow-lg hover:bg-gray-100 transition-colors"
+              aria-label="Close"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+
+            {/* Image Container */}
+            <div className="w-full h-full flex items-center justify-center">
+              <img
+                src="/If-youre.jpg"
+                alt="Dr. Raghupathi Jadhav - Full View"
+                className="max-w-full max-h-full object-contain"
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
+      <style jsx>{`
+        @keyframes ping {
+          75%, 100% {
+            transform: scale(1.5);
+            opacity: 0;
+          }
+        }
+
+        @keyframes pulse {
+          0%, 100% {
+            opacity: 0.4;
+          }
+          50% {
+            opacity: 0.6;
+          }
+        }
+
+        .animate-ping {
+          animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+        }
+
+        .animate-pulse {
+          animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+      `}</style>
+    </div>
   );
-}
+};
+
+export default AboutSection;

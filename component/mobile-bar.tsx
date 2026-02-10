@@ -1,8 +1,23 @@
 "use client";
 
 import { Phone, Calendar } from "lucide-react";
-
+import PopupForm from "./popup";
+import { useState } from "react";
+type AppointmentFormData = {
+  fullName: string;
+  phoneNumber: string;
+  email: string;
+  appointmentType: string;
+};
 export default function MobileActionBar() {
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+  
+    const handleFormSubmit = (formData: AppointmentFormData) => {
+      console.log("Appointment booked:", formData);
+      alert(
+        `Appointment booked successfully!\n\nName: ${formData.fullName}\nPhone: ${formData.phoneNumber}\nEmail: ${formData.email}\nType: ${formData.appointmentType}`
+      );
+    };
   return (
     <div
       className="
@@ -17,7 +32,6 @@ export default function MobileActionBar() {
         className="
           flex-1 flex items-center justify-center gap-2
           py-4 font-semibold text-white
-          bg-black
           text-sm
           bg-[#0b1842]
           active:scale-95 transition
@@ -28,13 +42,13 @@ export default function MobileActionBar() {
       </a>
 
       {/* Book Now */}
-      <a
-        href="#about"
+      <button
+onClick={() => setIsPopupOpen(true)}
         className="
           flex-1 flex items-center justify-center gap-2
           py-4 font-semibold
-          text-[#f7deba]
-          bg-black
+          text-black
+          bg-white
           text-sm
           border-l border-gray-200
           active:scale-95 transition
@@ -42,7 +56,12 @@ export default function MobileActionBar() {
       >
         <Calendar className="w-4 h-4" />
         Book Now
-      </a>
+      </button>
+            <PopupForm
+        isOpen={isPopupOpen}
+        onClose={() => setIsPopupOpen(false)}
+        onSubmit={handleFormSubmit}
+      />
     </div>
   );
 }

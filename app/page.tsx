@@ -19,7 +19,7 @@ export default function Home() {
  
     <GuidingYouForward />  
     <RealPatientResultsSection /> 
-    {/* <ProfessionalsSection />  */}
+    <ProfessionalsSection /> 
     <SouthernSpineClinic />  
     <Footers />  
     </>

@@ -52,7 +52,7 @@ const HeroSection = () => {
           
           <div className="trust-badges">
             <div className="trust-item">
-              <div className="trust-number">6+</div>
+              <div className="trust-number">11</div>
               <div className="trust-label">Years</div>
             </div>
             <div className="divider"></div>
@@ -85,10 +85,10 @@ const HeroSection = () => {
                 </svg>
               </div>
             </button>
-            <div className="video-badge">
-              <span className="badge-number">6</span>
+            {/* <div className="video-badge">
+              <span className="badge-number">11</span>
               <span className="badge-label">Years Pain Free</span>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
