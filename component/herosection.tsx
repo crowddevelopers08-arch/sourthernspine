@@ -3,20 +3,10 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import PopupForm from './popup';
-import { Video } from 'lucide-react';
-type AppointmentFormData = {
-  fullName: string;
-  phoneNumber: string;
-  email: string;
-  appointmentType: string;
-};
+
+
 const HeroSection = () => {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
-      const handleFormSubmit = (formData:AppointmentFormData) => {
-    console.log('Appointment booked:', formData);
-    // Handle form submission - API call, etc.
-    alert(`Appointment booked successfully!\n\nName: ${formData.fullName}\nPhone: ${formData.phoneNumber}\nEmail: ${formData.email}\nType: ${formData.appointmentType}`);
-  };
   return (
     <section className="hero-banner">
       <div className="hero-wrapper">
@@ -72,24 +62,14 @@ const HeroSection = () => {
         {/* Right Video */}
         <div className="video-side">
           <div className="video-box">
-            <Video 
-              src="www.youtube.com/watch?v=5Gt1GtuE9ic" 
-              alt="Treatment Success" 
-              width={600}
-              height={400}
+            <iframe 
               className="hero-video"
+              src="https://www.youtube.com/embed/5Gt1GtuE9ic?autoplay=1&mute=1&loop=1&playlist=5Gt1GtuE9ic&controls=1"
+              title="Treatment Success Video"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
             />
-            <button className="play-btn" aria-label="Play video">
-              <div className="play-circle">
-                <svg width="24" height="24" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z" fill="white"/>
-                </svg>
-              </div>
-            </button>
-            {/* <div className="video-badge">
-              <span className="badge-number">11</span>
-              <span className="badge-label">Years Pain Free</span>
-            </div> */}
           </div>
         </div>
       </div>
@@ -309,6 +289,8 @@ const HeroSection = () => {
           overflow: hidden;
           box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
           transition: transform 0.4s ease;
+          padding-bottom: 56.25%; /* 16:9 aspect ratio */
+          height: 0;
         }
 
         .video-box:hover {
@@ -316,62 +298,12 @@ const HeroSection = () => {
         }
 
         .hero-video {
+          position: absolute;
+          top: 0;
+          left: 0;
           width: 100%;
-          height: auto;
-          display: block;
-        }
-
-        .play-btn {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          background: transparent;
+          height: 100%;
           border: none;
-          cursor: pointer;
-          transition: transform 0.3s ease;
-        }
-
-        .play-btn:hover {
-          transform: translate(-50%, -50%) scale(1.1);
-        }
-
-        .play-circle {
-          width: 80px;
-          height: 80px;
-          background: rgba(249, 156, 30, 0.95);
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          box-shadow: 0 8px 30px rgba(249, 156, 30, 0.5);
-        }
-
-        .video-badge {
-          position: absolute;
-          top: 20px;
-          right: 20px;
-          background: linear-gradient(135deg, #f99c1e 0%, #ff8c00 100%);
-          padding: 12px 20px;
-          border-radius: 12px;
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          box-shadow: 0 4px 20px rgba(249, 156, 30, 0.4);
-        }
-
-        .badge-number {
-          font-size: 36px;
-          font-weight: 900;
-          color: white;
-          line-height: 1;
-        }
-
-        .badge-label {
-          font-size: 14px;
-          font-weight: 700;
-          color: white;
-          line-height: 1.2;
         }
 
         .whatsapp-fab {
@@ -457,19 +389,6 @@ const HeroSection = () => {
   .video-box {
     max-width: 500px;
     margin: 0 auto;
-  }
-
-  .badge-number {
-    font-size: 30px;
-  }
-
-  .badge-label {
-    font-size: 12px;
-  }
-
-  .play-circle {
-    width: 70px;
-    height: 70px;
   }
 }
 
@@ -575,31 +494,6 @@ const HeroSection = () => {
     max-width: 100%;
   }
 
-  .video-badge {
-    top: 15px;
-    right: 15px;
-    padding: 10px 15px;
-    border-radius: 10px;
-  }
-
-  .badge-number {
-    font-size: 28px;
-  }
-
-  .badge-label {
-    font-size: 11px;
-  }
-
-  .play-circle {
-    width: 65px;
-    height: 65px;
-  }
-
-  .play-circle svg {
-    width: 20px;
-    height: 20px;
-  }
-
   /* WhatsApp button adjustments for mobile */
   .whatsapp-fab {
     bottom: 20px;
@@ -666,25 +560,6 @@ const HeroSection = () => {
     font-size: 11px;
   }
 
-  .video-badge {
-    padding: 8px 12px;
-    top: 12px;
-    right: 12px;
-  }
-
-  .badge-number {
-    font-size: 24px;
-  }
-
-  .badge-label {
-    font-size: 10px;
-  }
-
-  .play-circle {
-    width: 55px;
-    height: 55px;
-  }
-
   .whatsapp-fab {
     bottom: 15px;
     right: 15px;
@@ -713,21 +588,6 @@ const HeroSection = () => {
 
   .trust-number {
     font-size: 20px;
-  }
-
-  .video-badge {
-    flex-direction: column;
-    gap: 5px;
-    padding: 8px 10px;
-  }
-
-  .badge-number {
-    font-size: 22px;
-  }
-
-  .badge-label {
-    font-size: 9px;
-    text-align: center;
   }
 }
 
@@ -765,7 +625,6 @@ const HeroSection = () => {
             <PopupForm
         isOpen={isPopupOpen}
         onClose={() => setIsPopupOpen(false)}
-        onSubmit={handleFormSubmit}
       />
     </section>
     
