@@ -15,7 +15,6 @@ const GuidingYouForward = () => {
 
   return (
     <div className="py-12 md:py-10 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Decorative circles - Changed to NAVY color */}
       <div className="absolute top-8 left-4 md:left-12 w-24 h-24 md:w-32 md:h-32 rounded-full opacity-20" style={{ backgroundColor: NAVY }}></div>
       <div className="absolute top-8 right-4 md:right-20 w-16 h-16 md:w-20 md:h-20 rounded-full opacity-20" style={{ backgroundColor: NAVY }}></div>
       <div className="absolute bottom-20 left-1/4 md:left-1/3 w-20 h-20 md:w-24 md:h-24 rounded-full opacity-20" style={{ backgroundColor: NAVY }}></div>
