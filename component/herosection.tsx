@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import PopupForm from './popup';
+import { Video } from 'lucide-react';
 type AppointmentFormData = {
   fullName: string;
   phoneNumber: string;
@@ -71,8 +72,8 @@ const HeroSection = () => {
         {/* Right Video */}
         <div className="video-side">
           <div className="video-box">
-            <Image 
-              src="/images/video-thumbnail.jpg" 
+            <Video 
+              src="www.youtube.com/watch?v=5Gt1GtuE9ic" 
               alt="Treatment Success" 
               width={600}
               height={400}

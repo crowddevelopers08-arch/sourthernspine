@@ -13,12 +13,7 @@ const AboutSection = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
 
-  const handleFormSubmit = (formData: AppointmentFormData) => {
-    console.log("Appointment booked:", formData);
-    alert(
-      `Appointment booked successfully!\n\nName: ${formData.fullName}\nPhone: ${formData.phoneNumber}\nEmail: ${formData.email}\nType: ${formData.appointmentType}`
-    );
-  };
+
 
   return (
     <div id="about" className="text-black py-12 px-4 md:py-16 lg:py-10 relative">
@@ -161,7 +156,6 @@ const AboutSection = () => {
       <PopupForm
         isOpen={isPopupOpen}
         onClose={() => setIsPopupOpen(false)}
-        onSubmit={handleFormSubmit}
       />
 
       {/* Image Popup */}

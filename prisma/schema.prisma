@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql" // or postgresql or sqlite
+  url      = env("DATABASE_URL")
+}
+
+// prisma/schema.prisma
+model Lead {
+  id                String   @id @default(cuid())
+  name              String
+  phone             String
+  email             String?
+  treatment         String?
+  procedure         String?
+  message           String?
+  city              String?
+  age               String?
+  pincode           String?
+  consent           Boolean  @default(false)
+  source            String?
+  formName          String   @default("Website Leads")
+  status            String   @default("new")
+  
+  // Southern Spine specific fields
+  appointmentType   String?
+  condition         String?
+  preferredDate     String?
+  preferredTime     String?
+  
+  telecrmSynced     Boolean  @default(false)
+  telecrmId         String?
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([status])
+  @@index([formName])
+  @@index([telecrmSynced])
+  @@index([createdAt])
+}

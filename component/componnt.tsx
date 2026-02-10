@@ -10,12 +10,6 @@ type AppointmentFormData = {
 };
 const GuidingYouForward = () => {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
-
-  const handleFormSubmit = (formData : AppointmentFormData) => {
-    console.log('Appointment booked:', formData);
-    // Handle form submission - API call, etc.
-    alert(`Appointment booked successfully!\n\nName: ${formData.fullName}\nPhone: ${formData.phoneNumber}\nEmail: ${formData.email}\nType: ${formData.appointmentType}`);
-  };
   const NAVY = "#0b1842";
   const ORANGE = "#f99c1e";
 
@@ -347,7 +341,6 @@ const GuidingYouForward = () => {
             <PopupForm
         isOpen={isPopupOpen}
         onClose={() => setIsPopupOpen(false)}
-        onSubmit={handleFormSubmit}
       />
     </div>
   );

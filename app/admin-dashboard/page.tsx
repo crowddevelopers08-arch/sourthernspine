@@ -19,8 +19,8 @@ interface Lead {
   name: string
   phone: string
   email: string
-  treatment: string        // This should have data
-  procedure: string       // This should have data
+  treatment: string        // This will have appointmentType from Southern Spine
+  procedure: string       // This will have appointmentType from Southern Spine
   message: string
   city: string
   age: string
@@ -183,6 +183,7 @@ export default function LeadsTable({
     const formConfig: { [key: string]: { label: string, color: string } } = {
       'hairtreatment': { label: "Hair Treatment", color: "bg-purple-100 text-purple-800 border-purple-200" },
       'skin and hair leads': { label: "Skin & Hair", color: "bg-indigo-100 text-indigo-800 border-indigo-200" },
+      'southernspine': { label: "Southern Spine", color: "bg-blue-100 text-blue-800 border-blue-200" },
       'default': { label: formName, color: "bg-gray-100 text-gray-800 border-gray-200" }
     }
     
@@ -221,12 +222,12 @@ export default function LeadsTable({
   const formStats = getFormStats()
 
   const exportToCSV = () => {
-    const headers = ["Name", "Phone", "Email", "Treatment", "Message", "City", "Age", "Status", "Form Name", "Source", "TeleCRM Synced", "Created At"]
+    const headers = ["Name", "Phone", "Email", "Treatment/Appointment Type", "Message", "City", "Age", "Status", "Form Name", "Source", "TeleCRM Synced", "Created At"]
     const csvData = filteredLeads.map(lead => [
       lead.name || '',
       lead.phone || '',
       lead.email || '',
-      lead.treatment || '',
+      lead.treatment || lead.procedure || '',
       `"${(lead.message || '').replace(/"/g, '""')}"`,
       lead.city || '',
       lead.age || '',
@@ -351,6 +352,7 @@ export default function LeadsTable({
                       <span className="font-medium text-sm text-gray-900 capitalize">
                         {formName === 'hairtreatment' ? 'Hair Treatment' : 
                          formName === 'skin and hair leads' ? 'Skin & Hair' : 
+                         formName === 'southernspine' ? 'Southern Spine' :
                          formName === 'Unknown' ? 'Unknown Form' : formName}
                       </span>
                     </div>
@@ -418,6 +420,12 @@ export default function LeadsTable({
                 <SelectItem value="Hair Transplant" className="focus:bg-gray-100">Hair Transplant</SelectItem>
                 <SelectItem value="Skin Rejuvenation" className="focus:bg-gray-100">Skin Rejuvenation</SelectItem>
                 <SelectItem value="Facial Contouring" className="focus:bg-gray-100">Facial Contouring</SelectItem>
+                {/* Southern Spine Appointment Types */}
+                <SelectItem value="Back Pain" className="focus:bg-gray-100">Back Pain</SelectItem>
+                <SelectItem value="Neck Pain" className="focus:bg-gray-100">Neck Pain</SelectItem>
+                <SelectItem value="Joint Pain" className="focus:bg-gray-100">Joint Pain</SelectItem>
+                <SelectItem value="Muscular Pain" className="focus:bg-gray-100">Muscular Pain</SelectItem>
+                <SelectItem value="Others" className="focus:bg-gray-100">Others</SelectItem>
               </SelectContent>
             </Select>
 
@@ -432,6 +440,7 @@ export default function LeadsTable({
                   <SelectItem key={formName} value={formName} className="focus:bg-gray-100">
                     {formName === 'hairtreatment' ? 'Hair Treatment' : 
                      formName === 'skin and hair leads' ? 'Skin & Hair' : 
+                     formName === 'southernspine' ? 'Southern Spine' :
                      formName === 'Unknown' ? 'Unknown Form' : formName}
                   </SelectItem>
                 ))}
@@ -470,7 +479,7 @@ export default function LeadsTable({
                       </div>
                     </th>
                     <th className="h-12 px-4 text-left align-middle font-medium text-gray-700">Contact</th>
-                    <th className="h-12 px-4 text-left align-middle font-medium text-gray-700">Treatment</th>
+                    <th className="h-12 px-4 text-left align-middle font-medium text-gray-700">Treatment/Service</th>
                     <th className="h-12 px-4 text-left align-middle font-medium text-gray-700">Form</th>
                     <th className="h-12 px-4 text-left align-middle font-medium text-gray-700">Status</th>
                     <th className="h-12 px-4 text-left align-middle font-medium text-gray-700">Sync</th>
@@ -687,6 +696,7 @@ export default function LeadsTable({
               {formFilter !== 'all' && ` • Form: ${
                 formFilter === 'hairtreatment' ? 'Hair Treatment' : 
                 formFilter === 'skin and hair leads' ? 'Skin & Hair' : 
+                formFilter === 'southernspine' ? 'Southern Spine' :
                 formFilter === 'Unknown' ? 'Unknown Form' : formFilter
               }`}
             </div>
