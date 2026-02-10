@@ -313,7 +313,7 @@ export default function LeadsTable({
         <CardHeader className="border-b border-gray-200">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
-              <CardTitle className="text-2xl font-bold text-gray-900">Leads Management</CardTitle>
+              <CardTitle className="text-2xl font-bold text-gray-900">Southern Spine Leads Management</CardTitle>
               <CardDescription className="text-gray-600">
                 Manage and track all consultation requests from your website forms
                 {autoRefresh && <span className="ml-2 text-xs text-green-600">• Auto-refresh enabled</span>}
