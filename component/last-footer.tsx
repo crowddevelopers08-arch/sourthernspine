@@ -18,7 +18,7 @@ const Footers = () => {
           </div>
 
 
-          <div className="border-t border-white/20">
+          <div >
             <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-4">
               <div className="flex items-center gap-2">
                 <Facebook className="w-5 h-5 text-white" />
