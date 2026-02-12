@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Outfit } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import MobileActionBar from "@/component/mobile-bar";
@@ -10,7 +10,7 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
+const outfit = Outfit({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
@@ -28,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${outfit.variable} antialiased`}
       >
        {children}
        <MobileActionBar />

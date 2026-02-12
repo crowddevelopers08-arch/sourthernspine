@@ -1,38 +1,36 @@
-
 'use client'
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import PopupForm from "./popup";
+
 type AppointmentFormData = {
   fullName: string;
   phoneNumber: string;
   email: string;
   appointmentType: string;
 };
+
 export default function RealPatientResultsSection() {
   const NAVY = "#0b1842";
   const ORANGE = "#f99c1e";
   const [currentSlide, setCurrentSlide] = useState(0);
-    const [isPopupOpen, setIsPopupOpen] = useState(false);
-      const handleFormSubmit = (formData:AppointmentFormData) => {
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  
+  const handleFormSubmit = (formData: AppointmentFormData) => {
     console.log('Appointment booked:', formData);
-    // Handle form submission - API call, etc.
     alert(`Appointment booked successfully!\n\nName: ${formData.fullName}\nPhone: ${formData.phoneNumber}\nEmail: ${formData.email}\nType: ${formData.appointmentType}`);
   };
 
   const cards = [
     {
-      poster:
-        "https://images.unsplash.com/photo-1580281657527-47f249e8f6b5?auto=format&fit=crop&w=1400&q=60",
+      video: "/video1.mov",
       duration: "1:56",
     },
     {
-      poster:
-        "https://images.unsplash.com/photo-1550831107-1553da8c8464?auto=format&fit=crop&w=1400&q=60",
+      video: "/video2.mov",
       duration: "1:24",
     },
     {
-      poster:
-        "https://images.unsplash.com/photo-1526256262350-7da7584cf5eb?auto=format&fit=crop&w=1400&q=60",
+      video: "/video3.mov",
       duration: "0:13",
     },
   ];
@@ -68,196 +66,217 @@ export default function RealPatientResultsSection() {
   );
 
   // Video Card Component
-  const VideoCard = ({ card }: { card: typeof cards[0] }) => (
-    <div className="overflow-hidden">
-      {/* VIDEO AREA */}
-      <div className="relative aspect-[3/4] w-full overflow-hidden bg-black">
-        <img
-          src={card.poster}
-          alt=""
-          className="h-full w-full object-cover"
-          draggable={false}
-        />
+  const VideoCard = ({ card }: { card: typeof cards[0] }) => {
+    const videoRef = useRef<HTMLVideoElement>(null);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [isMuted, setIsMuted] = useState(false); // Changed to false to enable sound by default
+    const [currentTime, setCurrentTime] = useState("0:00");
+    const [duration, setDuration] = useState(card.duration);
 
-        {/* Top-left logo circle */}
-        <div className="absolute left-4 top-6 flex h-[74px] w-[74px] items-center justify-center rounded-full bg-white shadow-[0_6px_16px_rgba(0,0,0,0.35)]">
-          <div className="flex flex-col items-center justify-center leading-none">
-            <div className="h-10 w-10">
+    useEffect(() => {
+      const video = videoRef.current;
+      if (!video) return;
+
+      const handleTimeUpdate = () => {
+        const minutes = Math.floor(video.currentTime / 60);
+        const seconds = Math.floor(video.currentTime % 60);
+        setCurrentTime(`${minutes}:${seconds.toString().padStart(2, '0')}`);
+      };
+
+      const handleLoadedMetadata = () => {
+        const minutes = Math.floor(video.duration / 60);
+        const seconds = Math.floor(video.duration % 60);
+        setDuration(`${minutes}:${seconds.toString().padStart(2, '0')}`);
+      };
+
+      video.addEventListener('timeupdate', handleTimeUpdate);
+      video.addEventListener('loadedmetadata', handleLoadedMetadata);
+
+      return () => {
+        video.removeEventListener('timeupdate', handleTimeUpdate);
+        video.removeEventListener('loadedmetadata', handleLoadedMetadata);
+      };
+    }, []);
+
+    const togglePlay = () => {
+      if (videoRef.current) {
+        if (isPlaying) {
+          videoRef.current.pause();
+        } else {
+          const playPromise = videoRef.current.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(error => {
+              console.log("Playback failed:", error);
+            });
+          }
+        }
+        setIsPlaying(!isPlaying);
+      }
+    };
+
+    const toggleMute = () => {
+      if (videoRef.current) {
+        videoRef.current.muted = !isMuted;
+        setIsMuted(!isMuted);
+      }
+    };
+
+    // Calculate progress percentage
+    const progressPercentage = videoRef.current 
+      ? (videoRef.current.currentTime / videoRef.current.duration) * 100 
+      : 0;
+
+    return (
+      <div className="overflow-hidden rounded-lg shadow-lg">
+        {/* VIDEO AREA */}
+        <div className="relative aspect-[4/7] w-full overflow-hidden bg-black">
+          <video
+            ref={videoRef}
+            src={card.video}
+            className="h-full w-full object-cover"
+            loop
+            playsInline
+            onClick={togglePlay}
+            preload="metadata"
+          />
+
+          {/* Sound Control Icon - clickable */}
+          <button
+            onClick={toggleMute}
+            className="absolute right-6 top-6 flex h-[54px] w-[54px] items-center justify-center rounded-full bg-black/70 hover:bg-black/90 transition-all duration-300 cursor-pointer"
+            aria-label={isMuted ? "Unmute" : "Mute"}
+          >
+            {isMuted ? (
+              // Muted Icon
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 120 120"
-                className="h-full w-full"
+                viewBox="0 0 24 24"
+                fill="none"
+                className="h-7 w-7"
                 aria-hidden="true"
               >
-                <path
-                  d="M24 76 C40 34, 80 34, 96 76"
-                  fill="none"
-                  stroke={ORANGE}
-                  strokeWidth="10"
+                <path d="M11 5L6.5 8.5H3v7h3.5L11 19V5Z" fill="white" />
+                <line 
+                  x1="15" 
+                  y1="9" 
+                  x2="21" 
+                  y2="15" 
+                  stroke="#f99c1e" 
+                  strokeWidth="2.5" 
                   strokeLinecap="round"
                 />
-                <path
-                  d="M20 84 C40 56, 80 56, 100 84"
-                  fill="none"
-                  stroke={NAVY}
-                  strokeWidth="8"
+                <line 
+                  x1="21" 
+                  y1="9" 
+                  x2="15" 
+                  y2="15" 
+                  stroke="#f99c1e" 
+                  strokeWidth="2.5" 
                   strokeLinecap="round"
                 />
-                <circle cx="60" cy="24" r="10" fill={NAVY} />
-                <path
-                  d="M60 36 L60 86"
-                  stroke={ORANGE}
-                  strokeWidth="6"
-                  strokeLinecap="round"
-                />
-                {Array.from({ length: 6 }).map((_, idx) => (
-                  <circle
-                    key={idx}
-                    cx="60"
-                    cy={44 + idx * 7}
-                    r="2.2"
-                    fill={NAVY}
-                  />
-                ))}
               </svg>
-            </div>
-            <div className="mt-1 text-[9px] font-extrabold tracking-[0.08em] text-[#0b1842]">
-              SOUTHERN
-            </div>
-            <div className="-mt-[2px] text-[9px] font-extrabold tracking-[0.08em] text-[#f99c1e]">
-              SPINE
-            </div>
-          </div>
-        </div>
-
-        {/* Top-right speaker */}
-        <div className="absolute right-6 top-6 flex h-[54px] w-[54px] items-center justify-center rounded-full bg-black/70">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            className="h-7 w-7"
-            aria-hidden="true"
-          >
-            <path d="M11 5L6.5 8.5H3v7h3.5L11 19V5Z" fill="white" />
-            <path
-              d="M15.5 8.5c1 1 1 6 0 7"
-              stroke="white"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-            <path
-              d="M18 6c2 2 2 10 0 12"
-              stroke="white"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-          </svg>
-        </div>
-
-        {/* Player controls strip */}
-        <div className="absolute bottom-0 left-0 right-0">
-          <div className="h-[4px] w-full bg-black/30">
-            <div
-              className="h-full w-[22%]"
-              style={{ backgroundColor: ORANGE }}
-            />
-          </div>
-
-          <div className="flex items-center justify-between bg-white px-4 py-3">
-            <div className="flex items-center gap-3">
-              <button
-                type="button"
-                className="flex h-9 w-9 items-center justify-center rounded-full"
-                style={{ backgroundColor: ORANGE }}
-                aria-label="Play"
+            ) : (
+              // Unmuted Icon
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                className="h-7 w-7"
+                aria-hidden="true"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="white"
-                  className="ml-[2px] h-5 w-5"
-                  aria-hidden="true"
+                <path d="M11 5L6.5 8.5H3v7h3.5L11 19V5Z" fill="white" />
+                <path
+                  d="M15.5 8.5c1 1 1 6 0 7"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M18 6c2 2 2 10 0 12"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            )}
+          </button>
+
+          {/* Player controls strip */}
+          <div className="absolute bottom-0 left-0 right-0">
+            <div className="h-[4px] w-full bg-black/30">
+              <div
+                className="h-full transition-all duration-300"
+                style={{ 
+                  width: `${progressPercentage}%`,
+                  backgroundColor: ORANGE 
+                }}
+              />
+            </div>
+
+            <div className="flex items-center justify-between bg-white px-4 py-3">
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  className="flex h-9 w-9 items-center justify-center rounded-full transition-transform hover:scale-105"
+                  style={{ backgroundColor: ORANGE }}
+                  aria-label={isPlaying ? "Pause" : "Play"}
+                  onClick={togglePlay}
                 >
-                  <path d="M8 5v14l11-7L8 5Z" />
-                </svg>
-              </button>
+                  {isPlaying ? (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="white"
+                      className="h-5 w-5"
+                    >
+                      <rect x="6" y="5" width="4" height="14" fill="white" />
+                      <rect x="14" y="5" width="4" height="14" fill="white" />
+                    </svg>
+                  ) : (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="white"
+                      className="ml-[2px] h-5 w-5"
+                    >
+                      <path d="M8 5v14l11-7L8 5Z" />
+                    </svg>
+                  )}
+                </button>
 
-              <span className="text-[18px] font-extrabold text-[#f99c1e]">
-                {card.duration}
-              </span>
-            </div>
-
-            <span className="text-[26px] leading-none text-gray-400">
-              ···
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* BELOW VIDEO: Brand row ONLY */}
-      <div className="flex items-center justify-between bg-white px-4 py-4">
-        <div className="flex items-center gap-3">
-          <div className="h-8 w-8">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 120 120"
-              className="h-full w-full"
-              aria-hidden="true"
-            >
-              <path
-                d="M24 76 C40 34, 80 34, 96 76"
-                fill="none"
-                stroke={ORANGE}
-                strokeWidth="10"
-                strokeLinecap="round"
-              />
-              <path
-                d="M20 84 C40 56, 80 56, 100 84"
-                fill="none"
-                stroke={NAVY}
-                strokeWidth="8"
-                strokeLinecap="round"
-              />
-              <circle cx="60" cy="24" r="10" fill={NAVY} />
-            </svg>
-          </div>
-
-          <div className="leading-tight">
-            <div className="text-[16px] font-extrabold tracking-[0.06em] text-[#0b1842]">
-              SOUTHERN <span style={{ color: ORANGE }}>SPINE</span>
-            </div>
-            <div className="text-[10px] font-semibold text-gray-500">
-              Physio Rehab | Osteopathy | Chiropractic
+                <span className="text-[18px] font-extrabold text-[#f99c1e]">
+                  {isPlaying ? currentTime : duration}
+                </span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <section className="w-full" style={{ backgroundColor: NAVY }}>
-      <div className="mx-auto max-w-7xl px-6 py-10">
-        <p className="text-center text-2xl md:text-4xl font-extrabold tracking-tight text-white">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+        <p className="text-center text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white">
           Real Patient, Real Results
         </p>
 
         {/* Desktop Grid View */}
-        <div className="desktop-view mt-10 grid gap-10 md:grid-cols-3">
+        <div className="desktop-view mt-10 grid gap-6 lg:gap-8 md:grid-cols-2 lg:grid-cols-3">
           {cards.map((c, i) => (
             <VideoCard key={i} card={c} />
           ))}
         </div>
 
         {/* Mobile Carousel View */}
-        <div className="mobile-view mt-10" style={{ display: 'none' }}>
+        <div className="mobile-view mt-10">
           {/* Carousel with Side Arrows */}
-          <div className="relative flex items-center justify-center gap-4">
+          <div className="relative flex items-center justify-center gap-2 sm:gap-4">
             {/* Left Arrow */}
             <button
               onClick={prevSlide}
-              className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border-2 border-white text-white transition-all duration-300 hover:bg-[#f99c1e] hover:border-[#f99c1e]"
+              className="flex h-10 w-10 sm:h-12 sm:w-12 flex-shrink-0 items-center justify-center rounded-full border-2 border-white text-white transition-all duration-300 hover:bg-[#f99c1e] hover:border-[#f99c1e]"
               aria-label="Previous slide"
             >
               <ArrowIcon direction="left" />
@@ -270,7 +289,7 @@ export default function RealPatientResultsSection() {
                 style={{ transform: `translateX(-${currentSlide * 100}%)` }}
               >
                 {cards.map((c, i) => (
-                  <div key={i} className="w-full flex-shrink-0">
+                  <div key={i} className="w-full flex-shrink-0 px-1">
                     <VideoCard card={c} />
                   </div>
                 ))}
@@ -280,7 +299,7 @@ export default function RealPatientResultsSection() {
             {/* Right Arrow */}
             <button
               onClick={nextSlide}
-              className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border-2 border-white/30 bg-white/10 text-white transition-all duration-300 hover:bg-[#f99c1e] hover:border-[#f99c1e]"
+              className="flex h-10 w-10 sm:h-12 sm:w-12 flex-shrink-0 items-center justify-center rounded-full border-2 border-white/30 bg-white/10 text-white transition-all duration-300 hover:bg-[#f99c1e] hover:border-[#f99c1e]"
               aria-label="Next slide"
             >
               <ArrowIcon direction="right" />
@@ -307,10 +326,13 @@ export default function RealPatientResultsSection() {
         </div>
 
         {/* Book Appointment Button */}
-        <div className="mt-10 flex justify-center">
-          <button className="book-btn"   onClick={() => setIsPopupOpen(true)}>
+        <div className="mt-12 lg:mt-16 flex justify-center">
+          <button 
+            className="group bg-white text-black py-3 px-8 lg:px-12 rounded-full font-bold flex items-center gap-2 transition-all duration-300 hover:shadow-lg hover:scale-105"
+            onClick={() => setIsPopupOpen(true)}
+          >
             Book Appointment
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="arrow">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="arrow transition-transform group-hover:translate-x-1">
               <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
             </svg>
           </button>
@@ -319,6 +341,11 @@ export default function RealPatientResultsSection() {
 
       {/* Responsive CSS */}
       <style jsx>{`
+        @media (min-width: 769px) {
+          .mobile-view {
+            display: none !important;
+          }
+        }
         @media (max-width: 768px) {
           .desktop-view {
             display: none !important;
@@ -328,7 +355,8 @@ export default function RealPatientResultsSection() {
           }
         }
       `}</style>
-        <PopupForm
+      
+      <PopupForm
         isOpen={isPopupOpen}
         onClose={() => setIsPopupOpen(false)}
         onSubmit={handleFormSubmit}

@@ -110,7 +110,7 @@ const TestimonialsSections = () => {
   return (
     <div style={{
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-      padding: '10px 0px',
+      padding: '15px 0px',
       backgroundColor: '#0b1842',
       maxWidth: '1500px',
     }}>
