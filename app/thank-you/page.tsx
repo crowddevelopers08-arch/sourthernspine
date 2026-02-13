@@ -1,3 +1,4 @@
+import ActionButtons from "@/component/action";
 import Footers from "@/component/last-footer";
 import SouthernSpineHeader from "@/component/navbar";
 import TestimonialsSections from "@/component/thank-you-review";
@@ -11,6 +12,7 @@ export default function Home() {
   <SouthernSpineHeader />
   <ThankYouBanner />
   <TestimonialsSections />
+  <ActionButtons />
   {/* <TestimonialVideos /> */}
   <Footers />
   </>;
