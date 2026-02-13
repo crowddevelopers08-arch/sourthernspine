@@ -7,7 +7,7 @@ export default function HealthJourney() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   
   return (
-    <div className="flex items-center justify-center p-8 max-sm:pt-5">
+    <div className="flex items-center justify-center max-sm:px-5 p-8 max-sm:pt-5">
       <div className="max-w-7xl w-full">
         {/* Header */}
         <h1 className="text-3xl md:text-4xl md:text-4xl text-center max-sm:mb-6 mb-12">

@@ -3,21 +3,10 @@
 import { Phone, Calendar } from "lucide-react";
 import PopupForm from "./popup";
 import { useState } from "react";
-type AppointmentFormData = {
-  fullName: string;
-  phoneNumber: string;
-  email: string;
-  appointmentType: string;
-};
+
 export default function MobileActionBar() {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
-  
-    const handleFormSubmit = (formData: AppointmentFormData) => {
-      console.log("Appointment booked:", formData);
-      alert(
-        `Appointment booked successfully!\n\nName: ${formData.fullName}\nPhone: ${formData.phoneNumber}\nEmail: ${formData.email}\nType: ${formData.appointmentType}`
-      );
-    };
+
   return (
     <div
       className="
@@ -60,7 +49,6 @@ onClick={() => setIsPopupOpen(true)}
             <PopupForm
         isOpen={isPopupOpen}
         onClose={() => setIsPopupOpen(false)}
-        onSubmit={handleFormSubmit}
       />
     </div>
   );
