@@ -47,8 +47,8 @@ onClick={() => setIsPopupOpen(true)}
         className="
           flex-1 flex items-center justify-center gap-2
           py-4 font-semibold
-          text-black
-          bg-white
+          text-white
+          bg-[#f99c1e]
           text-sm
           border-l border-gray-200
           active:scale-95 transition

@@ -22,27 +22,28 @@ const TestimonialsSection = () => {
   };
 
   const testimonials: Testimonial[] = [
+
     {
       id: 1,
-      name: "Nawaz Mohammad",
-      position: "2 years ago",
-      testimonial: "Hi all, I was having hell of back pain and I got relief from it now in just 6 sessions Dr Jadhav sir is very good and expert in this I recommend to all to contact him, thanks.",
-      title: "NM"
-    },
-    {
-      id: 2,
       name: "Mohammed Pasha",
       position: "2 years ago",
       testimonial: "I highly recommend Southern spine, Dr Jadhav is a genius, I was suffering from lower back for almost 3 years, it took 5 sessions to get rid of it, the treatment is pocket friendly ,if you are suffering from pain then don't hesitate just visit him, and I want to thank the 4 staff who were around me and assisted me during the sessions🙏.",
       title: "MP"
     },
     {
-      id: 3,
+      id: 2,
       name: "Sree Durga Bhavani",
       position: "2 years ago",
       testimonial: "Dr. Raghupathi Jadhav is truly exceptional. His interactive sessions are a game-changer, creating an environment that not only promotes healing but also uplifts the patient's spirits. The positivity they bring to each session is palpable, making every session a genuinely enjoyable experience.Raghupathi Jadhav has a unique ability to connect with the patient, ensuring they feel comfortable and engaged throughout the Physiotherapy sessions. His personalized approach and infectious positivity have been instrumental in the progress. I wholeheartedly recommend Raghupathi Jadhav anyone seeking a dedicated and uplifting physiotherapist. His exceptional skills and uplifting demeanour makes him a true asset.",
       title: "SDB"
-    }
+    },
+    {
+      id: 3,
+      name: "Nawaz Mohammad",
+      position: "2 years ago",
+      testimonial: "Hi all, I was having hell of back pain and I got relief from it now in just 6 sessions Dr Jadhav sir is very good and expert in this I recommend to all to contact him, thanks.",
+      title: "NM"
+    },
   ];
 
   const nextSlide = () => {
@@ -110,22 +111,22 @@ const TestimonialsSection = () => {
   return (
     <div style={{
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-      padding: '30px 20px',
-      backgroundColor: '#ffffff',
+      padding: 'clamp(20px, 5vw, 30px) clamp(16px, 4vw, 20px)',
       maxWidth: '1400px',
       margin: '0 auto'
     }}>
       {/* Header */}
       <div style={{
         textAlign: 'center',
-        marginBottom: '30px'
+        marginBottom: 'clamp(24px, 5vw, 30px)'
       }}>
         <h1 style={{
-          fontSize: 'clamp(22px, 5vw, 36px)',
+          fontSize: 'clamp(24px, 5vw, 36px)',
           fontWeight: '700',
-          color: '#0b1842',
+          color: 'white',
           margin: '0',
-          lineHeight: '1.2'
+          lineHeight: '1.3',
+          padding: '0 10px'
         }}>
           Peoples Talk About<br />Mediox
         </h1>
@@ -171,7 +172,7 @@ const TestimonialsSection = () => {
             {testimonials.map((item) => (
               <div key={item.id} style={{
                 minWidth: '100%',
-                padding: '0 10px'
+                padding: '0'
               }}>
                 <TestimonialCard 
                   item={item} 
@@ -180,6 +181,7 @@ const TestimonialsSection = () => {
                   GoogleIcon={GoogleIcon}
                   VerifiedIcon={VerifiedIcon}
                   StarIcon={StarIcon}
+                  isMobile={true}
                 />
               </div>
             ))}
@@ -191,14 +193,15 @@ const TestimonialsSection = () => {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          gap: '20px',
-          marginTop: '24px'
+          gap: '16px',
+          marginTop: '20px',
+          padding: '0 16px'
         }}>
           <button
             onClick={prevSlide}
             style={{
-              width: '48px',
-              height: '48px',
+              width: '44px',
+              height: '44px',
               borderRadius: '50%',
               border: '2px solid #e2e8f0',
               backgroundColor: '#ffffff',
@@ -208,7 +211,8 @@ const TestimonialsSection = () => {
               justifyContent: 'center',
               cursor: 'pointer',
               transition: 'all 0.3s ease',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+              boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+              flexShrink: 0
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.backgroundColor = '#f99c1e';
@@ -227,7 +231,7 @@ const TestimonialsSection = () => {
           {/* Dots Indicator */}
           <div style={{
             display: 'flex',
-            gap: '8px',
+            gap: '6px',
             alignItems: 'center'
           }}>
             {testimonials.map((_, index) => (
@@ -235,7 +239,7 @@ const TestimonialsSection = () => {
                 key={index}
                 onClick={() => setCurrentSlide(index)}
                 style={{
-                  width: currentSlide === index ? '24px' : '8px',
+                  width: currentSlide === index ? '20px' : '8px',
                   height: '8px',
                   borderRadius: '4px',
                   backgroundColor: currentSlide === index ? '#f99c1e' : '#e2e8f0',
@@ -249,8 +253,8 @@ const TestimonialsSection = () => {
           <button
             onClick={nextSlide}
             style={{
-              width: '48px',
-              height: '48px',
+              width: '44px',
+              height: '44px',
               borderRadius: '50%',
               border: '2px solid #e2e8f0',
               backgroundColor: '#ffffff',
@@ -260,7 +264,8 @@ const TestimonialsSection = () => {
               justifyContent: 'center',
               cursor: 'pointer',
               transition: 'all 0.3s ease',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+              boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+              flexShrink: 0
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.backgroundColor = '#f99c1e';
@@ -300,7 +305,8 @@ const TestimonialCard = ({
   toggleExpand,
   GoogleIcon,
   VerifiedIcon,
-  StarIcon
+  StarIcon,
+  isMobile = false
 }: {
   item: any;
   expandedCards: Record<number, boolean>;
@@ -308,35 +314,41 @@ const TestimonialCard = ({
   GoogleIcon: React.FC;
   VerifiedIcon: React.FC;
   StarIcon: React.FC<{ filled?: boolean }>;
+  isMobile?: boolean;
 }) => {
   return (
     <div style={{
       backgroundColor: '#f8fafc',
-      borderRadius: '20px',
-      padding: '40px 32px',
+      borderRadius: isMobile ? '16px' : '20px',
+      padding: isMobile ? '24px 20px' : '40px 32px',
       position: 'relative',
       display: 'flex',
       flexDirection: 'column',
-      gap: '20px',
+      gap: isMobile ? '16px' : '20px',
       border: '1px solid #e2e8f0',
       transition: 'all 0.3s ease',
       cursor: 'pointer',
-      height: '100%'
+      height: '100%',
+      minHeight: isMobile ? 'auto' : 'unset'
     }}
     onMouseEnter={(e) => {
-      e.currentTarget.style.boxShadow = '0 10px 30px rgba(11, 24, 66, 0.1)';
-      e.currentTarget.style.transform = 'translateY(-5px)';
+      if (!isMobile) {
+        e.currentTarget.style.boxShadow = '0 10px 30px rgba(11, 24, 66, 0.1)';
+        e.currentTarget.style.transform = 'translateY(-5px)';
+      }
     }}
     onMouseLeave={(e) => {
-      e.currentTarget.style.boxShadow = 'none';
-      e.currentTarget.style.transform = 'translateY(0)';
+      if (!isMobile) {
+        e.currentTarget.style.boxShadow = 'none';
+        e.currentTarget.style.transform = 'translateY(0)';
+      }
     }}>
       
       {/* Google Icon - Top Left */}
       <div style={{
         position: 'absolute',
-        top: '32px',
-        left: '32px'
+        top: isMobile ? '20px' : '32px',
+        left: isMobile ? '20px' : '32px'
       }}>
         <GoogleIcon />
       </div>
@@ -344,21 +356,21 @@ const TestimonialCard = ({
       {/* Title Badge - Top Right */}
       <div style={{
         position: 'absolute',
-        top: '24px',
-        right: '32px'
+        top: isMobile ? '16px' : '24px',
+        right: isMobile ? '20px' : '32px'
       }}>
         <div style={{
-          width: '70px',
-          height: '70px',
+          width: isMobile ? '56px' : '70px',
+          height: isMobile ? '56px' : '70px',
           borderRadius: '50%',
           backgroundColor: '#f0f9ff',
-          border: '4px solid #ffffff',
+          border: isMobile ? '3px solid #ffffff' : '4px solid #ffffff',
           boxShadow: '0 4px 12px rgba(11, 24, 66, 0.15)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           fontWeight: '700',
-          fontSize: '22px',
+          fontSize: isMobile ? '18px' : '22px',
           color: '#f99c1e'
         }}>
           {item.title}
@@ -367,19 +379,19 @@ const TestimonialCard = ({
 
       {/* Quote Icon */}
       <div style={{
-        fontSize: '56px',
+        fontSize: isMobile ? '44px' : '56px',
         color: '#f99c1e',
         fontWeight: '700',
         lineHeight: '1',
         fontFamily: 'Georgia, serif',
-        marginTop: '20px'
+        marginTop: isMobile ? '12px' : '20px'
       }}>
         "
       </div>
 
       {/* Name and Position */}
       <div style={{
-        marginTop: '20px'
+        marginTop: isMobile ? '12px' : '20px'
       }}>
         <div style={{
           display: 'flex',
@@ -388,7 +400,7 @@ const TestimonialCard = ({
           marginBottom: '4px'
         }}>
           <h3 style={{
-            fontSize: '20px',
+            fontSize: isMobile ? '17px' : '20px',
             fontWeight: '700',
             color: '#0b1842',
             margin: '0'
@@ -398,7 +410,7 @@ const TestimonialCard = ({
           <VerifiedIcon />
         </div>
         <p style={{
-          fontSize: '14px',
+          fontSize: isMobile ? '13px' : '14px',
           color: '#64748b',
           margin: '0',
           fontWeight: '500'
@@ -410,13 +422,13 @@ const TestimonialCard = ({
       {/* Testimonial Text with Read More */}
       <div>
         <p style={{
-          fontSize: '15px',
+          fontSize: isMobile ? '14px' : '15px',
           color: '#475569',
           lineHeight: '1.7',
           margin: '0',
           flexGrow: 1,
           display: '-webkit-box',
-          WebkitLineClamp: expandedCards[item.id] ? 'unset' : 4,
+          WebkitLineClamp: expandedCards[item.id] ? 'unset' : (isMobile ? 5 : 4),
           WebkitBoxOrient: 'vertical',
           overflow: 'hidden',
           textOverflow: 'ellipsis'
@@ -432,7 +444,7 @@ const TestimonialCard = ({
               background: 'none',
               border: 'none',
               color: '#f99c1e',
-              fontSize: '14px',
+              fontSize: isMobile ? '13px' : '14px',
               fontWeight: '600',
               cursor: 'pointer',
               padding: '8px 0 0 0',
@@ -457,7 +469,7 @@ const TestimonialCard = ({
         alignItems: 'center',
         gap: '4px',
         marginTop: 'auto',
-        paddingTop: '8px'
+        paddingTop: isMobile ? '4px' : '8px'
       }}>
         {[1, 2, 3, 4, 5].map((star) => (
           <StarIcon key={star} filled={true} />

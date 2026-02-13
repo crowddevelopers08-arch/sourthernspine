@@ -48,6 +48,8 @@
 
 body {
   font-family: var(--font-outfit);
+  background-color: #0b1842;
+  color: white;
 }
 
 

@@ -1,5 +1,6 @@
 import ProfessionalsSection from "@/component/about";
 import GuidingYouForward from "@/component/componnt";
+import ContactLocationSection from "@/component/footer";
 import SouthernSpineClinic from "@/component/footer";
 import HeroSection from "@/component/herosection";
 import Footers from "@/component/last-footer";
@@ -16,11 +17,10 @@ export default function Home() {
     <HeroSection /> 
     <TestimonialsSection /> 
     <WhatWeDo /> 
- 
-    <GuidingYouForward />  
-    <RealPatientResultsSection /> 
     <ProfessionalsSection /> 
-    <SouthernSpineClinic />  
+    <RealPatientResultsSection /> 
+    <GuidingYouForward /> 
+    <ContactLocationSection />  
     <Footers />  
     </>
   );

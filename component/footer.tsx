@@ -5,7 +5,7 @@ import Image from "next/image";
 
 const ContactLocationSection = () => {
   return (
-    <section className="relative py-20 lg:py-24 overflow-hidden">
+    <section className="relative py-10 lg:py-14 overflow-hidden">
       {/* Background Glow Effect */}
       <div className="absolute -top-48 -left-48 w-[500px] h-[500px] bg-[#f99c1e]/10 rounded-full blur-3xl pointer-events-none" />
 
@@ -26,7 +26,7 @@ const ContactLocationSection = () => {
 
             {/* Description */}
             <div className="bg-white/5 backdrop-blur-lg border border-white/10 p-6 rounded-2xl">
-              <p className="text-black/90 text-base leading-relaxed">
+              <p className="text-white text-base leading-relaxed">
                 Bid farewell to all your aches and pains as you step into a
                 realm of comprehensive healthcare at our Spine and Joint Clinic.
                 At the heart of our commitment to your well-being is our
@@ -53,7 +53,7 @@ const ContactLocationSection = () => {
                   <div className="text-[#f99c1e] text-sm font-semibold uppercase tracking-wide mb-1.5">
                     Location
                   </div>
-                  <div className="text-black text-base leading-relaxed">
+                  <div className="text-white text-base leading-relaxed">
                     Street number 6, 1-1-192, Chikkadpally Rd, Hyderabad,
                     Telangana 500020
                   </div>
@@ -94,32 +94,21 @@ const ContactLocationSection = () => {
             </div>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button className="flex-1 flex items-center justify-center gap-2 px-6 py-3.5 bg-transparent border-2 border-white/30 text-white font-bold rounded-xl hover:border-[#f99c1e] hover:bg-[#f99c1e]/10 transition-all duration-300">
-                <svg
-                  className="w-5 h-5"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z" />
-                </svg>
-                Get Directions
-              </button>
-
-              <a
-                href="tel:9700575616"
-                className="flex-1 flex items-center justify-center gap-2 px-6 py-3.5 bg-gradient-to-r from-[#f99c1e] to-[#ff8c00] text-white font-bold rounded-xl shadow-lg shadow-[#f99c1e]/40 hover:shadow-xl hover:shadow-[#f99c1e]/50 hover:-translate-y-0.5 transition-all duration-300"
-              >
-                <svg
-                  className="w-5 h-5"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
-                </svg>
-                Call Now
-              </a>
-            </div>
+<div className="flex flex-col sm:flex-row gap-4">
+  <a
+    href="tel:9700575616"
+    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-gradient-to-r from-[#f99c1e] to-[#ff8c00] text-white font-bold rounded-xl shadow-lg shadow-[#f99c1e]/40 hover:shadow-xl hover:shadow-[#f99c1e]/50 hover:-translate-y-0.5 transition-all duration-300 w-auto"
+  >
+    <svg
+      className="w-5 h-5"
+      fill="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+    </svg>
+    +91 9700575616
+  </a>
+</div>
           </div>
 
           {/* Right Column - Map */}

@@ -129,7 +129,7 @@ export default function RealPatientResultsSection() {
     return (
       <div className="overflow-hidden rounded-lg shadow-lg">
         {/* VIDEO AREA */}
-        <div className="relative aspect-[4/7] w-full overflow-hidden bg-black">
+        <div className="relative aspect-[4/6] w-full overflow-hidden bg-black">
           <video
             ref={videoRef}
             src={card.video}
@@ -257,7 +257,7 @@ export default function RealPatientResultsSection() {
 
   return (
     <section className="w-full" style={{ backgroundColor: NAVY }}>
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-2 lg:py-4">
         <p className="text-center text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white">
           Real Patient, Real Results
         </p>
@@ -270,7 +270,7 @@ export default function RealPatientResultsSection() {
         </div>
 
         {/* Mobile Carousel View */}
-        <div className="mobile-view mt-10">
+        <div className="mobile-view max-sm:mt-5 mt-10">
           {/* Carousel with Side Arrows */}
           <div className="relative flex items-center justify-center gap-2 sm:gap-4">
             {/* Left Arrow */}
@@ -326,9 +326,9 @@ export default function RealPatientResultsSection() {
         </div>
 
         {/* Book Appointment Button */}
-        <div className="mt-12 lg:mt-16 flex justify-center">
+        <div className="mt-5 lg:mt-16 flex justify-center">
           <button 
-            className="group bg-white text-black py-3 px-8 lg:px-12 rounded-full font-bold flex items-center gap-2 transition-all duration-300 hover:shadow-lg hover:scale-105"
+            className="group bg-[#f99c1e] text-white hover:bg-white hover:text-black py-3 px-8 lg:px-12 rounded-lg font-bold flex items-center gap-2 transition-all duration-300 hover:shadow-lg hover:scale-105"
             onClick={() => setIsPopupOpen(true)}
           >
             Book Appointment

@@ -4,7 +4,6 @@ import React, { useState, useRef } from "react";
 export default function PainTypesGridReplica() {
   const NAVY = "#0b1842";
   const ORANGE = "#f99c1e";
-  const [currentIndex, setCurrentIndex] = useState(0);
 
   const items = [
     {
@@ -67,24 +66,8 @@ export default function PainTypesGridReplica() {
       "repeating-linear-gradient(to bottom, rgba(255,255,255,0.85) 0 2px, transparent 2px 10px) right / 2px 100% no-repeat",
   };
 
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) => 
-      prevIndex === items.length - 1 ? 0 : prevIndex + 1
-    );
-  };
-
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) => 
-      prevIndex === 0 ? items.length - 1 : prevIndex - 1
-    );
-  };
-
-  const goToSlide = (index :number) => {
-    setCurrentIndex(index);
-  };
-
-  const renderCard = (it:any) => (
-    <div key={it.title} className="relative h-full  max-sm:pt-7">
+  const renderCard = (it: any) => (
+    <div key={it.title} className="relative h-full max-sm:pt-4">
       <div className="relative h-full" style={dottedBorderStyle}>
         <div
           className="pointer-events-none absolute -top-3 left-5 h-[34px] w-[86px] rounded-md"
@@ -118,7 +101,7 @@ export default function PainTypesGridReplica() {
           </svg>
         </div>
         <div
-          className="flex h-full flex-col rounded-[10px] px-7 pb-7 pt-12"
+          className="flex h-full flex-col rounded-[10px] px-7 max-sm:pb-4 max-sm:pt-9 pb-7 pt-12"
           style={{ backgroundColor: NAVY }}
         >
           {it.titleStyle === "chip" ? (
@@ -136,11 +119,11 @@ export default function PainTypesGridReplica() {
               {it.title}
             </h3>
           )}
-          <div className="mt-5 flex flex-1 flex-col space-y-2 text-[15px] leading-relaxed text-white">
-            <p className="font-extrabold">Description :</p>
-            <p className="opacity-95">{it.desc}</p>
-            <p className="pt-2 font-extrabold">Common Conditions:</p>
-            <p className="opacity-95">{it.cond}</p>
+          <div className="mt-5 max-sm:mt-1 flex flex-1 flex-col space-y-2 text-[15px] leading-relaxed text-white">
+            <p className="font-extrabold max-sm:mb-0">Description :</p>
+            <p className="opacity-95 max-sm:mb-0">{it.desc}</p>
+            <p className="pt-2 font-extrabold max-sm:mb-0">Common Conditions:</p>
+            <p className="opacity-95 max-sm:mb-0">{it.cond}</p>
             <div className="flex-1" />
           </div>
         </div>
@@ -150,9 +133,9 @@ export default function PainTypesGridReplica() {
 
   return (
     <section className="w-full" style={{ backgroundColor: NAVY }}>
-      <div className="mx-auto max-w-7xl px-6 py-5 md:py-15">
-        <div className="mx-auto max-w-5xl text-center text-white mb-10">
-          <p className="text-2xl md:text-4xl font-bold mb-4 ">
+      <div className="mx-auto max-w-7xl px-6 py-5 max-sm:pt-2 md:py-15">
+        <div className="mx-auto max-w-5xl text-center text-white mb-10 max-sm:mb-5">
+          <p className="text-2xl md:text-4xl font-bold max-sm:mb-2 mb-4 ">
             Your Pain, Our Expertise
           </p>
           <p className="text-md md:text-lg font-semibold">
@@ -163,73 +146,17 @@ export default function PainTypesGridReplica() {
           </p>
         </div>
 
-        {/* Desktop Grid */}
+        {/* Desktop Grid - 4 columns on xl, 2 columns on md */}
         <div className="hidden md:block">
           <div className="mt-10 grid auto-rows-fr gap-10 md:grid-cols-2 xl:grid-cols-4">
             {items.map(renderCard)}
           </div>
         </div>
 
-        {/* Mobile Carousel */}
+        {/* Mobile Stack - Vertical layout */}
         <div className="md:hidden">
-          <div className="mt-10">
-            {/* Carousel Container */}
-            <div className="relative overflow-hidden">
-              {/* Cards Wrapper */}
-              <div 
-                className="flex transition-transform duration-300 ease-in-out"
-                style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-              >
-                {items.map((it, index) => (
-                  <div key={it.title} className="w-full flex-shrink-0 px-2">
-                    {renderCard(it)}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Navigation Arrows - Placed below cards */}
-            <div className="mt-2 flex justify-center space-x-4">
-              <button
-                onClick={prevSlide}
-                className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20"
-                aria-label="Previous slide"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M15 18l-6-6 6-6" />
-                </svg>
-              </button>
-              
-              <button
-                onClick={nextSlide}
-                className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20"
-                aria-label="Next slide"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M9 18l6-6-6-6" />
-                </svg>
-              </button>
-            </div>
+          <div className="mt-6 space-y-6">
+            {items.map(renderCard)}
           </div>
         </div>
       </div>

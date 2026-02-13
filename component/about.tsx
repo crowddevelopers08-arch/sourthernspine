@@ -2,25 +2,16 @@
 import React, { useState } from "react";
 import PopupForm from "./popup";
 
-type AppointmentFormData = {
-  fullName: string;
-  phoneNumber: string;
-  email: string;
-  appointmentType: string;
-};
-
 const AboutSection = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
 
-
-
   return (
-    <div id="about" className="text-black py-12 px-4 md:py-16 lg:py-10 relative">
+    <div id="about" className="text-white py-4 px-4 md:py-16 lg:py-10 relative bg-[#0b1842]">
       
       {/* Main Content Container */}
       <div className="relative z-10 max-w-7xl mx-auto">
-        <p className="flex justify-center text-2xl md:text-4xl font-extrabold tracking-tight text-black mb-8">
+        <p className="flex justify-center text-2xl md:text-4xl font-extrabold tracking-tight text-white max-sm:mb-3 mb-8">
           Our Expert
         </p>
 
@@ -28,7 +19,7 @@ const AboutSection = () => {
           
           {/* Image Section - 40% width (2 out of 5 columns) - Hidden on mobile */}
           <div className="hidden md:block md:col-span-2">
-            <div className="w-full h-auto rounded-xl overflow-hidden shadow-2xl border-2 border-[#0b1842]">
+            <div className="w-full h-auto rounded-xl overflow-hidden shadow-2xl border-2 border-white/30">
               <img
                 src="/DR-Raghu.png"
                 alt="Dr. Raghupathi Jadhav"
@@ -42,15 +33,15 @@ const AboutSection = () => {
             
             {/* Introduction Paragraph */}
             <div className="space-y-1">
-              <h2 className="text-2xl font-bold text-black">Dr. Raghupathi Jadhav</h2>
-              <p className="text-gray-700 leading-relaxed text-base">
+              <h2 className="text-2xl font-bold text-[#f99c1e]">Dr. Raghupathi Jadhav :</h2>
+              <p className="text-white/90 leading-relaxed text-base">
                 Dr. Raghupathi Jadhav is a renowned healthcare professional with 11 years of experience in holistic healthcare and expertise in Physiotherapy, Osteopathy, and Chiropractic care. Dr. Jadhav offers comprehensive solutions to patients, including alternatives to surgery and medication.
               </p>
             </div>
 
             {/* Image for Mobile Only - Placed BELOW the introduction paragraph */}
             <div className="block md:hidden my-6">
-              <div className="w-full h-auto rounded-xl overflow-hidden shadow-2xl border-2 border-[#0b1842]">
+              <div className="w-full h-auto rounded-xl overflow-hidden shadow-2xl border-2 border-white/30">
                 <img
                   src="/DR-Raghu.png"
                   alt="Dr. Raghupathi Jadhav"
@@ -64,27 +55,27 @@ const AboutSection = () => {
               
               {/* Education Section */}
               <div className="space-y-2">
-                <h3 className="text-lg font-semibold text-black">Education and Qualifications:</h3>
+                <h3 className="text-lg font-semibold text-[#f99c1e]">Education and Qualifications:</h3>
                 <ul className="space-y-1 pl-4">
-                  <li className="text-gray-700">• MASTER OF CHIROPRACTIC (SWEDEN)</li>
-                  <li className="text-gray-700">• D.O OSTEOPATHY (CANADA)</li>
-                  <li className="text-gray-700">• FDM.FASCIAL DISTORTION MODEL (GERMANY)</li>
-                  <li className="text-gray-700">• BACHELOR OF PHYSIOTHERAPY</li>
+                  <li className="text-white/90">• MASTER OF CHIROPRACTIC (SWEDEN)</li>
+                  <li className="text-white/90">• D.O OSTEOPATHY (CANADA)</li>
+                  <li className="text-white/90">• FDM.FASCIAL DISTORTION MODEL (GERMANY)</li>
+                  <li className="text-white/90">• BACHELOR OF PHYSIOTHERAPY</li>
                 </ul>
               </div>
 
               {/* Specializations Section */}
               <div className="space-y-2">
-                <h3 className="text-lg font-semibold text-black">Specializations:</h3>
-                <p className="text-gray-700">
+                <h3 className="text-lg font-semibold text-[#f99c1e]">Specializations:</h3>
+                <p className="text-white/90">
                   Dr. Jadhav's expertise includes specialized treatments like chiropractic and physiotherapy interventions.
                 </p>
               </div>
 
               {/* Clinical Experience Section */}
               <div className="space-y-2">
-                <h3 className="text-lg font-semibold text-black">Clinical Experience:</h3>
-                <p className="text-gray-700">
+                <h3 className="text-lg font-semibold text-[#f99c1e]">Clinical Experience:</h3>
+                <p className="text-white/90">
                   With over a decade of experience, Dr. Jadhav provides hands-on spinal manipulation and holistic healing approaches. The Best Doctors Award in 2018 recognized his commitment to patient well-being.
                 </p>
               </div>
@@ -94,7 +85,7 @@ const AboutSection = () => {
             <div className="pt-4 flex items-center flex-wrap gap-4">
               <button
                 onClick={() => setIsPopupOpen(true)}
-                className="bg-[#f99c1e] text-white hover:bg-[#0b1842] px-8 py-3 rounded-lg font-semibold transition-colors duration-300 flex items-center gap-2 shadow-lg hover:shadow-xl"
+                className="bg-[#f99c1e] text-white hover:bg-[#0b1842] px-8 py-3 rounded-lg font-semibold transition-colors duration-300 flex items-center gap-2 shadow-lg hover:shadow-xl border-2 border-transparent hover:border-white/30"
               >
                 Book Appointment
                 <svg
@@ -121,11 +112,11 @@ const AboutSection = () => {
                   aria-label="View clinic tour"
                 >
                   {/* Animated Rings */}
-                  <span className="absolute inline-flex h-full w-full rounded-full bg-[#0b1842] opacity-30 animate-ping"></span>
-                  <span className="absolute inline-flex h-12 w-12 rounded-full bg-[#0b1842] opacity-40 animate-pulse"></span>
+                  <span className="absolute inline-flex h-full w-full rounded-full bg-white opacity-30 animate-ping"></span>
+                  <span className="absolute inline-flex h-12 w-12 rounded-full bg-white opacity-40 animate-pulse"></span>
                   
                   {/* Play Button Circle */}
-                  <span className="relative inline-flex items-center justify-center h-12 w-12 rounded-full bg-[#0b1842] shadow-lg group-hover:bg-[#0a1538] transition-colors duration-300">
+                  <span className="relative inline-flex items-center justify-center h-12 w-12 rounded-full bg-[#0b1842] shadow-lg group-hover:bg-[#0a1538] transition-colors duration-300 border-2 border-white/30">
                     {/* Play Icon */}
                     <svg
                       width="16"
@@ -144,7 +135,7 @@ const AboutSection = () => {
                 
                 {/* Text beside animation */}
                 <div className="flex flex-col">
-                  <span className="text-[#0b1842] font-semibold text-sm"> Watch Clinic Tour</span>
+                  <span className="text-white font-semibold text-sm"> Watch Clinic Tour</span>
                 </div>
               </div>
             </div>
