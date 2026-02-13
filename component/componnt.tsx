@@ -24,7 +24,7 @@ export default function HealthJourney() {
             </div>
             
             {/* Card Content */}
-            <div className="p-8 flex flex-col flex-grow max-sm:pt-3">
+            <div className="p-8 flex max-sm:px-4 max-sm:pb-5 flex-col flex-grow max-sm:pt-3">
               <h2 className="text-3xl max-sm:text-2xl font-bold text-gray-900 mb-2 text-center">
                 Predict
               </h2>
@@ -45,7 +45,7 @@ export default function HealthJourney() {
             </div>
             
             {/* Card Content */}
-            <div className="p-8 flex flex-col flex-grow max-sm:pt-3">
+            <div className="p-8 max-sm:px-4 max-sm:pb-5 flex flex-col flex-grow max-sm:pt-3">
               <h2 className="text-3xl font-bold max-sm:text-2xl text-gray-900 mb-2 text-center ">
                 Prevent
               </h2>
@@ -66,7 +66,7 @@ export default function HealthJourney() {
             </div>
             
             {/* Card Content */}
-            <div className="p-8 flex flex-col flex-grow max-sm:pt-3">
+            <div className="p-8 max-sm:px-4 max-sm:pb-5 flex flex-col flex-grow max-sm:pt-3">
               <h2 className="text-3xl max-sm:text-2xl font-bold text-gray-900 mb-2 text-center ">
                 Perform
               </h2>
