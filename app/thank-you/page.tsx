@@ -2,18 +2,27 @@ import ActionButtons from "@/component/action";
 import Footers from "@/component/last-footer";
 import SouthernSpineHeader from "@/component/navbar";
 import TestimonialsSections from "@/component/thank-you-review";
-// import TestimonialVideos from "@/component/thank-you-video";
 import ThankYouBanner from "@/component/thankpage";
-import Image from "next/image";
+import Script from "next/script";
 import React from "react";
 
 export default function Home() {
-  return <>
-  <SouthernSpineHeader />
-  <ThankYouBanner />
-  <TestimonialsSections />
-  <ActionButtons />
-  {/* <TestimonialVideos /> */}
-  <Footers />
-  </>;
+  return (
+    <>
+      {/* Google Ads Conversion Event */}
+      <Script id="google-ads-conversion" strategy="afterInteractive">
+        {`
+          gtag('event', 'conversion', {
+            'send_to': 'AW-16482547544/g8dtCMjn2JkZENjuvrM9'
+          });
+        `}
+      </Script>
+
+      <SouthernSpineHeader />
+      <ThankYouBanner />
+      <TestimonialsSections />
+      <ActionButtons />
+      <Footers />
+    </>
+  );
 }
