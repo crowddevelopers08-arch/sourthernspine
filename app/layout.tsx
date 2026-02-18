@@ -16,7 +16,7 @@ const outfit = Outfit({
 
 export const metadata: Metadata = {
   title: "Southern Spine Clinic",
-  description: "Southern Spine Clinic Website",
+  description: " Say goodbye to all your aches and pains",
 };
 
 export default function RootLayout({
