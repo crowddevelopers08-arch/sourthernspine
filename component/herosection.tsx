@@ -119,7 +119,7 @@ const HeroSection = () => {
                 </svg>
               </button>
               <a
-                href="tel:+919700575616"
+                href="tel:+91 9464108108"
                 className="group flex items-center gap-2.5 px-8 py-4 border-2 border-white/40 rounded-full text-white font-bold transition-all duration-300 hover:border-[#f99c1e] hover:bg-[#f99c1e]/20 hover:translate-y-[-3px]"
               >
                 <svg
@@ -130,7 +130,7 @@ const HeroSection = () => {
                 >
                   <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                 </svg>
-                +91 9700575616
+                +91 9464108108
               </a>
             </div>
 
@@ -184,7 +184,7 @@ const HeroSection = () => {
 
       {/* WhatsApp Float Button */}
       <a
-        href="https://wa.me/919700575616"
+        href="https://wa.me/91 9464108108"
         className="fixed bottom-18 sm:bottom-8 right-5 sm:right-8 w-14 h-14 sm:w-16 sm:h-16 bg-[#25D366] rounded-full flex items-center justify-center shadow-lg shadow-[#25D366]/50 hover:shadow-xl hover:shadow-[#25D366]/70 transition-all duration-400 hover:scale-110 z-50 animate-bounceIn"
         target="_blank"
         rel="noopener noreferrer"

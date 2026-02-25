@@ -69,7 +69,7 @@
 
 //         {/* Right: CTA */}
 //         <a
-//           href="tel:+919700575616"
+//           href="tel:+91 9464108108"
 //           className="rounded-full px-7 py-3 text-[16px] font-extrabold"
 //           style={{
 //             backgroundColor: ORANGE,
@@ -78,7 +78,7 @@
 //             boxShadow: `0 2px 0 ${NAVY}`,
 //           }}
 //         >
-//           +91 9700575616
+//           +91 9464108108
 //         </a>
 //       </div>
 
@@ -134,7 +134,7 @@ export default function SouthernSpineHeader() {
 
           {/* CTA (never wraps, scales cleanly) */}
           <a
-            href="tel:+919700575616"
+            href="tel:+91 9464108108"
             className="
               shrink-0 whitespace-nowrap rounded-full font-extrabold
               text-[11px] sm:text-[12px] md:text-[14px] lg:text-[15px]
@@ -150,7 +150,7 @@ export default function SouthernSpineHeader() {
               boxShadow: `0 2px 0 ${NAVY}`,
             }}
           >
-            +91 9700575616
+            +91 9464108108
           </a>
         </div>
       </div>
