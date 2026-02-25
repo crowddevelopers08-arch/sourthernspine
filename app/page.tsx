@@ -9,19 +9,31 @@ import TestimonialsSection from "@/component/review";
 import WhatWeDo from "@/component/service-list";
 import RealPatientResultsSection from "@/component/videosection";
 import Image from "next/image";
+import Script from "next/script";
 
 export default function Home() {
   return (
     <>
-    <Header /> 
-    <HeroSection /> 
-    <TestimonialsSection /> 
-    <WhatWeDo /> 
-    <ProfessionalsSection /> 
-    <RealPatientResultsSection /> 
-    <GuidingYouForward /> 
-    <ContactLocationSection />  
-    <Footers />  
+      <Script
+        id="google-ads-tag"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            gtag('config', 'AW-16482547544/e5f2CIqP0_4bENjuvrM9', {
+              'phone_conversion_number': '094641 08108'
+            });
+          `
+        }}
+      />
+      <Header /> 
+      <HeroSection /> 
+      <TestimonialsSection /> 
+      <WhatWeDo /> 
+      <ProfessionalsSection /> 
+      <RealPatientResultsSection /> 
+      <GuidingYouForward /> 
+      <ContactLocationSection />  
+      <Footers />  
     </>
   );
 }

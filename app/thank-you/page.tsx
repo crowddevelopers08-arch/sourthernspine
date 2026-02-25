@@ -17,6 +17,13 @@ export default function Home() {
           });
         `}
       </Script>
+      <Script id="google-ads-phone-config" strategy="afterInteractive">
+        {`
+          gtag('config', 'AW-16482547544/e5f2CIqP0_4bENjuvrM9', {
+            'phone_conversion_number': '094641 08108'
+          });
+        `}
+      </Script>
 
       <SouthernSpineHeader />
       <ThankYouBanner />
