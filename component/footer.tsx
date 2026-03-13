@@ -16,7 +16,7 @@ const ContactLocationSection = () => {
             {/* Logo */}
             <div className="bg-white p-5 rounded-2xl inline-block shadow-2xl animate-logo-float">
               <Image
-                src="/logos.png"
+                src="https://ik.imagekit.io/9yxs4igok/public/logos.png"
                 alt="Southern Spine Logo"
                 width={150}
                 height={120}

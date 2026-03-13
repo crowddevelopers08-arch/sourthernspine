@@ -21,7 +21,7 @@ const AboutSection = () => {
           <div className="hidden md:block md:col-span-2">
             <div className="w-full h-auto rounded-xl overflow-hidden shadow-2xl border-2 border-white/30">
               <img
-                src="/DR-Raghu.png"
+                src="https://ik.imagekit.io/9yxs4igok/public/DR-Raghu.png"
                 alt="Dr. Raghupathi Jadhav"
                 className="w-full h-auto object-cover"
               />
@@ -43,7 +43,7 @@ const AboutSection = () => {
             <div className="block md:hidden my-6">
               <div className="w-full h-auto rounded-xl overflow-hidden shadow-2xl border-2 border-white/30">
                 <img
-                  src="/DR-Raghu.png"
+                  src="https://ik.imagekit.io/9yxs4igok/public/DR-Raghu.png"
                   alt="Dr. Raghupathi Jadhav"
                   className="w-full h-auto object-cover"
                 />
@@ -183,7 +183,7 @@ const AboutSection = () => {
             {/* Image Container */}
             <div className="w-full h-full flex items-center justify-center">
               <img
-                src="/If-youre.jpg"
+                src="https://ik.imagekit.io/9yxs4igok/public/If-youre.jpg"
                 alt="Dr. Raghupathi Jadhav - Full View"
                 className="max-w-full max-h-full object-contain"
               />

@@ -22,15 +22,15 @@ export default function RealPatientResultsSection() {
 
   const cards = [
     {
-      video: "/video1.mov",
+      video: "https://ik.imagekit.io/9yxs4igok/public/video1.mov",
       duration: "1:56",
     },
     {
-      video: "/video2.mov",
+      video: "https://ik.imagekit.io/9yxs4igok/public/video2.mov",
       duration: "1:24",
     },
     {
-      video: "/video3.mov",
+      video: "https://ik.imagekit.io/9yxs4igok/public/video3.mov",
       duration: "0:13",
     },
   ];

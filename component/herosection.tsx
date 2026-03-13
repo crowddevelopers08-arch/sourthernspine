@@ -9,10 +9,10 @@ const HeroSection = () => {
 
   // Background images array
   const backgroundImages = [
-    "/ban-1.jpg",
-    "/ban-2.jpeg",
-    "/ban-3.avif",
-    "/ban-4.jpeg",
+    "https://ik.imagekit.io/9yxs4igok/public/ban-1.jpg",
+    "https://ik.imagekit.io/9yxs4igok/public/ban-2.jpeg",
+    "https://ik.imagekit.io/9yxs4igok/public/ban-3.avif",
+    "https://ik.imagekit.io/9yxs4igok/public/ban-4.jpeg",
   ];
 
   // Auto-slide background images
