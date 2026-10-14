@@ -4,6 +4,7 @@ import ContactLocationSection from "@/component/footer";
 import SouthernSpineClinic from "@/component/footer";
 import HeroSection from "@/component/herosection";
 import Footers from "@/component/last-footer";
+import MobileActionBar from "@/component/mobile-bar";
 import Header from "@/component/navbar";
 import TestimonialsSection from "@/component/review";
 import WhatWeDo from "@/component/service-list";
@@ -33,7 +34,8 @@ export default function Home() {
       <RealPatientResultsSection /> 
       <GuidingYouForward /> 
       <ContactLocationSection />  
-      <Footers />  
+      <Footers /> 
+      <MobileActionBar /> 
     </>
   );
 }

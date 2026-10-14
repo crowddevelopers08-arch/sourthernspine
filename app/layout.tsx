@@ -55,7 +55,6 @@ export default function RootLayout({
         </Script>
           {children}
 
-        <MobileActionBar />
       </body>
     </html>
   );
