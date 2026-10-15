@@ -123,7 +123,7 @@ export default function DoctorSection() {
         >
           <div className="order-1 sm:order-none">
           <div className="flex items-center gap-[10px]">
-            <span className="h-[2px] w-[22px] bg-[#f99c1e]" />
+            
             <span className="text-[11px] font-semibold uppercase tracking-[2px] text-[#f99c1e] sm:text-[12px]">
               Your Doctor
             </span>

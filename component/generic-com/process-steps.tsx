@@ -142,11 +142,11 @@ export default function ProcessSteps() {
           }`}
         >
           <div className="flex items-center gap-[10px]">
-            <span className="h-[2px] w-[22px] bg-[#f99c1e]" />
+           
             <span className="text-[11px] font-semibold uppercase tracking-[2px] text-[#f99c1e] sm:text-[12px]">
               Your Journey
             </span>
-            <span className="h-[2px] w-[22px] bg-[#f99c1e]" />
+           
           </div>
           <h2 className="mt-[8px] text-[26px] font-bold leading-tight text-[#0b1842] sm:text-[32px]">
             4 Simple Steps to <span className="text-[#f99c1e]">Better Spine Health</span>

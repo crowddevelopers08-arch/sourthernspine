@@ -1,4 +1,14 @@
-import { BicepsFlexed, Bone, Dumbbell, HousePlus, ScanSearch, Zap, type LucideIcon } from "lucide-react";
+import {
+  ArrowRight,
+  BicepsFlexed,
+  Bone,
+  CalendarCheck,
+  Dumbbell,
+  HousePlus,
+  ScanSearch,
+  Zap,
+  type LucideIcon,
+} from "lucide-react";
 import { outfit } from "./font";
 
 type Service = {
@@ -47,11 +57,11 @@ export default function ServicesSection() {
         {/* Heading */}
         <div className="flex flex-col items-center text-center">
           <div className="flex items-center gap-[10px]">
-            <span className="h-[2px] w-[22px] bg-[#f99c1e]" />
+            
             <span className="text-[11px] font-semibold uppercase tracking-[2px] text-[#f99c1e] sm:text-[12px]">
               Our Approach
             </span>
-            <span className="h-[2px] w-[22px] bg-[#f99c1e]" />
+            
           </div>
           <h2 className="mt-[8px] text-[26px] font-bold leading-tight text-[#0b1842] sm:text-[32px]">
             Comprehensive <span className="text-[#f99c1e]">Spine Care</span>
@@ -90,6 +100,24 @@ export default function ServicesSection() {
               <p className="mt-[6px] text-[13.5px] leading-[1.55] text-[#5b6478] sm:mt-[8px]">{service.description}</p>
             </div>
           ))}
+        </div>
+
+        {/* CTA */}
+        <div className="mt-[22px] flex flex-col items-center text-center sm:mt-[36px]">
+          <a
+            href="#book-appointment"
+            className="group inline-flex w-full max-w-[340px] items-center justify-center gap-[8px] rounded-full bg-[#f99c1e] px-[20px] py-[13px] text-[14px] font-bold uppercase tracking-[0.5px] text-[#0b1842] shadow-[0_12px_28px_-10px_rgba(249,156,30,0.8)] transition-all duration-300 hover:-translate-y-[2px] hover:bg-[#0b1842] hover:text-white sm:w-auto sm:max-w-none sm:gap-[10px] sm:px-[30px] sm:py-[15px] sm:text-[15px]"
+          >
+            <CalendarCheck className="h-[17px] w-[17px] shrink-0 sm:h-[18px] sm:w-[18px]" strokeWidth={2.3} />
+            Book Your Assessment
+            <ArrowRight
+              className="h-[16px] w-[16px] shrink-0 transition-transform duration-300 group-hover:translate-x-[3px]"
+              strokeWidth={2.5}
+            />
+          </a>
+          <p className="mt-[10px] text-[12.5px] text-[#5b6478] sm:text-[13.5px]">
+            Consultation &amp; spinal assessment for <span className="font-bold text-[#0b1842]">₹499</span>
+          </p>
         </div>
       </div>
     </section>

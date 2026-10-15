@@ -149,13 +149,20 @@ export default function ContactFooter() {
           <div>
             <h3 className="text-[13px] font-semibold uppercase tracking-[2px] text-[#f99c1e]">Quick Links</h3>
             <ul className="mt-[10px] grid grid-cols-2 gap-x-4 gap-y-[8px] sm:mt-[16px] sm:block sm:space-y-[10px]">
-              {footerLinks.map((link) => (
+              {footerLinks.map((link, i) => (
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className="group inline-flex items-center gap-[8px] text-[15px] text-white/75 transition-colors hover:text-white"
+                    className="group inline-flex items-center gap-[10px] text-[15px] text-white/75 transition-colors hover:text-white"
                   >
-                    <span className="h-[2px] w-[10px] bg-[#f99c1e]/60 transition-all duration-300 group-hover:w-[18px] group-hover:bg-[#f99c1e]" />
+                    {/* blinking dot */}
+                    <span className="relative flex h-[8px] w-[8px] shrink-0">
+                      <span
+                        className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#f99c1e] opacity-75 motion-reduce:animate-none"
+                        style={{ animationDelay: `${i * 0.25}s` }}
+                      />
+                      <span className="relative inline-flex h-[8px] w-[8px] rounded-full bg-[#f99c1e] transition-transform duration-300 group-hover:scale-125" />
+                    </span>
                     {link.label}
                   </a>
                 </li>

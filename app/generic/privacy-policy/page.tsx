@@ -47,35 +47,42 @@ const sections = [
 export default function PrivacyPolicyPage() {
   return (
     <main className={`${outfit.className} min-h-screen bg-[#f5f6fb] pb-28 text-[#0b1842] sm:pb-16`}>
-      <header className="border-b border-[#e1e5ef] bg-white px-5 py-5 sm:px-8">
-        <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4">
-          <Link href="/" className="relative block h-[52px] w-[200px] shrink-0 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f99c1e] sm:h-[58px] sm:w-[230px]">
+      <header className="border-b border-[#e1e5ef] bg-white px-4 py-3 sm:px-8 sm:py-5">
+        <div className="mx-auto flex max-w-5xl flex-nowrap items-center justify-between gap-3">
+          <Link href="/generic" className="relative block h-[40px] w-[150px] min-w-0 shrink rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f99c1e] sm:h-[58px] sm:w-[230px]">
             <Image
               src="https://ik.imagekit.io/9yxs4igok/public/logos.png"
               alt="Southern Spine — Home"
               fill
               priority
-              sizes="(min-width: 640px) 230px, 200px"
+              sizes="(min-width: 640px) 230px, 150px"
               className="object-contain object-left"
             />
           </Link>
-          <Link href="/generic" className="inline-flex items-center gap-2 rounded-sm text-sm text-[#52607a] hover:text-[#29469b] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f99c1e]"><ArrowLeft aria-hidden="true" className="h-4 w-4" />Back to Home</Link>
+          <Link
+            href="/generic"
+            className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border border-[#e1e5ef] px-3 py-2 text-[13px] font-medium text-[#52607a] transition-colors hover:border-[#29469b] hover:text-[#29469b] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f99c1e] sm:gap-2 sm:border-0 sm:px-0 sm:text-sm"
+          >
+            <ArrowLeft aria-hidden="true" className="h-4 w-4" />
+            <span className="sm:hidden">Home</span>
+            <span className="hidden sm:inline">Back to Home</span>
+          </Link>
         </div>
       </header>
-      <div className="mx-auto max-w-5xl px-5 pt-10 sm:px-8 sm:pt-14">
-        <div className="relative overflow-hidden rounded-[24px] bg-[#0b1842] p-7 text-white sm:p-12">
+      <div className="mx-auto max-w-5xl px-4 pt-6 sm:px-8 sm:pt-14">
+        <div className="relative overflow-hidden rounded-[20px] bg-[#0b1842] p-6 text-white sm:rounded-[24px] sm:p-12">
           <div aria-hidden="true" className="pointer-events-none absolute -right-24 -top-32 h-96 w-96 rounded-full border-[55px] border-white/5" />
-          <ShieldCheck aria-hidden="true" className="mb-5 h-9 w-9 text-[#ffb547]" />
-          <h1 className="relative text-4xl font-semibold tracking-tight sm:text-5xl">Privacy Policy</h1>
-          <p className="relative mt-4 max-w-2xl text-base leading-7 text-[#d1d8eb]">This policy explains how Southern Spine handles information collected through this website and appointment enquiries.</p>
+          <ShieldCheck aria-hidden="true" className="mb-4 h-8 w-8 text-[#ffb547] sm:mb-5 sm:h-9 sm:w-9" />
+          <h1 className="relative text-[30px] font-semibold tracking-tight sm:text-5xl">Privacy Policy</h1>
+          <p className="relative mt-3 max-w-2xl text-[15px] leading-7 text-[#d1d8eb] sm:mt-4 sm:text-base">This policy explains how Southern Spine handles information collected through this website and appointment enquiries.</p>
           <p className="mt-5 text-sm text-[#ffb547]">Last updated: 14 October 2026</p>
         </div>
-        <article className="mt-6 rounded-[24px] border border-[#e1e5ef] bg-white p-7 sm:p-12">
-          <div className="space-y-9">
+        <article className="mt-4 rounded-[20px] border border-[#e1e5ef] bg-white p-5 sm:mt-6 sm:rounded-[24px] sm:p-12">
+          <div className="space-y-7 sm:space-y-9">
             {sections.map((section) => (
               <section key={section.title}>
-                <h2 className="text-xl font-semibold">{section.title}</h2>
-                <p className="mt-3 text-base leading-8 text-[#52607a]">{section.text}</p>
+                <h2 className="text-lg font-semibold leading-snug sm:text-xl">{section.title}</h2>
+                <p className="mt-2 text-[15px] leading-7 text-[#52607a] sm:mt-3 sm:text-base sm:leading-8">{section.text}</p>
               </section>
             ))}
             <section className="border-t border-[#e1e5ef] pt-8">
