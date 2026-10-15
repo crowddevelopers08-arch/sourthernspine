@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
-import { Search, Filter, Download, Phone, Mail, Calendar, RefreshCw, Users, FileText, ChevronDown, ChevronUp } from "lucide-react"
+import { Search, Filter, Download, Phone, Mail, Calendar, Clock, RefreshCw, Users, FileText, ChevronDown, ChevronUp } from "lucide-react"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -44,6 +44,10 @@ const getFormLabel = (formName: string) => {
     default: return formName
   }
 }
+
+// Generic LP leads keep the preferred time inside the message ("Preferred time: Tomorrow")
+const getPreferredTime = (message?: string | null) =>
+  message?.match(/Preferred time:\s*(.+)/i)?.[1]?.trim() || ""
 
 interface LeadsTableProps {
   initialLeads?: Lead[]
@@ -235,12 +239,13 @@ export default function LeadsTable({
   const formStats = getFormStats()
 
   const exportToCSV = () => {
-    const headers = ["Name", "Phone", "Email", "Treatment/Appointment Type", "Message", "City", "Age", "Status", "Form Name", "Source", "TeleCRM Synced", "Created At"]
+    const headers = ["Name", "Phone", "Email", "Treatment/Appointment Type", "Preferred Time", "Message", "City", "Age", "Status", "Form Name", "Source", "TeleCRM Synced", "Created At"]
     const csvData = filteredLeads.map(lead => [
       lead.name || '',
       lead.phone || '',
       lead.email || '',
       lead.treatment || lead.procedure || '',
+      getPreferredTime(lead.message),
       `"${(lead.message || '').replace(/"/g, '""')}"`,
       lead.city || '',
       lead.age || '',
@@ -563,6 +568,12 @@ export default function LeadsTable({
                             <td className="p-4 align-middle">
                               <div className="flex flex-col gap-1">
                                 <span className="text-sm font-medium text-gray-900">{lead.treatment || lead.procedure || "Not specified"}</span>
+                                {getPreferredTime(lead.message) && (
+                                  <span className="inline-flex w-fit items-center gap-1 rounded-full bg-orange-50 px-2 py-0.5 text-xs font-medium text-orange-700 border border-orange-200">
+                                    <Clock className="h-3 w-3" />
+                                    {getPreferredTime(lead.message)}
+                                  </span>
+                                )}
                                 {lead.city && <span className="text-xs text-gray-600">{lead.city}</span>}
                                 {lead.age && <span className="text-xs text-gray-600">Age: {lead.age}</span>}
                               </div>
@@ -674,6 +685,7 @@ export default function LeadsTable({
                                     <h4 className="font-medium text-gray-900 mb-2">Lead Details</h4>
                                     <div className="space-y-2 text-gray-700">
                                       <div><span className="font-medium">Source:</span> {lead.source || 'Not specified'}</div>
+                                      <div><span className="font-medium">Preferred Time:</span> {getPreferredTime(lead.message) || 'Not specified'}</div>
                                       <div><span className="font-medium">Age:</span> {lead.age || 'Not specified'}</div>
                                       <div><span className="font-medium">City:</span> {lead.city || 'Not specified'}</div>
                                       <div><span className="font-medium">Consent:</span> {lead.consent ? 'Yes' : 'No'}</div>
