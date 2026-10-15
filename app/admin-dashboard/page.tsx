@@ -33,6 +33,18 @@ interface Lead {
   createdAt: string
   updatedAt: string
 }
+// Friendly names for the form identifiers stored on each lead
+const getFormLabel = (formName: string) => {
+  switch (formName) {
+    case 'hairtreatment': return 'Hair Treatment'
+    case 'skin and hair leads': return 'Skin & Hair'
+    case 'southernspine': return 'Southern Spine'
+    case 'generic-leads': return 'Generic LP'
+    case 'Unknown': return 'Unknown Form'
+    default: return formName
+  }
+}
+
 interface LeadsTableProps {
   initialLeads?: Lead[]
   autoRefresh?: boolean
@@ -184,6 +196,7 @@ export default function LeadsTable({
       'hairtreatment': { label: "Hair Treatment", color: "bg-purple-100 text-purple-800 border-purple-200" },
       'skin and hair leads': { label: "Skin & Hair", color: "bg-indigo-100 text-indigo-800 border-indigo-200" },
       'southernspine': { label: "Southern Spine", color: "bg-blue-100 text-blue-800 border-blue-200" },
+      'generic-leads': { label: "Generic LP", color: "bg-orange-100 text-orange-800 border-orange-200" },
       'default': { label: formName, color: "bg-gray-100 text-gray-800 border-gray-200" }
     }
     
@@ -350,10 +363,7 @@ export default function LeadsTable({
                     <div className="flex items-center gap-2 mb-2">
                       <FileText className="h-4 w-4 text-blue-600" />
                       <span className="font-medium text-sm text-gray-900 capitalize">
-                        {formName === 'hairtreatment' ? 'Hair Treatment' : 
-                         formName === 'skin and hair leads' ? 'Skin & Hair' : 
-                         formName === 'southernspine' ? 'Southern Spine' :
-                         formName === 'Unknown' ? 'Unknown Form' : formName}
+                        {getFormLabel(formName)}
                       </span>
                     </div>
                     <div className="text-2xl font-bold text-gray-900">{stats.total}</div>
@@ -426,6 +436,12 @@ export default function LeadsTable({
                 <SelectItem value="Joint Pain" className="focus:bg-gray-100">Joint Pain</SelectItem>
                 <SelectItem value="Muscular Pain" className="focus:bg-gray-100">Muscular Pain</SelectItem>
                 <SelectItem value="Others" className="focus:bg-gray-100">Others</SelectItem>
+                {/* Generic LP areas of concern */}
+                <SelectItem value="Hip Pain" className="focus:bg-gray-100">Hip Pain</SelectItem>
+                <SelectItem value="Sciatica" className="focus:bg-gray-100">Sciatica</SelectItem>
+                <SelectItem value="Shoulder Pain" className="focus:bg-gray-100">Shoulder Pain</SelectItem>
+                <SelectItem value="Ankle Sprain" className="focus:bg-gray-100">Ankle Sprain</SelectItem>
+                <SelectItem value="Other" className="focus:bg-gray-100">Other</SelectItem>
               </SelectContent>
             </Select>
 
@@ -438,10 +454,7 @@ export default function LeadsTable({
                 <SelectItem value="all" className="focus:bg-gray-100">All Forms</SelectItem>
                 {uniqueFormNames.map(formName => (
                   <SelectItem key={formName} value={formName} className="focus:bg-gray-100">
-                    {formName === 'hairtreatment' ? 'Hair Treatment' : 
-                     formName === 'skin and hair leads' ? 'Skin & Hair' : 
-                     formName === 'southernspine' ? 'Southern Spine' :
-                     formName === 'Unknown' ? 'Unknown Form' : formName}
+                    {getFormLabel(formName)}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -693,12 +706,7 @@ export default function LeadsTable({
             <div>
               Showing {filteredLeads.length} of {leads.length} leads
               {searchTerm && ` • Filtered by: "${searchTerm}"`}
-              {formFilter !== 'all' && ` • Form: ${
-                formFilter === 'hairtreatment' ? 'Hair Treatment' : 
-                formFilter === 'skin and hair leads' ? 'Skin & Hair' : 
-                formFilter === 'southernspine' ? 'Southern Spine' :
-                formFilter === 'Unknown' ? 'Unknown Form' : formFilter
-              }`}
+              {formFilter !== 'all' && ` • Form: ${getFormLabel(formFilter)}`}
             </div>
             <div className="flex gap-4">
               <div className="flex items-center gap-1">

@@ -66,8 +66,8 @@ export default function HeroBanner() {
           condition: form.concern,
           preferredTime: form.time,
           appointmentType: "Consultation & Spinal Assessment",
-          formName: "southernspine",
-          source: "generic-hero-banner",
+          formName: "generic-leads",
+          source: "generic form",
           consent: true,
           status: "new",
         }),
@@ -91,6 +91,44 @@ export default function HeroBanner() {
           50% { transform: scale(1.12); }
           100% { transform: scale(1); }
         }
+        @media (max-width: 639px) {
+          #home #book-appointment form h2 { font-size: 20px; }
+          #home #book-appointment form > p { font-size: 13px; }
+          #home #book-appointment form label > span:first-child { font-size: 11px; }
+          #home #book-appointment input,
+          #home #book-appointment select { font-size: 14px; }
+          #home #book-appointment button[type="submit"] {
+            font-size: 12px;
+            height: 44px;
+            gap: 8px;
+            letter-spacing: 0.3px;
+          }
+          #home #book-appointment button[type="submit"] svg {
+            width: 15px;
+            height: 15px;
+            flex-shrink: 0;
+          }
+          #home #book-appointment form > p:last-child { font-size: 11px; }
+        }
+        @media (max-width: 334px) {
+          #home { min-width: 0; max-width: 100%; }
+          #home > .hero-layout {
+            grid-template-columns: minmax(0, 1fr);
+            padding-left: 12px;
+            padding-right: 12px;
+          }
+          #home .hero-label {
+            font-size: 9px;
+            letter-spacing: 0.6px;
+            padding-left: 10px;
+            padding-right: 10px;
+          }
+          #home h1 { font-size: 28px; }
+          #home .hero-copy { overflow-wrap: anywhere; }
+          #home #book-appointment form { padding: 14px; }
+          #home #book-appointment input,
+          #home #book-appointment select { min-width: 0; max-width: 100%; }
+        }
       `}</style>
 
       {/* Background slider – zoom in / zoom out */}
@@ -110,18 +148,18 @@ export default function HeroBanner() {
       <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[#0b1842]/60 via-transparent to-transparent" />
       <div className="pointer-events-none absolute -left-32 -top-32 -z-10 h-[420px] w-[420px] rounded-full bg-[#f99c1e]/20 blur-[120px]" />
 
-      <div className="mx-auto grid w-full max-w-[1440px] items-center gap-10 px-4 py-12 sm:py-14 md:px-[60px] lg:grid-cols-[1.15fr_0.85fr] lg:gap-12 lg:py-8 xl:gap-16">
+      <div className="hero-layout mx-auto grid w-full min-w-0 max-w-[1440px] grid-cols-1 items-center gap-6 px-4 py-7 sm:gap-10 sm:py-14 md:px-[60px] lg:grid-cols-[1.15fr_0.85fr] lg:gap-12 lg:py-8 xl:gap-16">
         {/* ===== Left: content ===== */}
-        <div className="text-white">
-          <span className="inline-flex items-center gap-[8px] rounded-full border border-[#f99c1e]/40 bg-[#f99c1e]/10 px-[14px] py-[7px] text-[12px] font-semibold uppercase tracking-[1.8px] text-[#f99c1e] backdrop-blur-sm sm:text-[13px]">
-            <span className="relative flex h-[8px] w-[8px]">
+        <div className="hero-copy min-w-0 text-white">
+          <span className="hero-label inline-flex max-w-full items-center gap-[8px] rounded-full border border-[#f99c1e]/40 bg-[#f99c1e]/10 px-[12px] py-[6px] text-[10px] font-semibold uppercase tracking-[1px] text-[#f99c1e] backdrop-blur-sm sm:px-[14px] sm:py-[7px] sm:text-[13px] sm:tracking-[1.8px]">
+            <span className="relative flex h-[8px] w-[8px] shrink-0">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#f99c1e] opacity-75" />
               <span className="relative inline-flex h-[8px] w-[8px] rounded-full bg-[#f99c1e]" />
             </span>
             Chiropractic Care in Hyderabad
           </span>
 
-          <h1 className="mt-[18px] text-[36px] font-extrabold leading-[1.1] tracking-[-0.5px] sm:text-[46px] lg:text-[50px] xl:text-[58px]">
+          <h1 className="mt-[14px] text-[32px] font-extrabold leading-[1.15] tracking-[-0.5px] sm:mt-[18px] sm:text-[46px] sm:leading-[1.1] lg:text-[50px] xl:text-[58px]">
             Your Spine Deserves{" "}
             <span className="relative inline-block text-[#f99c1e]">
               Specialist Care
@@ -136,23 +174,23 @@ export default function HeroBanner() {
             </span>
           </h1>
 
-          <p className="mt-[20px] max-w-[560px] text-[16px] font-light leading-[1.7] text-white/85 sm:text-[18px]">
+          <p className="mt-[14px] max-w-[560px] text-[15px] font-normal leading-[1.6] text-white/85 sm:mt-[20px] sm:text-[18px] sm:font-light sm:leading-[1.7]">
             Expert chiropractic care for back pain, neck pain and joint problems. Start with a spinal assessment by{" "}
             <span className="font-bold text-white">Dr. Raghupathi Jadhav</span> and get a plan built around you.
           </p>
 
-          <ul className="mt-[22px] space-y-[12px]">
+          <ul className="mt-[16px] space-y-[10px] sm:mt-[22px] sm:space-y-[12px]">
             {highlights.map((item) => (
-              <li key={item} className="flex items-start gap-[12px]">
+              <li key={item} className="flex items-start gap-[10px] sm:gap-[12px]">
                 <span className="mt-[1px] flex h-[24px] w-[24px] shrink-0 items-center justify-center rounded-full bg-[#f99c1e] shadow-[0_0_0_4px_rgba(249,156,30,0.18)]">
                   <CheckCircle2 className="h-[15px] w-[15px] text-[#0b1842]" strokeWidth={2.6} />
                 </span>
-                <span className="text-[15.5px] font-medium leading-[1.5] text-white/95 sm:text-[17px]">{item}</span>
+                <span className="text-[14px] font-medium leading-[1.5] text-white/95 sm:text-[17px]">{item}</span>
               </li>
             ))}
           </ul>
 
-          <div className="mt-[28px] flex flex-col gap-[14px] sm:flex-row sm:items-center">
+          <div className="mt-[18px] flex flex-col gap-[14px] sm:mt-[28px] sm:flex-row sm:items-center">
             <a
               href="#book-appointment"
               className="group hidden sm:inline-flex items-center justify-center gap-[10px] rounded-full bg-[#f99c1e] px-[26px] py-[14px] text-[15px] font-bold uppercase tracking-[0.5px] text-[#0b1842] shadow-[0_10px_30px_-8px_rgba(249,156,30,0.75)] transition-all duration-300 hover:-translate-y-[2px] hover:bg-white"
@@ -174,34 +212,34 @@ export default function HeroBanner() {
         </div>
 
         {/* ===== Right: form ===== */}
-        <div id="book-appointment" className="relative mx-auto w-full max-w-[500px] scroll-mt-6 lg:mr-0">
+        <div id="book-appointment" className="relative mx-auto w-full min-w-0 max-w-[500px] scroll-mt-6 lg:mr-0">
           <div className="absolute -inset-[2px] rounded-[26px] bg-gradient-to-br from-[#f99c1e] via-[#f99c1e]/30 to-transparent opacity-80 blur-[2px]" />
 
           <div className="relative overflow-hidden rounded-[24px] bg-white shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]">
             {/* Price header */}
-            <div className="relative flex items-center justify-between gap-4 bg-[#0b1842] px-[22px] py-[14px]">
-              <div className="flex items-center gap-[12px]">
+            <div className="relative flex items-center justify-between gap-2 bg-[#0b1842] px-[16px] py-[12px] sm:gap-4 sm:px-[22px] sm:py-[14px]">
+              <div className="flex min-w-0 items-center gap-[8px] sm:gap-[12px]">
                 <span className="flex h-[40px] w-[40px] shrink-0 items-center justify-center rounded-[12px] bg-[#f99c1e]/15">
                   <Stethoscope className="h-[20px] w-[20px] text-[#f99c1e]" strokeWidth={2.2} />
                 </span>
-                <p className="text-[14px] font-semibold uppercase leading-[1.35] tracking-[0.5px] text-white">
+                <p className="text-[11px] font-semibold uppercase leading-[1.4] tracking-[0.2px] text-white sm:text-[14px] sm:leading-[1.35] sm:tracking-[0.5px]">
                   Consultation &amp;
                   <br />
                   Spinal Assessment
                 </p>
               </div>
-              <div className="rounded-[12px] bg-[#f99c1e] px-[14px] py-[8px] text-center shadow-[0_6px_20px_-6px_rgba(249,156,30,0.9)]">
+              <div className="shrink-0 rounded-[12px] bg-[#f99c1e] px-[10px] py-[8px] text-center shadow-[0_6px_20px_-6px_rgba(249,156,30,0.9)] sm:px-[14px]">
                 <span className="block text-[28px] font-extrabold leading-none text-[#0b1842]">₹499</span>
               </div>
             </div>
 
-            <form onSubmit={handleSubmit} className="px-[22px] pb-[18px] pt-[18px]" noValidate>
-              <h2 className="text-[25px] font-bold leading-tight text-[#0b1842]">Book Your Appointment</h2>
+            <form onSubmit={handleSubmit} className="p-[16px] sm:px-[22px] sm:pb-[18px] sm:pt-[18px]" noValidate>
+              <h2 className="text-[22px] font-bold leading-tight text-[#0b1842] sm:text-[25px]">Book Your Appointment</h2>
               <p className="mt-[4px] text-[14.5px] leading-[1.5] text-[#6b7280]">
                 Share your details and our team will call to confirm your slot.
               </p>
 
-              <div className="mt-[16px] space-y-[12px]">
+              <div className="mt-[12px] space-y-[10px] sm:mt-[16px] sm:space-y-[12px]">
                 <Field label="Full name" icon={<User className="h-[16px] w-[16px]" />}>
                   <input
                     type="text"
@@ -276,9 +314,9 @@ export default function HeroBanner() {
                 )}
               </button>
 
-              <p className="mt-[12px] flex items-center justify-center gap-[6px] text-center text-[13px] text-[#9ca3af]">
-                <Lock className="h-[12px] w-[12px]" />
-                Your details are used only to schedule your visit.
+              <p className="mt-[10px] flex items-center justify-center gap-[6px] text-center text-[12px] leading-[1.5] text-[#9ca3af] sm:mt-[12px] sm:text-[13px]">
+                <Lock className="h-[12px] w-[12px] shrink-0" />
+                <span>Your details are used only to schedule your visit.</span>
               </p>
             </form>
           </div>
@@ -300,7 +338,7 @@ function Field({
   children: React.ReactNode;
 }) {
   return (
-    <label className="block">
+    <label className="block min-w-0">
       <span className="mb-[6px] block text-[13px] font-semibold uppercase tracking-[0.6px] text-[#0b1842]">{label}</span>
       <span className="relative block">
         <span className="pointer-events-none absolute left-[14px] top-1/2 -translate-y-1/2 text-[#f99c1e]">{icon}</span>

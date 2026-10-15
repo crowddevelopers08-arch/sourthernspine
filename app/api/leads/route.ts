@@ -85,8 +85,20 @@ async function saveLeadToDatabase(leadData: LeadData, telecrmResult?: any) {
   });
 
   // Store appointmentType in treatment field for Southern Spine
-  const treatmentField = leadData.treatment || leadData.test || leadData.appointmentType || null;
+  let treatmentField = leadData.treatment || leadData.test || leadData.appointmentType || null;
   const procedureField = leadData.procedure || leadData.test || leadData.appointmentType || null;
+  let messageField = leadData.message || null;
+
+  // Generic LP form: show the area of concern as the treatment, and keep the
+  // preferred time in the message (there are no dedicated DB columns for these)
+  if (leadData.formName === "generic-leads") {
+    treatmentField = leadData.condition || treatmentField;
+    const details = [
+      leadData.condition && `Area of concern: ${leadData.condition}`,
+      leadData.preferredTime && `Preferred time: ${leadData.preferredTime}`,
+    ].filter(Boolean);
+    if (details.length) messageField = [messageField, ...details].filter(Boolean).join("\n");
+  }
 
   const lead = await prisma.lead.create({
     data: {
@@ -95,7 +107,7 @@ async function saveLeadToDatabase(leadData: LeadData, telecrmResult?: any) {
       email: leadData.email || null,
       treatment: treatmentField,
       procedure: procedureField,
-      message: leadData.message || null,
+      message: messageField,
       city: leadData.city || null,
       age: leadData.age || null,
       pincode: leadData.pincode || null,
@@ -152,15 +164,18 @@ async function sendToTeleCRM(leadData: LeadData) {
   // Form name note
   systemNotes.push(`Form Name: ${leadData.formName || "Website Leads"}`);
 
+  // Southern Spine forms (main LP + generic LP) share the same fields
+  const isSouthernSpineForm = leadData.formName === 'southernspine' || leadData.formName === 'generic-leads';
+
   // Treatment/Appointment type note
-  if (leadData.formName === 'southernspine' && leadData.appointmentType) {
+  if (isSouthernSpineForm && leadData.appointmentType) {
     systemNotes.push(`Appointment Type: ${leadData.appointmentType}`);
   } else if (leadData.treatment || leadData.test) {
     systemNotes.push(`Treatment Requested: ${leadData.treatment || leadData.test || "Not specified"}`);
   }
 
   // Southern Spine specific notes
-  if (leadData.formName === 'southernspine') {
+  if (isSouthernSpineForm) {
     if (leadData.condition) systemNotes.push(`Medical Condition: ${leadData.condition}`);
     if (leadData.preferredDate) systemNotes.push(`Preferred Date: ${leadData.preferredDate}`);
     if (leadData.preferredTime) systemNotes.push(`Preferred Time: ${leadData.preferredTime}`);
