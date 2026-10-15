@@ -17,6 +17,17 @@ const outfit = Outfit({
 export const metadata: Metadata = {
   title: "Southern Spine Clinic",
   description: " Say goodbye to all your aches and pains",
+
+  // Southern Spine logo mark (cropped from logos.png) – files live in /public, favicon.ico in /app
+  icons: {
+    icon: [
+      { url: "/favicon-32x32.png", type: "image/png", sizes: "32x32" },
+      { url: "/icon-192x192.png", type: "image/png", sizes: "192x192" },
+      { url: "/icon-512x512.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
+    shortcut: ["/favicon-32x32.png"],
+  },
 };
 
 export default function RootLayout({
