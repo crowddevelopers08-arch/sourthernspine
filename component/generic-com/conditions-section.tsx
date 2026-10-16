@@ -26,8 +26,15 @@ export default function ConditionsSection() {
   const [holding, setHolding] = useState(false);
 
   return (
-    <section id="conditions" className={`${outfit.className} w-full bg-[#081231] py-[50px] sm:py-[60px]`}>
-      <div className="mx-auto w-full max-w-[1440px] px-4 md:px-[60px]">
+    <section
+      id="conditions"
+      className={`${outfit.className} relative w-full overflow-hidden bg-gradient-to-b from-[#fff8ef] to-[#fffdf9] py-[50px] sm:py-[60px]`}
+    >
+      {/* soft decorative glows */}
+      <div aria-hidden="true" className="pointer-events-none absolute -left-32 -top-32 h-[340px] w-[340px] rounded-full bg-[#f99c1e]/15 blur-[110px]" />
+      <div aria-hidden="true" className="pointer-events-none absolute -bottom-40 -right-32 h-[360px] w-[360px] rounded-full bg-[#0b1842]/[0.07] blur-[110px]" />
+
+      <div className="relative mx-auto w-full max-w-[1440px] px-4 md:px-[60px]">
         {/* Heading */}
         <div className="flex flex-col items-center text-center">
           <div className="flex items-center gap-[10px]">
@@ -37,8 +44,10 @@ export default function ConditionsSection() {
             </span>
           
           </div>
-          <h2 className="mt-[8px] text-[26px] font-bold leading-tight text-white sm:text-[32px]">What We Treat</h2>
-          <p className="mt-[6px] max-w-[520px] text-[14px] leading-[1.6] text-white/60 sm:text-[15px]">
+          <h2 className="mt-[8px] text-[26px] font-bold leading-tight text-[#0b1842] sm:text-[32px]">
+            What We <span className="text-[#f99c1e]">Treat</span>
+          </h2>
+          <p className="mt-[6px] max-w-[520px] text-[14px] leading-[1.6] text-[#5b6478] sm:text-[15px]">
             If you are dealing with any of these, an assessment is the right first step.
           </p>
         </div>
@@ -59,12 +68,12 @@ export default function ConditionsSection() {
               href="#book-appointment"
               aria-hidden={index >= conditions.length ? true : undefined}
               tabIndex={index >= conditions.length ? -1 : undefined}
-              className={`${index >= conditions.length ? "sm:hidden" : ""} group w-[160px] shrink-0 overflow-hidden rounded-[12px] border border-white/[0.07] bg-gradient-to-b from-[#13235a] to-[#0c173d] transition-all duration-300 hover:border-[#f99c1e]/45 hover:shadow-[0_14px_30px_-12px_rgba(249,156,30,0.4)] sm:w-auto sm:hover:-translate-y-[4px] focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[#f99c1e]`}
+              className={`${index >= conditions.length ? "sm:hidden" : ""} group w-[160px] shrink-0 overflow-hidden rounded-[16px] border border-[#f1e4d2] bg-white shadow-[0_6px_18px_-10px_rgba(11,24,66,0.18)] transition-all duration-300 hover:border-[#f99c1e]/60 hover:shadow-[0_18px_34px_-14px_rgba(249,156,30,0.45)] sm:w-auto sm:hover:-translate-y-[4px] focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[#f99c1e]`}
             >
-              <div className="relative flex aspect-[4/3] items-center justify-center bg-[radial-gradient(circle_at_50%_42%,#1d3275_0%,#0e1a45_72%)]">
+              <div className="relative flex aspect-[4/3] items-center justify-center bg-[radial-gradient(circle_at_50%_42%,#fff1dc_0%,#fffaf3_60%,#ffffff_100%)]">
                 {/* ground shadow */}
-                <span className="absolute bottom-[12%] left-1/2 h-[8px] w-[44%] -translate-x-1/2 rounded-[50%] bg-black/45 blur-[4px]" />
-                <span className="relative flex aspect-square w-[58%] max-w-[120px] items-center justify-center rounded-full bg-white shadow-[0_10px_22px_-8px_rgba(0,0,0,0.6)] ring-[3px] ring-[#f99c1e]/70 transition-all duration-500 group-hover:scale-[1.08] group-hover:ring-[#f99c1e]">
+                <span className="absolute bottom-[12%] left-1/2 h-[8px] w-[44%] -translate-x-1/2 rounded-[50%] bg-[#0b1842]/15 blur-[4px]" />
+                <span className="relative flex aspect-square w-[58%] max-w-[120px] items-center justify-center rounded-full bg-white shadow-[0_10px_22px_-10px_rgba(11,24,66,0.35)] ring-[3px] ring-[#0b1842]/10 transition-all duration-500 group-hover:scale-[1.08] group-hover:ring-[#f99c1e]">
                   <Image
                     src={condition.icon}
                     alt=""
@@ -75,7 +84,7 @@ export default function ConditionsSection() {
                   />
                 </span>
               </div>
-              <p className="flex min-h-[44px] items-center justify-center border-t border-white/[0.06] px-[8px] py-[10px] text-center text-[13px] font-medium leading-[1.3] text-white/85 transition-colors duration-300 group-hover:text-[#f99c1e] sm:text-[14px]">
+              <p className="flex min-h-[44px] items-center justify-center border-t border-[#f1e4d2] px-[8px] py-[10px] text-center text-[13px] font-semibold leading-[1.3] text-[#0b1842] transition-colors duration-300 group-hover:border-[#0b1842] group-hover:bg-[#0b1842] group-hover:text-white sm:text-[14px]">
                 {condition.name}
               </p>
             </a>
