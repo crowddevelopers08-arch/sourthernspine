@@ -203,10 +203,16 @@ export default function ContactFooter() {
         <div className="border-t border-white/10">
           <div className="mx-auto flex max-w-[1440px] flex-col items-center justify-center gap-[8px] px-4 py-[12px] text-center text-[12px] text-white/55 sm:gap-[12px] sm:py-[18px] sm:text-[13.5px] md:px-[60px]">
             <p>© {new Date().getFullYear()} Southern Spine, Hyderabad. All rights reserved.</p>
-            <div className="flex w-full items-center justify-center">
-              <Link href="/generic/privacy-policy" className="inline-flex min-h-11 items-center justify-center rounded-sm text-[14px] font-medium text-white transition-colors hover:text-[#f99c1e] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f99c1e]">
-                Privacy Policy
-              </Link>
+            <div className="flex w-full flex-wrap items-center justify-center gap-x-[18px] gap-y-0 sm:gap-x-[24px]">
+              {[
+                { href: "/generic/privacy-policy", label: "Privacy Policy" },
+                { href: "/generic/terms-and-conditions", label: "Terms & Conditions" },
+                { href: "/generic/cancellation-refund-policy", label: "Cancellation & Refund" },
+              ].map((link) => (
+                <Link key={link.href} href={link.href} className="inline-flex min-h-11 items-center justify-center rounded-sm text-[14px] font-medium text-white transition-colors hover:text-[#f99c1e] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f99c1e]">
+                  {link.label}
+                </Link>
+              ))}
               <a
                 href="#home"
                 aria-label="Back to top"

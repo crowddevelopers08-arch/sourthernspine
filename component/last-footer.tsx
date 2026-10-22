@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { Facebook } from 'lucide-react';
 
 const Footers = () => {
@@ -30,23 +31,18 @@ const Footers = () => {
             </div>
           </div>
 
-          {/* Optional: Add some spacing or additional links */}
-          <div>
-            {/* <div className="flex flex-wrap justify-center gap-6 text-sm text-white/70">
-              <a href="#" className="hover:text-white transition-colors">
-                Privacy Policy
-              </a>
-              <a href="#" className="hover:text-white transition-colors">
-                Terms of Service
-              </a>
-              <a href="#" className="hover:text-white transition-colors">
-                Contact Us
-              </a>
-              <a href="#" className="hover:text-white transition-colors">
-                Sitemap
-              </a>
-            </div> */}
-          </div>
+          {/* Policy links */}
+          <nav aria-label="Policies" className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 pb-3 text-sm text-white/80">
+            <Link href="/privacy-policy" className="transition-colors hover:text-[#f99c1e]">
+              Privacy Policy
+            </Link>
+            <Link href="/terms-and-conditions" className="transition-colors hover:text-[#f99c1e]">
+              Terms &amp; Conditions
+            </Link>
+            <Link href="/cancellation-refund-policy" className="transition-colors hover:text-[#f99c1e]">
+              Cancellation &amp; Refund
+            </Link>
+          </nav>
         </div>
       </div>
     </footer>

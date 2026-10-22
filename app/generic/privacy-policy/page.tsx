@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowLeft, Mail, Phone, ShieldCheck } from "lucide-react";
+import { ArrowLeft, ArrowRight, Mail, Phone, ShieldCheck } from "lucide-react";
 import { outfit } from "@/component/generic-com/font";
 
 export const metadata: Metadata = {
@@ -95,6 +95,23 @@ export default function PrivacyPolicyPage() {
             </section>
           </div>
         </article>
+
+        {/* Related policies */}
+        <nav aria-label="Related policies" className="mt-4 grid gap-3 sm:mt-6 sm:grid-cols-2">
+          {[
+            { href: "/generic/terms-and-conditions", label: "Terms & Conditions" },
+            { href: "/generic/cancellation-refund-policy", label: "Cancellation & Refund Policy" },
+          ].map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="group flex items-center justify-between gap-3 rounded-[16px] border border-[#e1e5ef] bg-white px-5 py-4 font-semibold text-[#0b1842] transition-all hover:border-[#f99c1e]/60 hover:shadow-[0_10px_24px_-14px_rgba(11,24,66,0.35)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f99c1e]"
+            >
+              {link.label}
+              <ArrowRight aria-hidden="true" className="h-4 w-4 shrink-0 text-[#f99c1e] transition-transform group-hover:translate-x-1" />
+            </Link>
+          ))}
+        </nav>
       </div>
     </main>
   );

@@ -54,6 +54,8 @@ export default function GenericThankYouPage() {
         <footer className="mt-6 flex flex-wrap justify-center sm:mt-8 gap-x-5 gap-y-3 text-center text-sm text-[#65708a]">
           <p>© Southern Spine, Hyderabad. All rights reserved.</p>
           <Link href="/generic/privacy-policy" className={`rounded-sm text-[#29469b] hover:underline ${focusStyles}`}>Privacy Policy</Link>
+          <Link href="/generic/terms-and-conditions" className={`rounded-sm text-[#29469b] hover:underline ${focusStyles}`}>Terms &amp; Conditions</Link>
+          <Link href="/generic/cancellation-refund-policy" className={`rounded-sm text-[#29469b] hover:underline ${focusStyles}`}>Cancellation &amp; Refund</Link>
         </footer>
       </div>
     </main>
