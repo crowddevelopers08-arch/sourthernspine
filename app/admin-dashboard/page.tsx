@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
-import { Search, Filter, Download, Phone, Mail, Calendar, Clock, RefreshCw, Users, FileText, ChevronDown, ChevronUp, IndianRupee, CreditCard, CheckCircle2, XCircle, Hourglass } from "lucide-react"
+import { Search, Filter, Download, Phone, Mail, Calendar, Clock, RefreshCw, Users, FileText, ChevronDown, ChevronUp, ChevronRight, IndianRupee, CreditCard, CheckCircle2, XCircle, Hourglass } from "lucide-react"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -81,6 +81,8 @@ export default function LeadsTable({
   const [treatmentFilter, setTreatmentFilter] = useState<string>("all")
   const [dateFilter, setDateFilter] = useState<string>("all")
   const [formFilter, setFormFilter] = useState<string>("all")
+  // Shown on every visit: pick which form's leads to view first
+  const [showFormPicker, setShowFormPicker] = useState(true)
   const [paymentFilter, setPaymentFilter] = useState<string>("all")
   const [expandedLead, setExpandedLead] = useState<string | null>(null)
   const [sortConfig, setSortConfig] = useState<{ key: string; direction: 'asc' | 'desc' } | null>(null)
@@ -270,6 +272,10 @@ export default function LeadsTable({
 
   const formStats = getFormStats()
 
+  // Only the generic LP takes online payments – hide the Payment column when viewing Southern Spine leads
+  const showPaymentColumn = formFilter !== 'southernspine'
+  const tableColumns = showPaymentColumn ? 8 : 7
+
   // Razorpay totals (generic LP bookings)
   const paidLeads = leads.filter(l => l.paymentStatus === 'paid')
   const paymentStats = {
@@ -372,8 +378,58 @@ export default function LeadsTable({
     }
   }
 
+  const formChoices = [
+    { value: "all", label: "All Forms", description: "Every lead from both landing pages", icon: Users, count: leads.length },
+    { value: "southernspine", label: "Southern Spine", description: "Main landing page – booking popup", icon: FileText, count: leads.filter(l => l.formName === "southernspine").length },
+    { value: "generic-leads", label: "Generic LP", description: "Generic landing page – Razorpay bookings", icon: CreditCard, count: leads.filter(l => l.formName === "generic-leads").length },
+  ]
+
+  const chooseForm = (value: string) => {
+    setFormFilter(value)
+    setShowFormPicker(false)
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900 p-4">
+      {/* Form picker – appears each time the dashboard opens */}
+      {showFormPicker && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/50 p-4 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="form-picker-title"
+          onKeyDown={(e) => e.key === "Escape" && chooseForm("all")}
+        >
+          <div className="w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-2xl">
+            <div className="border-b border-gray-200 px-6 py-5">
+              <h2 id="form-picker-title" className="text-xl font-bold text-gray-900">Which leads do you want to see?</h2>
+              <p className="mt-1 text-sm text-gray-600">Choose a form. You can change it later from the Form filter.</p>
+            </div>
+            <div className="flex flex-col gap-2 p-4">
+              {formChoices.map(({ value, label, description, icon: Icon, count }, i) => (
+                <button
+                  key={value}
+                  type="button"
+                  autoFocus={i === 0}
+                  onClick={() => chooseForm(value)}
+                  className="group flex w-full items-center gap-4 rounded-xl border border-gray-200 px-4 py-3 text-left transition-all hover:border-blue-300 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                >
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gray-100 text-gray-700 group-hover:bg-blue-100 group-hover:text-blue-700">
+                    <Icon className="h-5 w-5" />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block font-semibold text-gray-900">{label}</span>
+                    <span className="block truncate text-xs text-gray-500">{description}</span>
+                  </span>
+                  <span className="text-sm font-medium text-gray-500">{loading ? "…" : count}</span>
+                  <ChevronRight className="h-5 w-5 shrink-0 text-gray-400 transition-transform group-hover:translate-x-1 group-hover:text-blue-600" />
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
       <Card className="w-full bg-white border-gray-200">
         <CardHeader className="border-b border-gray-200">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -579,7 +635,9 @@ export default function LeadsTable({
                     <th className="h-12 px-4 text-left align-middle font-medium text-gray-700">Treatment/Service</th>
                     <th className="h-12 px-4 text-left align-middle font-medium text-gray-700">Form</th>
                     <th className="h-12 px-4 text-left align-middle font-medium text-gray-700">Status</th>
-                    <th className="h-12 px-4 text-left align-middle font-medium text-gray-700">Payment</th>
+                    {showPaymentColumn && (
+                      <th className="h-12 px-4 text-left align-middle font-medium text-gray-700">Payment</th>
+                    )}
                     <th 
                       className="h-12 px-4 text-left align-middle font-medium text-gray-700 cursor-pointer hover:bg-gray-100 transition-colors"
                       onClick={() => handleSort('createdAt')}
@@ -597,7 +655,7 @@ export default function LeadsTable({
                 <tbody>
                   {loading ? (
                     <tr>
-                      <td colSpan={8} className="p-8 text-center text-gray-500">
+                      <td colSpan={tableColumns} className="p-8 text-center text-gray-500">
                         <div className="flex items-center justify-center gap-2">
                           <RefreshCw className="h-4 w-4 animate-spin" />
                           Loading leads...
@@ -606,7 +664,7 @@ export default function LeadsTable({
                     </tr>
                   ) : filteredLeads.length === 0 ? (
                     <tr>
-                      <td colSpan={8} className="p-8 text-center text-gray-500">
+                      <td colSpan={tableColumns} className="p-8 text-center text-gray-500">
                         No leads found matching your criteria
                       </td>
                     </tr>
@@ -716,9 +774,11 @@ export default function LeadsTable({
                                 </DropdownMenuContent>
                               </DropdownMenu>
                             </td>
-                            <td className="p-4 align-middle">
-                              {getPaymentBadge(lead)}
-                            </td>
+                            {showPaymentColumn && (
+                              <td className="p-4 align-middle">
+                                {getPaymentBadge(lead)}
+                              </td>
+                            )}
                             <td className="p-4 align-middle text-sm text-gray-600">
                               {formattedDate.date}
                               <br />
@@ -758,7 +818,7 @@ export default function LeadsTable({
                           </tr>
                           {expandedLead === lead.id && (
                             <tr className="bg-gray-50 border-b border-gray-200">
-                              <td colSpan={8} className="p-4">
+                              <td colSpan={tableColumns} className="p-4">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                                   <div>
                                     <h4 className="font-medium text-gray-900 mb-2">Lead Details</h4>

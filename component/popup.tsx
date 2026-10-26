@@ -184,7 +184,7 @@ const PopupForm: React.FC<PopupFormProps> = ({
                 value={formData.fullName}
                 onChange={handleChange}
                 placeholder="Enter your full name"
-                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 md:py-3.5 text-sm sm:text-base border-2 border-gray-200 rounded-lg sm:rounded-xl focus:border-[#0b1842] focus:ring-2 sm:focus:ring-4 focus:ring-[#0b1842]/10 transition-all duration-200 outline-none placeholder:text-gray-400"
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 md:py-3.5 text-sm sm:text-base border-2 border-gray-200 rounded-lg sm:rounded-xl focus:border-[#0b1842] focus:ring-2 sm:focus:ring-4 focus:ring-[#0b1842]/10 transition-all duration-200 outline-none bg-white text-[#0b1842] caret-[#0b1842] placeholder:text-gray-400"
                 required
                 disabled={isSubmitting}
               />
@@ -201,7 +201,7 @@ const PopupForm: React.FC<PopupFormProps> = ({
                 value={formData.phoneNumber}
                 onChange={handleChange}
                 placeholder="Enter your phone number"
-                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 md:py-3.5 text-sm sm:text-base border-2 border-gray-200 rounded-lg sm:rounded-xl focus:border-[#0b1842] focus:ring-2 sm:focus:ring-4 focus:ring-[#0b1842]/10 transition-all duration-200 outline-none placeholder:text-gray-400"
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 md:py-3.5 text-sm sm:text-base border-2 border-gray-200 rounded-lg sm:rounded-xl focus:border-[#0b1842] focus:ring-2 sm:focus:ring-4 focus:ring-[#0b1842]/10 transition-all duration-200 outline-none bg-white text-[#0b1842] caret-[#0b1842] placeholder:text-gray-400"
                 required
                 disabled={isSubmitting}
               />
@@ -218,7 +218,7 @@ const PopupForm: React.FC<PopupFormProps> = ({
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="Enter your email"
-                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 md:py-3.5 text-sm sm:text-base border-2 border-gray-200 rounded-lg sm:rounded-xl focus:border-[#0b1842] focus:ring-2 sm:focus:ring-4 focus:ring-[#0b1842]/10 transition-all duration-200 outline-none placeholder:text-gray-400"
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 md:py-3.5 text-sm sm:text-base border-2 border-gray-200 rounded-lg sm:rounded-xl focus:border-[#0b1842] focus:ring-2 sm:focus:ring-4 focus:ring-[#0b1842]/10 transition-all duration-200 outline-none bg-white text-[#0b1842] caret-[#0b1842] placeholder:text-gray-400"
                 required
                 disabled={isSubmitting}
               />
