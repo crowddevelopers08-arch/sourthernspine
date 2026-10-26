@@ -5,6 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { GENERIC_LP_FORM, basicAuth, consultationFeeRupees, razorpayKeys } from "@/lib/razorpay";
 import { concerns, times } from "@/component/generic-com/booking-options";
+import { cleanPageUrl, pageUrlLine } from "@/lib/page-url";
 
 const NOT_CONFIGURED = "Online payment is not available right now. Please call us at 94641 08108 to book.";
 const APPOINTMENT_TYPE = "Consultation & Spinal Assessment";
@@ -34,6 +35,8 @@ export async function POST(req: NextRequest) {
   const phone = read("phone").replace(/\D/g, "");
   const concern = read("concern");
   const time = read("time");
+  // Landing page incl. UTM params; falls back to the Referer header
+  const pageUrl = cleanPageUrl(read("pageUrl")) ?? cleanPageUrl(req.headers.get("referer"));
 
   if (name.length < 2 || !/^[6-9]\d{9}$/.test(phone)) {
     return NextResponse.json({ error: "Please enter your name and a valid 10-digit mobile number." }, { status: 400 });
@@ -56,7 +59,9 @@ export async function POST(req: NextRequest) {
         appointmentType: APPOINTMENT_TYPE,
         condition: concern,
         preferredTime: time,
-        message: `Area of concern: ${concern}\nPreferred time: ${time}`,
+        message: [`Area of concern: ${concern}`, `Preferred time: ${time}`, pageUrl && pageUrlLine(pageUrl)]
+          .filter(Boolean)
+          .join("\n"),
         consent: true,
         source: "generic form",
         formName: GENERIC_LP_FORM,
@@ -88,6 +93,7 @@ export async function POST(req: NextRequest) {
           phone,
           concern,
           preferredTime: time,
+          pageUrl: (pageUrl ?? "").slice(0, 250), // Razorpay limits each note to 256 chars
         },
       }),
       signal: AbortSignal.timeout(15000),

@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
+import { cleanPageUrl, pageUrlLine } from "@/lib/page-url";
 
 /**
  * ✅ Prisma singleton (prevents "too many connections" in Next.js dev)
@@ -28,6 +29,8 @@ interface LeadData {
   condition?: string;
   preferredDate?: string;
   preferredTime?: string;
+  // Landing page the form was submitted from
+  pageUrl?: string;
 }
 
 function logEnvironmentStatus() {
@@ -99,6 +102,10 @@ async function saveLeadToDatabase(leadData: LeadData, telecrmResult?: any) {
     ].filter(Boolean);
     if (details.length) messageField = [messageField, ...details].filter(Boolean).join("\n");
   }
+
+  // Every form: remember which landing page (and ad campaign params) the lead came from
+  const pageUrl = cleanPageUrl(leadData.pageUrl);
+  if (pageUrl) messageField = [messageField, pageUrlLine(pageUrl)].filter(Boolean).join("\n");
 
   const lead = await prisma.lead.create({
     data: {
@@ -188,6 +195,8 @@ async function sendToTeleCRM(leadData: LeadData) {
   if (leadData.age) systemNotes.push(`Age: ${leadData.age}`);
   systemNotes.push(`Consent Given: ${leadData.consent ? "Yes" : "No"}`);
   systemNotes.push(`Source: ${leadData.source || "Not specified"}`);
+  const pageUrl = cleanPageUrl(leadData.pageUrl);
+  if (pageUrl) systemNotes.push(pageUrlLine(pageUrl));
 
   // Convert notes to TeleCRM actions
   telecrmPayload.actions = systemNotes.map(text => ({

@@ -72,7 +72,7 @@ export function useRazorpayBooking() {
         fetch("/api/generic/razorpay/order", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(fields),
+          body: JSON.stringify({ ...fields, pageUrl: window.location.href }), // landing page incl. UTM params
         }),
       ]);
       const order = await res.json();

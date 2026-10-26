@@ -56,6 +56,10 @@ const getFormLabel = (formName: string) => {
 const getPreferredTime = (message?: string | null) =>
   message?.match(/Preferred time:\s*(.+)/i)?.[1]?.trim() || ""
 
+// Both LP forms keep the landing page URL inside the message ("Page URL: https://…")
+const getPageUrl = (message?: string | null) =>
+  message?.match(/Page URL:\s*(https?:\/\/\S+)/i)?.[1] || ""
+
 const formatRupees = (paise?: number | null) =>
   `₹${((paise || 0) / 100).toLocaleString('en-IN', { maximumFractionDigits: 2 })}`
 
@@ -276,7 +280,7 @@ export default function LeadsTable({
   }
 
   const exportToCSV = () => {
-    const headers = ["Name", "Phone", "Email", "Treatment/Appointment Type", "Preferred Time", "Message", "City", "Age", "Status", "Form Name", "Source", "Payment Status", "Amount (INR)", "Razorpay Payment ID", "Razorpay Order ID", "Payment Method", "Paid At", "Created At"]
+    const headers = ["Name", "Phone", "Email", "Treatment/Appointment Type", "Preferred Time", "Message", "City", "Age", "Status", "Form Name", "Source", "Payment Status", "Amount (INR)", "Razorpay Payment ID", "Razorpay Order ID", "Payment Method", "Paid At", "Page URL", "Created At"]
     const csvData = filteredLeads.map(lead => [
       lead.name || '',
       lead.phone || '',
@@ -295,7 +299,8 @@ export default function LeadsTable({
       lead.razorpayOrderId || '',
       lead.paymentMethod || '',
       lead.paidAt && isClient ? `"${new Date(lead.paidAt).toLocaleString('en-IN')}"` : (lead.paidAt || ''),
-      isClient ? `"${new Date(lead.createdAt).toLocaleString('en-IN')}"` : lead.createdAt
+      `"${getPageUrl(lead.message).replace(/"/g, '""')}"`,
+      isClient ?`"${new Date(lead.createdAt).toLocaleString('en-IN')}"` : lead.createdAt
     ])
     
     const csvContent = [headers, ...csvData]
@@ -760,6 +765,20 @@ export default function LeadsTable({
                                     <div className="space-y-2 text-gray-700">
                                       <div><span className="font-medium">Source:</span> {lead.source || 'Not specified'}</div>
                                       <div><span className="font-medium">Preferred Time:</span> {getPreferredTime(lead.message) || 'Not specified'}</div>
+                                      <div className="break-all">
+                                        <span className="font-medium">Page URL:</span>{' '}
+                                        {getPageUrl(lead.message) ? (
+                                          <a
+                                            href={getPageUrl(lead.message)}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            onClick={(e) => e.stopPropagation()}
+                                            className="text-blue-700 underline hover:text-blue-900"
+                                          >
+                                            {getPageUrl(lead.message)}
+                                          </a>
+                                        ) : 'Not captured'}
+                                      </div>
                                       <div><span className="font-medium">Age:</span> {lead.age || 'Not specified'}</div>
                                       <div><span className="font-medium">City:</span> {lead.city || 'Not specified'}</div>
                                       <div><span className="font-medium">Consent:</span> {lead.consent ? 'Yes' : 'No'}</div>

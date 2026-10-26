@@ -58,7 +58,8 @@ const PopupForm: React.FC<PopupFormProps> = ({
         formName: 'southernspine', // This is IMPORTANT nanba!
         source: 'website-form',
         consent: true, // Assuming consent is given
-        status: 'new'
+        status: 'new',
+        pageUrl: window.location.href, // landing page incl. UTM params
       };
 
       console.log('📤 Submitting form data:', {
