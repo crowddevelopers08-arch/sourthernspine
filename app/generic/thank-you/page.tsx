@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Script from "next/script";
-import { ArrowLeft, Check, Phone } from "lucide-react";
+import { ArrowLeft, Check, Phone, ShieldCheck } from "lucide-react";
 import { outfit } from "@/component/generic-com/font";
 
 export const metadata: Metadata = {
@@ -13,7 +13,15 @@ export const metadata: Metadata = {
 
 const focusStyles = "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f99c1e]";
 
-export default function GenericThankYouPage() {
+export default async function GenericThankYouPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ payment_id?: string | string[] }>;
+}) {
+  const { payment_id } = await searchParams;
+  // Only show values shaped like a Razorpay payment id
+  const paymentId = typeof payment_id === "string" && /^pay_[A-Za-z0-9]{6,40}$/.test(payment_id) ? payment_id : null;
+
   return (
     <main className={`${outfit.className} min-h-screen bg-[#f5f6fb] pb-4 text-[#0b1842] sm:pb-2`}>
       <Script id="generic-google-ads-conversion" strategy="afterInteractive">
@@ -44,7 +52,18 @@ export default function GenericThankYouPage() {
           <div aria-hidden="true" className="pointer-events-none absolute -right-40 -top-48 -z-10 h-[500px] w-[500px] rounded-full border-[70px] border-white/5" />
           <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full sm:h-20 sm:w-20 border border-[#ffb547]/30 bg-[#ffb547]/10"><Check aria-hidden="true" className="h-8 w-8 text-[#ffb547] sm:h-10 sm:w-10" /></span>
           <h1 id="thank-you-heading" className="mt-6 text-[28px] font-semibold leading-tight tracking-tight text-white sm:text-5xl">Thank You for Choosing <span className="text-[#ffb547]">Southern Spine</span></h1>
-          <p className="mt-5 text-base font-medium text-white sm:mt-6 sm:text-lg">Your appointment request has been received.</p>
+          <p className="mt-5 text-base font-medium text-white sm:mt-6 sm:text-lg">
+            {paymentId ? "Your payment was successful and your booking request has been received." : "Your appointment request has been received."}
+          </p>
+          {paymentId && (
+            <div className="mx-auto mt-5 inline-flex max-w-full flex-col items-center gap-1 rounded-2xl border border-[#ffb547]/30 bg-[#ffb547]/10 px-5 py-3 text-sm text-[#ffd99a] sm:flex-row sm:gap-3">
+              <span className="inline-flex items-center gap-2 font-semibold text-white">
+                <ShieldCheck aria-hidden="true" className="h-4 w-4 text-[#ffb547]" />
+                Payment received · ₹499
+              </span>
+              <span className="break-all">Payment ID: {paymentId}</span>
+            </div>
+          )}
           <p className="mx-auto mt-3 max-w-lg text-[15px] leading-7 text-[#d1d8eb] sm:text-base">Our team will call you to discuss your concerns and confirm your appointment. Your visit is confirmed once you hear from us.</p>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <Link href="/generic" className={`inline-flex min-h-14 items-center justify-center gap-2 rounded-xl bg-[#f99c1e] px-6 py-4 font-semibold text-[#0b1842] transition-colors hover:bg-[#ffb547] ${focusStyles}`}><ArrowLeft aria-hidden="true" className="h-4 w-4" />Back to Home</Link>

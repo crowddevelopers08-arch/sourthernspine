@@ -32,12 +32,21 @@ model Lead {
   
   telecrmSynced     Boolean  @default(false)
   telecrmId         String?
-  
+
+  // Razorpay booking payment (generic LP) – null for leads that don't pay online
+  paymentStatus     String?            // "pending" | "paid" | "failed"
+  paymentAmount     Int?               // in paise
+  razorpayOrderId   String?  @unique
+  razorpayPaymentId String?
+  paymentMethod     String?
+  paidAt            DateTime?
+
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 
   @@index([status])
   @@index([formName])
   @@index([telecrmSynced])
+  @@index([paymentStatus])
   @@index([createdAt])
 }

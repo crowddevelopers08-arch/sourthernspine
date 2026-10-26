@@ -418,6 +418,13 @@ export async function GET(request: NextRequest) {
           status: lead.status,
           telecrmSynced: lead.telecrmSynced,
           telecrmId: lead.telecrmId,
+          // Razorpay booking payment (generic LP)
+          paymentStatus: lead.paymentStatus,
+          paymentAmount: lead.paymentAmount,
+          razorpayOrderId: lead.razorpayOrderId,
+          razorpayPaymentId: lead.razorpayPaymentId,
+          paymentMethod: lead.paymentMethod,
+          paidAt: lead.paidAt ? lead.paidAt.toISOString() : null,
           createdAt: lead.createdAt.toISOString(),
           updatedAt: lead.updatedAt.toISOString(),
         })),

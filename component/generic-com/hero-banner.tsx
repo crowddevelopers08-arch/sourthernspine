@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState, type FormEvent } from "react";
-import { useRouter } from "next/navigation";
 import {
   ArrowRight,
   CalendarCheck,
@@ -15,6 +14,8 @@ import {
   User,
 } from "lucide-react";
 import { outfit } from "./font";
+import { concerns, times } from "./booking-options";
+import { useRazorpayBooking } from "./use-razorpay-booking";
 
 const BG_IMAGES = [
   "https://ik.imagekit.io/9yxs4igok/public/ban-1.jpg",
@@ -30,14 +31,9 @@ const highlights = [
   "Transparent pricing with flexible payment plans",
 ];
 
-const concerns = ["Back Pain", "Neck Pain", "Hip Pain", "Sciatica", "Shoulder Pain", "Ankle Sprain", "Other"];
-const times = ["Tomorrow", "Within This Week", "This Month"];
-
 export default function HeroBanner() {
-  const router = useRouter();
   const [form, setForm] = useState({ name: "", phone: "", concern: "Back Pain", time: "Tomorrow" });
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const { startBooking, submitting, error, setError } = useRazorpayBooking();
   const [bgIndex, setBgIndex] = useState(0);
 
   useEffect(() => {
@@ -53,33 +49,10 @@ export default function HeroBanner() {
 
     const digits = form.phone.replace(/\D/g, "");
     if (form.name.trim().length < 2) return setError("Please enter your full name.");
-    if (digits.length !== 10) return setError("Please enter a valid 10-digit phone number.");
+    if (!/^[6-9]\d{9}$/.test(digits)) return setError("Please enter a valid 10-digit mobile number.");
 
-    setSubmitting(true);
-    try {
-      const response = await fetch("/api/leads", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: form.name.trim(),
-          phone: digits,
-          condition: form.concern,
-          preferredTime: form.time,
-          appointmentType: "Consultation & Spinal Assessment",
-          formName: "generic-leads",
-          source: "generic form",
-          consent: true,
-          status: "new",
-        }),
-      });
-      const result = await response.json();
-      if (!response.ok || !result.success) throw new Error(result.error || "Failed to submit");
-      router.push("/generic/thank-you");
-    } catch {
-      setError("Something went wrong. Please try again or call us directly.");
-    } finally {
-      setSubmitting(false);
-    }
+    // Saves the lead, then opens Razorpay Checkout for the ₹499 consultation
+    await startBooking({ name: form.name.trim(), phone: digits, concern: form.concern, time: form.time });
   };
 
   return (
@@ -303,12 +276,12 @@ export default function HeroBanner() {
                 {submitting ? (
                   <>
                     <Loader2 className="h-[18px] w-[18px] animate-spin" />
-                    Booking...
+                    Processing...
                   </>
                 ) : (
                   <>
                     <CalendarCheck className="h-[18px] w-[18px]" strokeWidth={2.4} />
-                    Book Appointment
+                    Pay ₹499 &amp; Book
                     <ArrowRight className="h-[16px] w-[16px] transition-transform duration-300 group-hover:translate-x-[3px]" strokeWidth={2.6} />
                   </>
                 )}
@@ -316,7 +289,7 @@ export default function HeroBanner() {
 
               <p className="mt-[10px] flex items-center justify-center gap-[6px] text-center text-[12px] leading-[1.5] text-[#9ca3af] sm:mt-[12px] sm:text-[13px]">
                 <Lock className="h-[12px] w-[12px] shrink-0" />
-                <span>Your details are used only to schedule your visit.</span>
+                <span>Secure payment by Razorpay. Your details are used only to schedule your visit.</span>
               </p>
             </form>
           </div>

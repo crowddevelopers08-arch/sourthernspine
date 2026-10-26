@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
-import { Search, Filter, Download, Phone, Mail, Calendar, Clock, RefreshCw, Users, FileText, ChevronDown, ChevronUp } from "lucide-react"
+import { Search, Filter, Download, Phone, Mail, Calendar, Clock, RefreshCw, Users, FileText, ChevronDown, ChevronUp, IndianRupee, CreditCard, CheckCircle2, XCircle, Hourglass } from "lucide-react"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -30,6 +30,13 @@ interface Lead {
   status: 'new' | 'contacted' | 'scheduled' | 'converted' | 'lost'
   telecrmSynced: boolean
   telecrmId?: string
+  // Razorpay booking payment (generic LP) – null for leads that don't pay online
+  paymentStatus?: 'pending' | 'paid' | 'failed' | null
+  paymentAmount?: number | null   // paise
+  razorpayOrderId?: string | null
+  razorpayPaymentId?: string | null
+  paymentMethod?: string | null
+  paidAt?: string | null
   createdAt: string
   updatedAt: string
 }
@@ -49,6 +56,9 @@ const getFormLabel = (formName: string) => {
 const getPreferredTime = (message?: string | null) =>
   message?.match(/Preferred time:\s*(.+)/i)?.[1]?.trim() || ""
 
+const formatRupees = (paise?: number | null) =>
+  `₹${((paise || 0) / 100).toLocaleString('en-IN', { maximumFractionDigits: 2 })}`
+
 interface LeadsTableProps {
   initialLeads?: Lead[]
   autoRefresh?: boolean
@@ -67,6 +77,7 @@ export default function LeadsTable({
   const [treatmentFilter, setTreatmentFilter] = useState<string>("all")
   const [dateFilter, setDateFilter] = useState<string>("all")
   const [formFilter, setFormFilter] = useState<string>("all")
+  const [paymentFilter, setPaymentFilter] = useState<string>("all")
   const [expandedLead, setExpandedLead] = useState<string | null>(null)
   const [sortConfig, setSortConfig] = useState<{ key: string; direction: 'asc' | 'desc' } | null>(null)
   const [isClient, setIsClient] = useState(false)
@@ -146,14 +157,19 @@ export default function LeadsTable({
       safeString(lead.treatment).includes(safeString(searchTerm)) ||
       safeString(lead.message).includes(safeString(searchTerm)) ||
       safeString(lead.city).includes(safeString(searchTerm)) ||
-      safeString(lead.formName).includes(safeString(searchTerm))
-    
+      safeString(lead.formName).includes(safeString(searchTerm)) ||
+      safeString(lead.razorpayPaymentId).includes(safeString(searchTerm)) ||
+      safeString(lead.razorpayOrderId).includes(safeString(searchTerm))
+        
     const matchesStatus = statusFilter === "all" || lead.status === statusFilter
     const matchesTreatment = treatmentFilter === "all" || lead.treatment === treatmentFilter
     const matchesDate = dateFilter === "all" || isWithinDateRange(lead.createdAt, dateFilter)
     const matchesForm = formFilter === "all" || lead.formName === formFilter
+    const matchesPayment =
+      paymentFilter === "all" ||
+      (paymentFilter === "none" ? !lead.paymentStatus : lead.paymentStatus === paymentFilter)
     
-    return matchesSearch && matchesStatus && matchesTreatment && matchesDate && matchesForm
+    return matchesSearch && matchesStatus && matchesTreatment && matchesDate && matchesForm && matchesPayment
   })
 
   function isWithinDateRange(date: string, range: string): boolean {
@@ -208,10 +224,22 @@ export default function LeadsTable({
     return <Badge variant="outline" className={`${config.color} border text-xs`}>{config.label}</Badge>
   }
 
-  const getTelecrmBadge = (synced: boolean) => {
-    return synced ? 
-      <Badge className="bg-green-100 text-green-800 border-green-200">Synced</Badge> :
-      <Badge variant="outline" className="bg-yellow-100 text-yellow-800 border-yellow-200">Pending</Badge>
+  const getPaymentBadge = (lead: Lead) => {
+    switch (lead.paymentStatus) {
+      case 'paid':
+        return (
+          <div className="flex flex-col gap-1">
+            <Badge className="w-fit bg-green-100 text-green-800 border-green-200 gap-1"><CheckCircle2 className="h-3 w-3" />Paid</Badge>
+            <span className="text-xs font-medium text-gray-700">{formatRupees(lead.paymentAmount)}</span>
+          </div>
+        )
+      case 'failed':
+        return <Badge variant="outline" className="bg-red-100 text-red-800 border-red-200 gap-1"><XCircle className="h-3 w-3" />Failed</Badge>
+      case 'pending':
+        return <Badge variant="outline" className="bg-yellow-100 text-yellow-800 border-yellow-200 gap-1"><Hourglass className="h-3 w-3" />Pending</Badge>
+      default:
+        return <span className="text-xs text-gray-400">No online payment</span>
+    }
   }
 
   // Get unique form names for filter
@@ -219,18 +247,18 @@ export default function LeadsTable({
 
   // Get statistics
   const getFormStats = () => {
-    const stats: { [key: string]: { total: number, new: number, converted: number, synced: number } } = {}
+    const stats: { [key: string]: { total: number, new: number, converted: number, paid: number } } = {}
     
     leads.forEach(lead => {
       const formName = lead.formName || 'Unknown'
       if (!stats[formName]) {
-        stats[formName] = { total: 0, new: 0, converted: 0, synced: 0 }
+        stats[formName] = { total: 0, new: 0, converted: 0, paid: 0 }
       }
       
       stats[formName].total++
       if (lead.status === 'new') stats[formName].new++
       if (lead.status === 'converted') stats[formName].converted++
-      if (lead.telecrmSynced) stats[formName].synced++
+      if (lead.paymentStatus === 'paid') stats[formName].paid++
     })
     
     return stats
@@ -238,8 +266,17 @@ export default function LeadsTable({
 
   const formStats = getFormStats()
 
+  // Razorpay totals (generic LP bookings)
+  const paidLeads = leads.filter(l => l.paymentStatus === 'paid')
+  const paymentStats = {
+    paid: paidLeads.length,
+    revenue: paidLeads.reduce((sum, l) => sum + (l.paymentAmount || 0), 0),
+    pending: leads.filter(l => l.paymentStatus === 'pending').length,
+    failed: leads.filter(l => l.paymentStatus === 'failed').length,
+  }
+
   const exportToCSV = () => {
-    const headers = ["Name", "Phone", "Email", "Treatment/Appointment Type", "Preferred Time", "Message", "City", "Age", "Status", "Form Name", "Source", "TeleCRM Synced", "Created At"]
+    const headers = ["Name", "Phone", "Email", "Treatment/Appointment Type", "Preferred Time", "Message", "City", "Age", "Status", "Form Name", "Source", "Payment Status", "Amount (INR)", "Razorpay Payment ID", "Razorpay Order ID", "Payment Method", "Paid At", "Created At"]
     const csvData = filteredLeads.map(lead => [
       lead.name || '',
       lead.phone || '',
@@ -252,8 +289,13 @@ export default function LeadsTable({
       lead.status || '',
       lead.formName || '',
       lead.source || '',
-      lead.telecrmSynced ? "Yes" : "No",
-      isClient ? new Date(lead.createdAt).toLocaleString('en-IN') : lead.createdAt
+      lead.paymentStatus || '',
+      lead.paymentAmount ? (lead.paymentAmount / 100).toFixed(2) : '',
+      lead.razorpayPaymentId || '',
+      lead.razorpayOrderId || '',
+      lead.paymentMethod || '',
+      lead.paidAt && isClient ? `"${new Date(lead.paidAt).toLocaleString('en-IN')}"` : (lead.paidAt || ''),
+      isClient ? `"${new Date(lead.createdAt).toLocaleString('en-IN')}"` : lead.createdAt
     ])
     
     const csvContent = [headers, ...csvData]
@@ -359,6 +401,24 @@ export default function LeadsTable({
         </CardHeader>
         
         <CardContent className="p-6">
+          {/* Payment Statistics (Razorpay – generic LP) */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+            {[
+              { label: "Paid bookings", value: paymentStats.paid, icon: CheckCircle2, tone: "text-green-700 bg-green-50 border-green-200" },
+              { label: "Collected", value: formatRupees(paymentStats.revenue), icon: IndianRupee, tone: "text-blue-700 bg-blue-50 border-blue-200" },
+              { label: "Payment pending", value: paymentStats.pending, icon: Hourglass, tone: "text-yellow-700 bg-yellow-50 border-yellow-200" },
+              { label: "Payment failed", value: paymentStats.failed, icon: XCircle, tone: "text-red-700 bg-red-50 border-red-200" },
+            ].map(({ label, value, icon: Icon, tone }) => (
+              <Card key={label} className={`p-4 border shadow-sm ${tone}`}>
+                <div className="flex items-center gap-2 text-sm font-medium">
+                  <Icon className="h-4 w-4" />
+                  {label}
+                </div>
+                <div className="mt-2 text-2xl font-bold text-gray-900">{value}</div>
+              </Card>
+            ))}
+          </div>
+
           {/* Form Statistics */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
             {Object.entries(formStats).map(([formName, stats]) => (
@@ -384,7 +444,7 @@ export default function LeadsTable({
                     </div>
                     <div className="flex items-center gap-1 justify-end">
                       <div className="w-2 h-2 bg-gray-500 rounded-full"></div>
-                      <span className="text-gray-600">Synced: {stats.synced}</span>
+                      <span className="text-gray-600">Paid: {stats.paid}</span>
                     </div>
                   </div>
                 </div>
@@ -393,7 +453,7 @@ export default function LeadsTable({
           </div>
 
           {/* Filters */}
-          <div className="grid grid-cols-1 md:grid-cols-6 gap-4 mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
+          <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-7 gap-4 mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
             <div className="md:col-span-2">
               <div className="relative">
                 <Search className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
@@ -465,6 +525,20 @@ export default function LeadsTable({
               </SelectContent>
             </Select>
 
+            <Select value={paymentFilter} onValueChange={setPaymentFilter}>
+              <SelectTrigger className="bg-white border-gray-300 text-gray-900">
+                <CreditCard className="h-4 w-4 mr-2 text-gray-500" />
+                <SelectValue placeholder="Payment" />
+              </SelectTrigger>
+              <SelectContent className="bg-white border-gray-300 text-gray-900">
+                <SelectItem value="all" className="focus:bg-gray-100">All Payments</SelectItem>
+                <SelectItem value="paid" className="focus:bg-gray-100">Paid</SelectItem>
+                <SelectItem value="pending" className="focus:bg-gray-100">Pending</SelectItem>
+                <SelectItem value="failed" className="focus:bg-gray-100">Failed</SelectItem>
+                <SelectItem value="none" className="focus:bg-gray-100">No online payment</SelectItem>
+              </SelectContent>
+            </Select>
+
             <Select value={dateFilter} onValueChange={setDateFilter}>
               <SelectTrigger className="bg-white border-gray-300 text-gray-900">
                 <Calendar className="h-4 w-4 mr-2 text-gray-500" />
@@ -500,7 +574,7 @@ export default function LeadsTable({
                     <th className="h-12 px-4 text-left align-middle font-medium text-gray-700">Treatment/Service</th>
                     <th className="h-12 px-4 text-left align-middle font-medium text-gray-700">Form</th>
                     <th className="h-12 px-4 text-left align-middle font-medium text-gray-700">Status</th>
-                    <th className="h-12 px-4 text-left align-middle font-medium text-gray-700">Sync</th>
+                    <th className="h-12 px-4 text-left align-middle font-medium text-gray-700">Payment</th>
                     <th 
                       className="h-12 px-4 text-left align-middle font-medium text-gray-700 cursor-pointer hover:bg-gray-100 transition-colors"
                       onClick={() => handleSort('createdAt')}
@@ -638,7 +712,7 @@ export default function LeadsTable({
                               </DropdownMenu>
                             </td>
                             <td className="p-4 align-middle">
-                              {getTelecrmBadge(lead.telecrmSynced)}
+                              {getPaymentBadge(lead)}
                             </td>
                             <td className="p-4 align-middle text-sm text-gray-600">
                               {formattedDate.date}
@@ -694,6 +768,19 @@ export default function LeadsTable({
                                       )}
                                     </div>
                                   </div>
+                                  {lead.paymentStatus && (
+                                    <div className="md:col-span-2 order-last">
+                                      <h4 className="font-medium text-gray-900 mb-2">Payment (Razorpay)</h4>
+                                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 text-gray-700 bg-white p-3 rounded border border-gray-200">
+                                        <div><span className="font-medium">Status:</span> {lead.paymentStatus}</div>
+                                        <div><span className="font-medium">Amount:</span> {lead.paymentAmount ? formatRupees(lead.paymentAmount) : '—'}</div>
+                                        <div><span className="font-medium">Method:</span> {lead.paymentMethod || '—'}</div>
+                                        <div className="break-all"><span className="font-medium">Payment ID:</span> {lead.razorpayPaymentId || '—'}</div>
+                                        <div className="break-all"><span className="font-medium">Order ID:</span> {lead.razorpayOrderId || '—'}</div>
+                                        <div><span className="font-medium">Paid at:</span> {lead.paidAt && isClient ? new Date(lead.paidAt).toLocaleString('en-IN') : '—'}</div>
+                                      </div>
+                                    </div>
+                                  )}
                                   <div>
                                     <h4 className="font-medium text-gray-900 mb-2">Message</h4>
                                     <p className="text-gray-700 bg-white p-3 rounded border border-gray-200">
@@ -731,7 +818,7 @@ export default function LeadsTable({
               </div>
               <div className="flex items-center gap-1">
                 <div className="w-2 h-2 bg-gray-500 rounded-full"></div>
-                <span>Synced: {leads.filter(l => l.telecrmSynced).length}</span>
+                <span>Paid: {paymentStats.paid} ({formatRupees(paymentStats.revenue)})</span>
               </div>
             </div>
           </div>
