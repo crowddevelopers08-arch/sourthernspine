@@ -46,7 +46,7 @@ const getFormLabel = (formName: string) => {
     case 'hairtreatment': return 'Hair Treatment'
     case 'skin and hair leads': return 'Skin & Hair'
     case 'southernspine': return 'Southern Spine'
-    case 'generic-leads': return 'Generic LP'
+    case 'generic-leads': return 'Southern Spine Paid LP'
     case 'Unknown': return 'Unknown Form'
     default: return formName
   }
@@ -222,7 +222,7 @@ export default function LeadsTable({
       'hairtreatment': { label: "Hair Treatment", color: "bg-purple-100 text-purple-800 border-purple-200" },
       'skin and hair leads': { label: "Skin & Hair", color: "bg-indigo-100 text-indigo-800 border-indigo-200" },
       'southernspine': { label: "Southern Spine", color: "bg-blue-100 text-blue-800 border-blue-200" },
-      'generic-leads': { label: "Generic LP", color: "bg-orange-100 text-orange-800 border-orange-200" },
+      'generic-leads': { label: "Southern Spine Paid LP", color: "bg-orange-100 text-orange-800 border-orange-200" },
       'default': { label: formName, color: "bg-gray-100 text-gray-800 border-gray-200" }
     }
     
@@ -381,7 +381,7 @@ export default function LeadsTable({
   const formChoices = [
     { value: "all", label: "All Forms", description: "Every lead from both landing pages", icon: Users, count: leads.length },
     { value: "southernspine", label: "Southern Spine", description: "Main landing page – booking popup", icon: FileText, count: leads.filter(l => l.formName === "southernspine").length },
-    { value: "generic-leads", label: "Generic LP", description: "Generic landing page – Razorpay bookings", icon: CreditCard, count: leads.filter(l => l.formName === "generic-leads").length },
+    { value: "generic-leads", label: "Southern Spine Paid LP", description: "Paid landing page – Razorpay bookings", icon: CreditCard, count: leads.filter(l => l.formName === "generic-leads").length },
   ]
 
   const chooseForm = (value: string) => {
@@ -514,21 +514,21 @@ export default function LeadsTable({
           </div>
 
           {/* Filters */}
-          <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-7 gap-4 mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
-            <div className="md:col-span-2">
+          <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-[minmax(0,1.8fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.7fr)_minmax(0,1fr)_minmax(0,1fr)] gap-4 mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
+            <div className="md:col-span-2 lg:col-span-1">
               <div className="relative">
                 <Search className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
                 <Input
                   placeholder="Search by name, phone, email, treatment, form..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 bg-white border-gray-300 text-gray-900 placeholder:text-gray-500"
+                  className="h-10 pl-10 bg-white border-gray-300 text-gray-900 placeholder:text-gray-500"
                 />
               </div>
             </div>
             
             <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="bg-white border-gray-300 text-gray-900">
+              <SelectTrigger className="w-full min-w-0 data-[size=default]:h-10 bg-white border-gray-300 text-gray-900">
                 <Filter className="h-4 w-4 mr-2 text-gray-500" />
                 <SelectValue placeholder="Status" />
               </SelectTrigger>
@@ -543,7 +543,7 @@ export default function LeadsTable({
             </Select>
 
             <Select value={treatmentFilter} onValueChange={setTreatmentFilter}>
-              <SelectTrigger className="bg-white border-gray-300 text-gray-900">
+              <SelectTrigger className="w-full min-w-0 data-[size=default]:h-10 bg-white border-gray-300 text-gray-900">
                 <SelectValue placeholder="Treatment" />
               </SelectTrigger>
               <SelectContent className="bg-white border-gray-300 text-gray-900">
@@ -572,7 +572,7 @@ export default function LeadsTable({
             </Select>
 
             <Select value={formFilter} onValueChange={setFormFilter}>
-              <SelectTrigger className="bg-white border-gray-300 text-gray-900">
+              <SelectTrigger className="w-full min-w-0 data-[size=default]:h-10 bg-white border-gray-300 text-gray-900">
                 <Users className="h-4 w-4 mr-2 text-gray-500" />
                 <SelectValue placeholder="Form" />
               </SelectTrigger>
@@ -587,7 +587,7 @@ export default function LeadsTable({
             </Select>
 
             <Select value={paymentFilter} onValueChange={setPaymentFilter}>
-              <SelectTrigger className="bg-white border-gray-300 text-gray-900">
+              <SelectTrigger className="w-full min-w-0 data-[size=default]:h-10 bg-white border-gray-300 text-gray-900">
                 <CreditCard className="h-4 w-4 mr-2 text-gray-500" />
                 <SelectValue placeholder="Payment" />
               </SelectTrigger>
@@ -601,7 +601,7 @@ export default function LeadsTable({
             </Select>
 
             <Select value={dateFilter} onValueChange={setDateFilter}>
-              <SelectTrigger className="bg-white border-gray-300 text-gray-900">
+              <SelectTrigger className="w-full min-w-0 data-[size=default]:h-10 bg-white border-gray-300 text-gray-900">
                 <Calendar className="h-4 w-4 mr-2 text-gray-500" />
                 <SelectValue placeholder="Date" />
               </SelectTrigger>

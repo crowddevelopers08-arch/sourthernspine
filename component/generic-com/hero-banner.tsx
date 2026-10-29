@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, CalendarCheck, CheckCircle2, Phone, Volume2, VolumeX } from "lucide-react";
+import { ArrowRight, CalendarCheck, CheckCircle2, Volume2, VolumeX } from "lucide-react";
 import { outfit } from "./font";
 import BookingModal from "./booking-modal";
 
@@ -11,7 +11,6 @@ const BG_IMAGES = [
   "https://ik.imagekit.io/9yxs4igok/public/ban-3.avif",
   "https://ik.imagekit.io/9yxs4igok/public/ban-4.jpeg",
 ];
-const PHONE_HREF = "tel:+919464108108";
 const VIDEO_ID = "5Gt1GtuE9ic"; // landscape banner video from the previous LP
 
 const highlights = [
@@ -126,7 +125,7 @@ export default function HeroBanner() {
             ))}
           </ul>
 
-          <div className="mt-[18px] flex flex-col gap-[14px] sm:mt-[28px] sm:flex-row sm:items-center">
+          <div className="mt-[28px] hidden items-center gap-[14px] sm:flex">
             <a
               href="#book-appointment"
               className="group hidden sm:inline-flex items-center justify-center gap-[10px] rounded-full bg-[#f99c1e] px-[26px] py-[14px] text-[15px] font-bold uppercase tracking-[0.5px] text-[#0b1842] shadow-[0_10px_30px_-8px_rgba(249,156,30,0.75)] transition-all duration-300 hover:-translate-y-[2px] hover:bg-white"
@@ -134,15 +133,6 @@ export default function HeroBanner() {
               <CalendarCheck className="h-[17px] w-[17px]" strokeWidth={2.4} />
               Book Appointment
               <ArrowRight className="h-[16px] w-[16px] transition-transform duration-300 group-hover:translate-x-[3px]" strokeWidth={2.6} />
-            </a>
-            <a
-              href={PHONE_HREF}
-              className="inline-flex items-center justify-center gap-[10px] rounded-full border-2 border-white/30 px-[22px] py-[10px] text-[15px] font-semibold uppercase tracking-[0.5px] text-white backdrop-blur-sm transition-all duration-300 hover:border-[#f99c1e] hover:text-[#f99c1e]"
-            >
-              <span className="flex h-[26px] w-[26px] items-center justify-center rounded-full bg-white/15">
-                <Phone className="h-[13px] w-[13px]" strokeWidth={2.4} />
-              </span>
-              Call: 94641 08108
             </a>
           </div>
         </div>

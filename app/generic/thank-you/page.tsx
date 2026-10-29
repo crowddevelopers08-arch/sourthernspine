@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Script from "next/script";
-import { ArrowLeft, Check, Phone, ShieldCheck } from "lucide-react";
+import { ArrowLeft, Check, ShieldCheck } from "lucide-react";
 import { outfit } from "@/component/generic-com/font";
 
 export const metadata: Metadata = {
@@ -54,15 +54,6 @@ export default async function GenericThankYouPage({
           <Link href="/generic" className={`relative block h-[40px] w-[150px] min-w-0 shrink rounded-sm sm:h-[58px] sm:w-[230px] ${focusStyles}`}>
             <Image src="https://ik.imagekit.io/9yxs4igok/public/logos.png" alt="Southern Spine — Home" fill priority sizes="(min-width: 640px) 230px, 150px" className="object-contain object-left" />
           </Link>
-          <a
-            href="tel:+919464108108"
-            aria-label="Call +91 94641 08108"
-            className={`inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full bg-[#f99c1e] px-3 py-2 text-[13px] font-semibold text-[#0b1842] sm:gap-2 sm:bg-transparent sm:px-0 sm:text-sm sm:font-medium sm:text-[#29469b] ${focusStyles}`}
-          >
-            <Phone aria-hidden="true" className="h-4 w-4" />
-            <span className="sm:hidden">Call</span>
-            <span className="hidden sm:inline">+91 94641 08108</span>
-          </a>
         </div>
       </header>
       <div className="mx-auto max-w-3xl px-4 py-5 sm:px-5">
@@ -85,7 +76,6 @@ export default async function GenericThankYouPage({
           <p className="mx-auto mt-3 max-w-lg text-[15px] leading-7 text-[#d1d8eb] sm:text-base">Our team will call you to discuss your concerns and confirm your appointment. Your visit is confirmed once you hear from us.</p>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <Link href="/generic" className={`inline-flex min-h-14 items-center justify-center gap-2 rounded-xl bg-[#f99c1e] px-6 py-4 font-semibold text-[#0b1842] transition-colors hover:bg-[#ffb547] ${focusStyles}`}><ArrowLeft aria-hidden="true" className="h-4 w-4" />Back to Home</Link>
-            <a href="tel:+919464108108" className={`inline-flex min-h-14 items-center justify-center gap-2 rounded-xl border border-white/25 bg-white/5 px-6 py-4 font-semibold text-white transition-colors hover:bg-white/10 ${focusStyles}`}><Phone aria-hidden="true" className="h-4 w-4" />Call: 94641 08108</a>
           </div>
         </section>
         <footer className="mt-6 flex flex-wrap justify-center sm:mt-8 gap-x-5 gap-y-3 text-center text-sm text-[#65708a]">

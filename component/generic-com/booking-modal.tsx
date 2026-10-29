@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
+import { createPortal } from "react-dom";
 import { ArrowRight, CalendarCheck, CalendarDays, ChevronDown, Loader2, Lock, MapPin, Phone, Stethoscope, User, X } from "lucide-react";
 import { outfit } from "./font";
 import { concerns, findLocation, formatDateLabel, locations } from "./booking-options";
@@ -91,7 +92,7 @@ export default function BookingModal() {
 
   if (!open) return null;
 
-  return (
+  return createPortal(
     <div
       id="booking-modal"
       className={`${outfit.className} fixed inset-0 z-[60] flex items-start justify-center overflow-y-auto overscroll-contain bg-[#0b1842]/70 px-3 py-4 backdrop-blur-sm sm:items-center sm:p-6`}
@@ -214,7 +215,7 @@ export default function BookingModal() {
                   </select>
                 </Field>
 
-                <Field label="Location" icon={<MapPin className="h-[16px] w-[16px]" />} select>
+                <Field label="Location (Hyderabad)" icon={<MapPin className="h-[16px] w-[16px]" />} select>
                   <select
                     value={form.location}
                     onChange={(e) => chooseLocation(e.target.value)}
@@ -293,7 +294,10 @@ export default function BookingModal() {
           </form>
         </div>
       </div>
-    </div>
+    </div>,
+    // Render at <body> level: inside the hero's stacking context later sections
+    // (step hexagons, back-to-top, mobile bar) would paint on top of the popup.
+    document.body
   );
 }
 

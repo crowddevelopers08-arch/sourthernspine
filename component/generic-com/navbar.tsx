@@ -2,14 +2,12 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { CalendarCheck, Mail, MapPin, Phone } from "lucide-react";
+import { CalendarCheck, Mail, MapPin } from "lucide-react";
 import { outfit } from "./font";
 import { navLinks } from "./nav-links";
 
 const primaryMenu = navLinks;
 
-const PHONE_DISPLAY = "+91 94641 08108";
-const PHONE_HREF = "tel:+919464108108";
 const EMAIL = "info@southernspine.co.in";
 
 export default function Navbar() {
@@ -40,23 +38,15 @@ export default function Navbar() {
       <div className="w-full bg-[#0b1842]">
         <div className="mx-auto flex h-[42px] max-w-[1400px] items-center justify-between gap-4 px-4 md:px-[0px]">
           {/* Location */}
-          <div className="hidden items-center gap-[8px] md:flex">
+          <div className="flex min-w-0 items-center gap-[8px]">
             <MapPin className="h-[14px] w-[14px] shrink-0 text-[#f99c1e]" strokeWidth={2.2} />
-            <span className="text-[13px] font-medium uppercase tracking-[0.4px] text-white">
-              Jubilee Hills &amp; Chikkadpally, Hyderabad
+            <span className="truncate text-[11px] font-medium uppercase tracking-[0.3px] text-white sm:text-[13px] sm:tracking-[0.4px]">
+              Jubilee Hills &amp; Chikkadpally<span className="hidden sm:inline">, Hyderabad</span>
             </span>
           </div>
 
-          {/* Call + Email */}
-          <div className="flex w-full items-center justify-between gap-[18px] md:w-auto md:justify-end">
-            <a
-              href={PHONE_HREF}
-              className="flex items-center gap-[7px] text-[13px] font-medium tracking-[0.3px] text-white transition-colors duration-200 hover:text-[#f99c1e]"
-            >
-              <Phone className="h-[13px] w-[13px] shrink-0 text-[#f99c1e]" strokeWidth={2.2} />
-              <span className="uppercase">Call:</span> {PHONE_DISPLAY}
-            </a>
-            <span className="hidden h-[14px] w-px bg-white/25 sm:block" />
+          {/* Email */}
+          <div className="flex shrink-0 items-center">
             <a
               href={`mailto:${EMAIL}`}
               className="flex items-center gap-[7px] text-[13px] font-medium tracking-[0.3px] text-white transition-colors duration-200 hover:text-[#f99c1e]"
