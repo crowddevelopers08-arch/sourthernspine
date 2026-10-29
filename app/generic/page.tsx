@@ -23,7 +23,7 @@ export default function GenericPage() {
       <TestimonialsSection />
       <FaqSection />
       <ContactFooter />
-      <MobileActionBar />
+      {/* <MobileActionBar /> */}
     </main>
   );
 }
