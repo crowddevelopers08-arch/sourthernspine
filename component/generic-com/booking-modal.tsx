@@ -94,7 +94,7 @@ export default function BookingModal() {
   return (
     <div
       id="booking-modal"
-      className={`${outfit.className} fixed inset-0 z-[60] flex items-center justify-center overflow-y-auto bg-[#0b1842]/70 p-3 backdrop-blur-sm sm:p-6`}
+      className={`${outfit.className} fixed inset-0 z-[60] flex items-start justify-center overflow-y-auto overscroll-contain bg-[#0b1842]/70 px-3 py-4 backdrop-blur-sm sm:items-center sm:p-6`}
       onClick={close}
       role="dialog"
       aria-modal="true"
@@ -108,10 +108,15 @@ export default function BookingModal() {
           #booking-modal form h2 { font-size: 20px; }
           #booking-modal form > p { font-size: 13px; }
           #booking-modal form label > span:first-child { font-size: 11px; }
-          #booking-modal input, #booking-modal select { font-size: 14px; }
+          #booking-modal input, #booking-modal select { font-size: 16px; }
           #booking-modal button[type="submit"] { font-size: 12px; height: 44px; gap: 8px; letter-spacing: 0.3px; }
           #booking-modal button[type="submit"] svg { width: 15px; height: 15px; flex-shrink: 0; }
           #booking-modal form > p:last-child { font-size: 11px; }
+        }
+        @media (max-width: 359px) {
+          #booking-modal .booking-header-icon { display: none; }
+          #booking-modal .booking-price { font-size: 20px; }
+          #booking-modal form { padding: 14px; }
         }
       `}</style>
 
@@ -130,15 +135,15 @@ export default function BookingModal() {
         </div>
       )}
 
-      <div className="booking-card relative my-auto w-full max-w-[500px]" onClick={(e) => e.stopPropagation()}>
+      <div className="booking-card relative w-full max-w-[500px] sm:my-auto" onClick={(e) => e.stopPropagation()}>
         <div className="absolute -inset-[2px] rounded-[26px] bg-gradient-to-br from-[#f99c1e] via-[#f99c1e]/30 to-transparent opacity-80 blur-[2px]" />
 
         <div className="relative overflow-hidden rounded-[24px] bg-white shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]">
           {/* Price header */}
-          <div className="relative flex items-center justify-between gap-2 bg-[#0b1842] py-[12px] pl-[16px] pr-[52px] sm:gap-4 sm:py-[14px] sm:pl-[22px] sm:pr-[60px]">
+          <div className="relative flex items-center justify-between gap-2 bg-[#0b1842] py-[12px] pl-[14px] pr-[50px] sm:gap-4 sm:py-[14px] sm:pl-[22px] sm:pr-[60px]">
             <div className="flex min-w-0 items-center gap-[8px] sm:gap-[12px]">
-              <span className="flex h-[40px] w-[40px] shrink-0 items-center justify-center rounded-[12px] bg-[#f99c1e]/15">
-                <Stethoscope className="h-[20px] w-[20px] text-[#f99c1e]" strokeWidth={2.2} />
+              <span className="booking-header-icon flex h-[36px] w-[36px] shrink-0 items-center justify-center rounded-[12px] bg-[#f99c1e]/15 sm:h-[40px] sm:w-[40px]">
+                <Stethoscope className="h-[18px] w-[18px] text-[#f99c1e] sm:h-[20px] sm:w-[20px]" strokeWidth={2.2} />
               </span>
               <p className="text-[11px] font-semibold uppercase leading-[1.4] tracking-[0.2px] text-white sm:text-[14px] sm:leading-[1.35] sm:tracking-[0.5px]">
                 Consultation &amp;
@@ -146,8 +151,8 @@ export default function BookingModal() {
                 Spinal Assessment
               </p>
             </div>
-            <div className="shrink-0 rounded-[12px] bg-[#f99c1e] px-[10px] py-[8px] text-center shadow-[0_6px_20px_-6px_rgba(249,156,30,0.9)] sm:px-[14px]">
-              <span className="block text-[24px] font-extrabold leading-none text-[#0b1842] sm:text-[28px]">₹499</span>
+            <div className="shrink-0 rounded-[12px] bg-[#f99c1e] px-[8px] py-[7px] text-center sm:py-[8px] shadow-[0_6px_20px_-6px_rgba(249,156,30,0.9)] sm:px-[14px]">
+              <span className="booking-price block text-[22px] font-extrabold leading-none text-[#0b1842] sm:text-[28px]">₹499</span>
             </div>
 
             {/* Close */}

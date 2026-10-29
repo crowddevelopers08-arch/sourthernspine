@@ -71,14 +71,14 @@ export default function SlotPicker({ location, initialDate, onConfirm, onClose }
 
   return (
     <div
-      className="fixed inset-0 z-[70] flex items-center justify-center overflow-y-auto bg-[#0b1842]/60 p-3 backdrop-blur-[2px] sm:p-6"
+      className="fixed inset-0 z-[70] flex items-start justify-center overflow-y-auto overscroll-contain bg-[#0b1842]/60 px-3 py-4 backdrop-blur-[2px] sm:items-center sm:p-6"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
       aria-labelledby="slot-picker-title"
     >
       <div
-        className="slot-card relative my-auto w-full max-w-[440px] overflow-hidden rounded-[22px] bg-white shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]"
+        className="slot-card relative w-full max-w-[440px] sm:my-auto overflow-hidden rounded-[22px] bg-white shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]"
         onClick={(e) => e.stopPropagation()}
       >
         <style>{`
@@ -90,7 +90,7 @@ export default function SlotPicker({ location, initialDate, onConfirm, onClose }
         {/* Header: location */}
         <div className="relative bg-[#0b1842] px-[18px] py-[14px] pr-[54px] text-white sm:px-[22px]">
           <p className="text-[12px] font-semibold uppercase tracking-[1.5px] text-[#f99c1e]">Choose your visit date</p>
-          <p id="slot-picker-title" className="mt-[4px] flex items-center gap-[8px] text-[17px] font-bold sm:text-[18px]">
+          <p id="slot-picker-title" className="mt-[4px] flex items-center gap-[8px] text-[16px] font-bold leading-snug sm:text-[18px]">
             <MapPin className="h-[18px] w-[18px] shrink-0 text-[#f99c1e]" />
             {clinic.value}
           </p>
@@ -104,7 +104,7 @@ export default function SlotPicker({ location, initialDate, onConfirm, onClose }
           </button>
         </div>
 
-        <div className="p-[16px] sm:p-[20px]">
+        <div className="p-[14px] sm:p-[20px]">
           {/* Month navigation */}
           <div className="flex items-center justify-between">
             <button
@@ -138,7 +138,7 @@ export default function SlotPicker({ location, initialDate, onConfirm, onClose }
               return (
                 <span
                   key={d}
-                  className={`py-[4px] text-[11.5px] font-semibold uppercase tracking-[0.5px] ${open ? "text-[#0b1842]" : "text-[#cbd2e1]"}`}
+                  className={`py-[4px] text-[10.5px] font-semibold uppercase tracking-[0.3px] sm:text-[11.5px] sm:tracking-[0.5px] ${open ? "text-[#0b1842]" : "text-[#cbd2e1]"}`}
                 >
                   {d}
                 </span>
@@ -157,7 +157,7 @@ export default function SlotPicker({ location, initialDate, onConfirm, onClose }
                   onClick={() => setDate(iso)}
                   aria-pressed={selected}
                   aria-label={formatDateLabel(iso)}
-                  className={`relative mx-auto flex h-[38px] w-full max-w-[44px] items-center justify-center rounded-[10px] text-[14px] font-semibold transition-all ${
+                  className={`relative mx-auto flex h-[36px] w-full max-w-[44px] items-center justify-center rounded-[9px] text-[13.5px] font-semibold transition-all sm:h-[38px] sm:rounded-[10px] sm:text-[14px] ${
                     selected
                       ? "bg-[#f99c1e] text-[#0b1842] shadow-[0_6px_16px_-6px_rgba(249,156,30,0.9)]"
                       : bookable
@@ -190,7 +190,7 @@ export default function SlotPicker({ location, initialDate, onConfirm, onClose }
             type="button"
             disabled={!date}
             onClick={() => onConfirm(date)}
-            className="mt-[16px] flex h-[46px] w-full items-center justify-center gap-[8px] rounded-[12px] bg-gradient-to-r from-[#f99c1e] to-[#ffb547] text-[15px] font-bold uppercase tracking-[0.5px] text-[#0b1842] shadow-[0_12px_28px_-10px_rgba(249,156,30,0.9)] transition-all hover:-translate-y-[1px] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0"
+            className="mt-[16px] flex h-[46px] w-full items-center justify-center gap-[8px] rounded-[12px] bg-gradient-to-r from-[#f99c1e] to-[#ffb547] px-[10px] text-[13.5px] sm:text-[15px] font-bold uppercase tracking-[0.5px] text-[#0b1842] shadow-[0_12px_28px_-10px_rgba(249,156,30,0.9)] transition-all hover:-translate-y-[1px] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0"
           >
             <Check className="h-[18px] w-[18px]" strokeWidth={2.6} />
             {date ? `Confirm · ${formatDateLabel(date).replace(/ \d{4}$/, "")}` : "Select a date"}
