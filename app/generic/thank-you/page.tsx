@@ -31,6 +31,24 @@ export default async function GenericThankYouPage({
             'send_to': 'AW-16482547544/g8dtCMjn2JkZENjuvrM9'
           });`}
       </Script>
+      {/* Meta Pixel conversion: fbq('track', 'SubmitApplication').
+          The Pixel loads asynchronously (via GTM), so wait until fbq exists, then fire exactly once. */}
+      <Script id="generic-meta-submit-application" strategy="afterInteractive">
+        {`(function () {
+          if (window.__ssSubmitApplicationSent) return;
+          var tries = 0;
+          (function fire() {
+            if (typeof window.fbq === 'function') {
+              window.__ssSubmitApplicationSent = true;
+              fbq('track', 'SubmitApplication');
+            } else if (++tries < 50) {
+              setTimeout(fire, 300); // keep trying for ~15s while the Pixel loads
+            } else {
+              console.warn('Meta Pixel (fbq) not found – SubmitApplication not sent');
+            }
+          })();
+        })();`}
+      </Script>
       <header className="border-b border-[#e1e5ef] bg-white px-4 py-3 sm:px-8 sm:py-5">
         <div className="mx-auto flex max-w-5xl flex-nowrap items-center justify-between gap-3">
           <Link href="/generic" className={`relative block h-[40px] w-[150px] min-w-0 shrink rounded-sm sm:h-[58px] sm:w-[230px] ${focusStyles}`}>

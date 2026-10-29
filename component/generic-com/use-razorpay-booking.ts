@@ -14,7 +14,7 @@ declare global {
   }
 }
 
-export type BookingFields = { name: string; phone: string; concern: string; time: string };
+export type BookingFields = { name: string; phone: string; concern: string; location: string; date: string; time: string };
 
 // Loads Razorpay Checkout on first use instead of on every page view.
 function loadRazorpay() {
@@ -89,7 +89,7 @@ export function useRazorpayBooking() {
         name: "Southern Spine",
         description: "Consultation & Spinal Assessment",
         prefill: order.prefill,
-        notes: { concern: fields.concern, preferredTime: fields.time },
+        notes: { concern: fields.concern, location: fields.location, appointment: `${fields.date} ${fields.time}` },
         theme: { color: "#0b1842" },
         handler: verifyPayment,
         modal: {

@@ -4,7 +4,7 @@ export const dynamic = "force-dynamic";
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { GENERIC_LP_FORM, basicAuth, consultationFeeRupees, razorpayKeys } from "@/lib/razorpay";
-import { concerns, times } from "@/component/generic-com/booking-options";
+import { concerns, findLocation, formatDateLabel, isBookableDate } from "@/component/generic-com/booking-options";
 import { cleanPageUrl, pageUrlLine } from "@/lib/page-url";
 
 const NOT_CONFIGURED = "Online payment is not available right now. Please call us at 94641 08108 to book.";
@@ -34,16 +34,24 @@ export async function POST(req: NextRequest) {
   const name = read("name").slice(0, 100);
   const phone = read("phone").replace(/\D/g, "");
   const concern = read("concern");
-  const time = read("time");
+  const location = read("location");
+  const date = read("date"); // YYYY-MM-DD
+  const clinic = findLocation(location);
   // Landing page incl. UTM params; falls back to the Referer header
   const pageUrl = cleanPageUrl(read("pageUrl")) ?? cleanPageUrl(req.headers.get("referer"));
 
   if (name.length < 2 || !/^[6-9]\d{9}$/.test(phone)) {
     return NextResponse.json({ error: "Please enter your name and a valid 10-digit mobile number." }, { status: 400 });
   }
-  if (!concerns.includes(concern) || !times.includes(time)) {
-    return NextResponse.json({ error: "Please select your area of concern and preferred time." }, { status: 400 });
+  if (!concerns.includes(concern) || !clinic) {
+    return NextResponse.json({ error: "Please select your area of concern and clinic location." }, { status: 400 });
   }
+  // must be a real open day for that clinic (Mon/Tue/Fri/Sat, not in the past)
+  if (!isBookableDate(clinic, date)) {
+    return NextResponse.json({ error: "That date is not available. Please pick another date." }, { status: 400 });
+  }
+  // visit time = the clinic's hours, e.g. "Fri, 31 Oct 2026 · 10 AM – 1 PM"
+  const appointment = `${formatDateLabel(date)} · ${clinic.hours}`;
 
   const amountPaise = Math.round(fee * 100);
 
@@ -58,8 +66,10 @@ export async function POST(req: NextRequest) {
         procedure: APPOINTMENT_TYPE,
         appointmentType: APPOINTMENT_TYPE,
         condition: concern,
-        preferredTime: time,
-        message: [`Area of concern: ${concern}`, `Preferred time: ${time}`, pageUrl && pageUrlLine(pageUrl)]
+        city: location, // clinic location (shown in the dashboard)
+        preferredDate: date,
+        preferredTime: clinic.hours,
+        message: [`Area of concern: ${concern}`, `Location: ${location}`, `Preferred time: ${appointment}`, pageUrl && pageUrlLine(pageUrl)]
           .filter(Boolean)
           .join("\n"),
         consent: true,
@@ -92,7 +102,8 @@ export async function POST(req: NextRequest) {
           name,
           phone,
           concern,
-          preferredTime: time,
+          location,
+          appointment,
           pageUrl: (pageUrl ?? "").slice(0, 250), // Razorpay limits each note to 256 chars
         },
       }),
