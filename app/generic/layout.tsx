@@ -1,8 +1,10 @@
 import Script from "next/script";
+import MetaPixelPageView from "@/component/generic-com/meta-pixel-pageview";
 
 const GTM_ID = "GTM-NSQ8Z49K";
+const META_PIXEL_ID = "1129859606127945";
 
-// Google Tag Manager for the generic LP (/generic and its sub-pages: thank-you, policies)
+// Google Tag Manager + Meta Pixel for the generic LP (/generic and its sub-pages: thank-you, policies)
 export default function GenericLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <>
@@ -31,6 +33,35 @@ export default function GenericLayout({ children }: Readonly<{ children: React.R
           title="Google Tag Manager"
         />
       </noscript>
+
+      {/* Meta Pixel Code */}
+      <Script id="generic-meta-pixel" strategy="afterInteractive">
+        {`
+          !function(f,b,e,v,n,t,s)
+          {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+          n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+          if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+          n.queue=[];t=b.createElement(e);t.async=!0;
+          t.src=v;s=b.getElementsByTagName(e)[0];
+          s.parentNode.insertBefore(t,s)}(window, document,'script',
+          'https://connect.facebook.net/en_US/fbevents.js');
+          fbq('init', '${META_PIXEL_ID}');
+          fbq('track', 'PageView');
+        `}
+      </Script>
+      <noscript>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          height="1"
+          width="1"
+          style={{ display: "none" }}
+          src={`https://www.facebook.com/tr?id=${META_PIXEL_ID}&ev=PageView&noscript=1`}
+          alt=""
+        />
+      </noscript>
+      {/* PageView on in-site page changes (e.g. after payment → thank-you) */}
+      <MetaPixelPageView />
+      {/* End Meta Pixel Code */}
 
       {children}
     </>

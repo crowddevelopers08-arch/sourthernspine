@@ -1,6 +1,6 @@
 "use client";
 
-import { Phone, Calendar } from "lucide-react";
+import { Calendar } from "lucide-react";
 export default function MobileActionBar() {
 
   return (
@@ -11,22 +11,7 @@ export default function MobileActionBar() {
         flex md:hidden
       "
     >
-      {/* Call Now */}
-      <a
-        href="tel:+91 9464108108"
-        className="
-          flex-1 flex items-center justify-center gap-2
-          py-4 font-semibold text-white
-          text-sm
-          bg-[#0b1842]
-          active:scale-95 transition
-        "
-      >
-        <Phone className="w-4 h-4" />
-        Call Now
-      </a>
-
-      {/* Book Now */}
+      {/* Book Now – full width (opens the booking popup) */}
       <a
        href="#book-appointment"
         className="
@@ -35,12 +20,11 @@ export default function MobileActionBar() {
           text-white
           bg-[#f99c1e]
           text-sm
-          border-l border-gray-200
           active:scale-95 transition
         "
       >
         <Calendar className="w-4 h-4" />
-        Book Now
+        Book Your Appointment
       </a>
     </div>
   );
